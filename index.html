@@ -1,29 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>This Is Not A Quiz</title>
-  <link rel="stylesheet" href="style.css">
+  <title>The Office – Our Story</title>
 </head>
 <body>
-<audio id="bgSound"></audio>
 
-<div id="app">
+<h1>Click and feel it</h1>
 
-  <img id="sceneImage" src="images/michael_1.jpg">
+<button onclick="playSound('theme.mp3')">
+  🎵 Office Theme
+</button>
 
-  <h2 id="sceneTitle">So… you clicked.</h2>
+<button onclick="playSound('deranged.mp3')">
+  😭 Kelly Meltdown
+</button>
 
-  <p id="sceneText">
-    “This is a very bad idea.” <br> — Michael Scott
-  </p>
-
-  <div id="buttons">
-    <button id="yesBtn">Okay…</button>
-    <button id="noBtn">Nope</button>
-  </div>
-
-</div>
+<button onclick="playSound('wild.mp3')">
+  🧠 Dwight Chaos
+</button>
 
 <script src="script.js"></script>
 </body>
