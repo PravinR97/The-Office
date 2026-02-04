@@ -5,8 +5,8 @@ const scenes = [
   {
     title: "Michael Scott wants to have a Moment with you so....",
     text: ""Uh...nope. Nope. This isn't the surprise. It's surprising because you didn't expect it, but you will...you'll know it when you see it."",
-    bg: "images/michael.jpg",
-    sound: "theme.mp3"
+    bg: "images/That's_what_she_said.jpg",
+    sound: "That's_What_she_said.mp3"
   },
   {
     title: "Dwight Energy",
