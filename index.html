@@ -1,88 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>An Episode</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f5ff;
-      color: #222;
-      text-align: center;
-      padding: 40px;
-    }
-    .section {
-      margin: 80px auto;
-      max-width: 600px;
-    }
-    button {
-      margin: 10px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 20px;
-      background: #6c63ff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #554ee0;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>This is a very bad idea</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <div class="section">
-    <p><i>So… you clicked.</i></p>
-    <p><b>This is a very bad idea.</b><br>— Michael Scott</p>
-    <p>But some bad ideas come from good intentions.</p>
-  </div>
+<div class="card" id="step1">
+  <h1>“This is a very bad idea.”</h1>
+  <p>— Michael Scott</p>
+  <button onclick="nextStep(2)">I love inside jokes</button>
+</div>
 
-  <div class="section">
-    <p>This is not a quiz.</p>
-    <p>This is an episode.</p>
-    <button onclick="next(1)">Start Episode</button>
-  </div>
+<div class="card hidden" id="step2">
+  <h2>This is not a quiz.</h2>
+  <p>This is Prison Mike’s exercise.</p>
+  <p class="quote">
+    I AM HERE TO SCARE YOU STRAIIIIGHT!!
+  </p>
+  <button onclick="nextStep(3)">Okay… continue</button>
+</div>
 
-  <div id="s1" class="section hidden">
-    <p><b>Who is the heart of The Office?</b></p>
-    <button onclick="next(2)">Jim</button>
-    <button onclick="next(2)">Pam</button>
-    <button onclick="next(2)">Michael</button>
-    <button onclick="next(2)">Dwight</button>
-  </div>
+<div class="card hidden" id="step3">
+  <h2>Who is the real heart of The Office?</h2>
+  <button onclick="nextStep(4)">You already know this answer</button>
+</div>
 
-  <div id="s2" class="section hidden">
-    <p><i>"Before I do anything, I ask myself — would an idiot do that?"</i></p>
-    <p>I didn’t ask myself.</p>
-    <button onclick="next(3)">Continue</button>
-  </div>
+<div class="card hidden" id="step4">
+  <h2>Small confession</h2>
+  <p>
+    We laughed at The Office.<br>
+    We watched Peaky Blinders.<br>
+    Those laughs were real.
+  </p>
+  <button onclick="nextStep(5)">Go on…</button>
+</div>
 
-  <div id="s3" class="section hidden">
-    <p>Some people don’t just watch shows together.</p>
-    <p>They build memories between episodes.</p>
-    <button onclick="next(4)">Continue</button>
-  </div>
+<div class="card hidden" id="step5">
+  <h2>Unnecessary football round ⚽</h2>
+  <p>
+    Arsenal. Barcelona. Messi.<br>
+    I know you don’t care.<br>
+    I still wanted you to know.
+  </p>
+  <button onclick="nextStep(6)">Skip this nonsense</button>
+</div>
 
-  <div id="s4" class="section hidden">
-    <p>This was never about The Office.</p>
-    <p>It was about missing someone quietly.</p>
-    <button onclick="next(5)">Final Episode</button>
-  </div>
+<div class="card hidden" id="step6">
+  <h2>You once said something</h2>
+  <p>
+    You wanted to leave everything<br>
+    and live in Himachal.<br>
+    Jungle. Silence. Peace.
+  </p>
+  <button onclick="nextStep(7)">I remember that</button>
+</div>
 
-  <div id="s5" class="section hidden">
-    <p><b>Thank you for the time.</b></p>
-    <p>Some stories don’t really end.</p>
-  </div>
+<div class="card hidden" id="step7">
+  <h2>Some regrets</h2>
+  <p>
+    Vaishnodevi.<br>
+    I didn’t come.<br>
+    I had reasons — but still.
+  </p>
+  <button onclick="nextStep(8)">Okay</button>
+</div>
 
-<script>
-function next(n) {
-  document.getElementById("s" + n).classList.remove("hidden");
-}
-</script>
+<div class="card hidden" id="step8">
+  <h2>Jammu & Kashmir</h2>
+  <p>
+    Burgers. Dosa. Temples.<br>
+    Cold water on stone floors.<br>
+    You never listened to me — and I admired that.
+  </p>
+  <button onclick="nextStep(9)">Those days…</button>
+</div>
 
+<div class="card hidden" id="step9">
+  <h2>Truth</h2>
+  <p>
+    I wasn’t perfect.<br>
+    Late mornings. Bad habits.<br>
+    But every good version of me<br>
+    started because of you.
+  </p>
+  <button onclick="nextStep(10)">One last thing</button>
+</div>
+
+<div class="card hidden" id="step10">
+  <h2>No expectations</h2>
+  <p>
+    I don’t know what you feel.<br>
+    I don’t know where life took you.<br><br>
+    I just know —<br>
+    what we had was real.
+  </p>
+  <p class="end">
+    Some things… I keep only with you.
+  </p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
