@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>The Office – Our Story</title>
+  <meta charset="UTF-8">
+  <title>One Episode For You</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Click and feel it</h1>
+<div id="scene">
+  <div class="overlay">
+    <h1 id="title"></h1>
+    <p id="text"></p>
 
-<button onclick="playSound('theme.mp3')">
-  🎵 Office Theme
-</button>
-
-<button onclick="playSound('deranged.mp3')">
-  😭 Kelly Meltdown
-</button>
-
-<button onclick="playSound('wild.mp3')">
-  🧠 Dwight Chaos
-</button>
+    <div class="buttons">
+      <button id="yesBtn">YES 💛</button>
+      <button id="noBtn">NO 🙄</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
