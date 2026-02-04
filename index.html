@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>An Episode</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f5ff;
+      color: #222;
+      text-align: center;
+      padding: 40px;
+    }
+    .section {
+      margin: 80px auto;
+      max-width: 600px;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #6c63ff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #554ee0;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="section">
+    <p><i>So… you clicked.</i></p>
+    <p><b>This is a very bad idea.</b><br>— Michael Scott</p>
+    <p>But some bad ideas come from good intentions.</p>
+  </div>
+
+  <div class="section">
+    <p>This is not a quiz.</p>
+    <p>This is an episode.</p>
+    <button onclick="next(1)">Start Episode</button>
+  </div>
+
+  <div id="s1" class="section hidden">
+    <p><b>Who is the heart of The Office?</b></p>
+    <button onclick="next(2)">Jim</button>
+    <button onclick="next(2)">Pam</button>
+    <button onclick="next(2)">Michael</button>
+    <button onclick="next(2)">Dwight</button>
+  </div>
+
+  <div id="s2" class="section hidden">
+    <p><i>"Before I do anything, I ask myself — would an idiot do that?"</i></p>
+    <p>I didn’t ask myself.</p>
+    <button onclick="next(3)">Continue</button>
+  </div>
+
+  <div id="s3" class="section hidden">
+    <p>Some people don’t just watch shows together.</p>
+    <p>They build memories between episodes.</p>
+    <button onclick="next(4)">Continue</button>
+  </div>
+
+  <div id="s4" class="section hidden">
+    <p>This was never about The Office.</p>
+    <p>It was about missing someone quietly.</p>
+    <button onclick="next(5)">Final Episode</button>
+  </div>
+
+  <div id="s5" class="section hidden">
+    <p><b>Thank you for the time.</b></p>
+    <p>Some stories don’t really end.</p>
+  </div>
+
+<script>
+function next(n) {
+  document.getElementById("s" + n).classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
