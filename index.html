@@ -1,147 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>This is a very bad idea</title>
+  <meta charset="UTF-8" />
+  <title>A Story Only You Know</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="card" id="step1">
-  <h1>“This is a very bad idea.”</h1>
-  <p>— Michael Scott</p>
-  <img src="images/michael.jpg" class="img">
-  <button onclick="nextStep(2)">I love inside jokes</button>
-</div>
+<div class="container">
 
-<div class="card hidden" id="step2">
-  <h2>This is not a quiz.</h2>
-  <p>This is Prison Mike’s exercise.</p>
-  <img src="images/prison-mike.jpg" class="img">
-  <p class="quote">
-    I AM HERE TO SCARE YOU STRAIIIIGHT!!
-  </p>
-  <button onclick="nextStep(3)">Okay… continue</button>
-</div>
+  <!-- STEP 1 -->
+  <div class="step active">
+    <img src="images/michael.jpg" alt="Michael Scott">
+    <h1>“I am Beyoncé, always.” – Michael Scott</h1>
+    <p>
+      We laughed a lot watching *The Office* together.
+      Before we go ahead…
+      <br><br>
+      Did those laughs mean something to you too?
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">Yes 🙂</button>
+      <button onclick="nextStep()">Maybe 🤍</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step3">
-  <h2>Who is the real heart of The Office?</h2>
-  <p onclick="easterEgg()" class="secret">
-    (Click here if you are bored)
-  </p>
-  <button onclick="nextStep(4)">You already know</button>
-</div>
+  <!-- STEP 2 -->
+  <div class="step">
+    <img src="images/dwight.jpg" alt="Dwight Schrute">
+    <h1>Dwight says:</h1>
+    <p>
+      “Whenever I’m about to do something, I think,
+      would an idiot do that?”
+      <br><br>
+      I did many idiotic things.
+      <br>
+      Distance. Silence. Ego.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">I noticed 😐</button>
+      <button onclick="nextStep()">I understood 😌</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step4">
-  <h2>Some things were easy</h2>
-  <p>
-    The Office.<br>
-    Peaky Blinders.<br>
-    Long laughs that didn’t need reasons.
-  </p>
-  <img src="images/dwight.jpg" class="img">
-  <button onclick="nextStep(5)">Go on…</button>
-</div>
+  <!-- STEP 3 -->
+  <div class="step">
+    <img src="images/peaky.jpg" alt="Peaky Blinders">
+    <h1>“We’re not good people.”</h1>
+    <p>
+      Peaky Blinders wasn’t about guns.
+      <br>
+      It was about broken people pretending they’re fine.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">True.</button>
+      <button onclick="nextStep()">Very true.</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step5">
-  <h2>Unnecessary football round ⚽</h2>
-  <p>
-    Arsenal. Barcelona. Messi.<br>
-    I know you don’t care.<br>
-    This was just me.
-  </p>
-  <button onclick="nextStep(6)">Skip this</button>
-</div>
+  <!-- STEP 4 -->
+  <div class="step">
+    <h1>Mummy & Ishaan</h1>
+    <p>
+      You love them deeply.
+      <br>
+      You don’t show it.
+      <br>
+      You show *chidchidi anger* instead.
+      <br><br>
+      I noticed. I never judged.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">You noticed 🥺</button>
+      <button onclick="nextStep()">You’re wrong 😤</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step6">
-  <h2>You once said something</h2>
-  <p>
-    You wanted to leave everything<br>
-    and live in Himachal.<br>
-    Somewhere quiet. Somewhere honest.
-  </p>
-  <button onclick="nextStep(7)">I remember</button>
-</div>
+  <!-- STEP 5 -->
+  <div class="step">
+    <h1>Football break ⚽</h1>
+    <p>
+      Arsenal. Barcelona. Messi.
+      <br>
+      I know you don’t care.
+      <br>
+      But you still listened sometimes.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">Barely 😒</button>
+      <button onclick="nextStep()">A little 😅</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step7">
-  <h2>Some regrets stay</h2>
-  <p>
-    Vaishnodevi.<br>
-    You went.<br>
-    I didn’t.<br><br>
-    I had reasons — but still.
-  </p>
-  <button onclick="nextStep(8)">Okay</button>
-</div>
+  <!-- STEP 6 -->
+  <div class="step">
+    <img src="images/jammu.jpg" alt="Jammu memories">
+    <h1>Jammu & Kashmir</h1>
+    <p>
+      Burger King.
+      <br>
+      Dosa.
+      <br>
+      Temples.
+      <br>
+      Cold water.
+      <br><br>
+      Those days live rent-free in my heart.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">They were special 🤍</button>
+      <button onclick="nextStep()">They were just days.</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step8">
-  <h2>Jammu & Kashmir</h2>
-  <p>
-    Burgers. Dosa. Mall walks.<br>
-    Temples. Cold stone floors.<br>
-    You never listened — and I admired that.
-  </p>
-  <button onclick="nextStep(9)">Those days…</button>
-</div>
+  <!-- STEP 7 -->
+  <div class="step">
+    <img src="images/trek.jpg" alt="Trek">
+    <h1>You & the mountains</h1>
+    <p>
+      You wanted to leave everything.
+      <br>
+      Live in Himachal.
+      <br>
+      Or a jungle.
+      <br><br>
+      I would’ve walked there too.
+    </p>
+    <div class="buttons">
+      <button onclick="nextStep()">I know.</button>
+      <button onclick="nextStep()">You’re romantic.</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="step9">
-  <h2>Truth</h2>
-  <p>
-    I wasn’t disciplined.<br>
-    Late mornings. Bad habits.<br><br>
-    But every better version of me<br>
-    started because of you.
-  </p>
-  <button onclick="nextStep('choice')">One honest question</button>
-</div>
+  <!-- FINAL -->
+  <div class="step">
+    <h1>Last question</h1>
+    <p>
+      Should this story stay here…
+      <br>
+      or continue someday?
+    </p>
+    <div class="buttons">
+      <button onclick="alert('No pressure. Truly.')">Stay here.</button>
+      <button onclick="alert('Some stories don’t end.')">Continue someday.</button>
+    </div>
+  </div>
 
-<div class="card hidden" id="stepchoice">
-  <h2>Do you think silence</h2>
-  <p>always means distance?</p>
-  <button onclick="nextStep(10)">Yes</button>
-  <button onclick="nextStep(11)">No</button>
-</div>
-
-<div class="card hidden" id="step10">
-  <h2>If yes…</h2>
-  <p>
-    Then I understand why you stayed quiet.<br>
-    I did too.
-  </p>
-  <button onclick="nextStep(12)">Continue</button>
-</div>
-
-<div class="card hidden" id="step11">
-  <h2>If no…</h2>
-  <p>
-    Then maybe silence was just time.<br>
-    And time changes people.
-  </p>
-  <button onclick="nextStep(12)">Continue</button>
-</div>
-
-<div class="card hidden" id="step12">
-  <h2>By order of the Peaky Blinders</h2>
-  <p class="quote">
-    “Sometimes the people we love<br>
-    are the ones we leave alone the longest.”
-  </p>
-  <button onclick="nextStep(13)">One last thing</button>
-</div>
-
-<div class="card hidden" id="step13">
-  <h2>No expectations</h2>
-  <p>
-    I don’t know what you feel.<br>
-    I don’t know where life took you.<br><br>
-    I just know —<br>
-    what we had was real.
-  </p>
-  <p class="end">
-    Some things… I keep only with you.
-  </p>
-  <button onclick="finalAnswer('stay')">Stay here</button>
-  <button onclick="finalAnswer('continue')">Continue someday</button>
 </div>
 
 <script src="script.js"></script>
