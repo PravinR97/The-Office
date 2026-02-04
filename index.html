@@ -1,149 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>A Story Only You Know</title>
+  <meta charset="UTF-8">
+  <title>The Office Story</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-  <!-- STEP 1 -->
-  <div class="step active">
-    <img src="images/michael.jpg" alt="Michael Scott">
-    <h1>“I am Beyoncé, always.” – Michael Scott</h1>
-    <p>
-      We laughed a lot watching *The Office* together.
-      Before we go ahead…
-      <br><br>
-      Did those laughs mean something to you too?
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">Yes 🙂</button>
-      <button onclick="nextStep()">Maybe 🤍</button>
-    </div>
-  </div>
+  <h1>Before we go ahead…</h1>
 
-  <!-- STEP 2 -->
-  <div class="step">
-    <img src="images/dwight.jpg" alt="Dwight Schrute">
-    <h1>Dwight says:</h1>
-    <p>
-      “Whenever I’m about to do something, I think,
-      would an idiot do that?”
-      <br><br>
-      I did many idiotic things.
-      <br>
-      Distance. Silence. Ego.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">I noticed 😐</button>
-      <button onclick="nextStep()">I understood 😌</button>
-    </div>
-  </div>
+  <img id="storyImage" src="images/michael_1.jpg" alt="story image">
 
-  <!-- STEP 3 -->
-  <div class="step">
-    <img src="images/peaky.jpg" alt="Peaky Blinders">
-    <h1>“We’re not good people.”</h1>
-    <p>
-      Peaky Blinders wasn’t about guns.
-      <br>
-      It was about broken people pretending they’re fine.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">True.</button>
-      <button onclick="nextStep()">Very true.</button>
-    </div>
-  </div>
+  <p id="storyText">
+    Michael has something to say. Are you listening?
+  </p>
 
-  <!-- STEP 4 -->
-  <div class="step">
-    <h1>Mummy & Ishaan</h1>
-    <p>
-      You love them deeply.
-      <br>
-      You don’t show it.
-      <br>
-      You show *chidchidi anger* instead.
-      <br><br>
-      I noticed. I never judged.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">You noticed 🥺</button>
-      <button onclick="nextStep()">You’re wrong 😤</button>
-    </div>
-  </div>
-
-  <!-- STEP 5 -->
-  <div class="step">
-    <h1>Football break ⚽</h1>
-    <p>
-      Arsenal. Barcelona. Messi.
-      <br>
-      I know you don’t care.
-      <br>
-      But you still listened sometimes.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">Barely 😒</button>
-      <button onclick="nextStep()">A little 😅</button>
-    </div>
-  </div>
-
-  <!-- STEP 6 -->
-  <div class="step">
-    <img src="images/jammu.jpg" alt="Jammu memories">
-    <h1>Jammu & Kashmir</h1>
-    <p>
-      Burger King.
-      <br>
-      Dosa.
-      <br>
-      Temples.
-      <br>
-      Cold water.
-      <br><br>
-      Those days live rent-free in my heart.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">They were special 🤍</button>
-      <button onclick="nextStep()">They were just days.</button>
-    </div>
-  </div>
-
-  <!-- STEP 7 -->
-  <div class="step">
-    <img src="images/trek.jpg" alt="Trek">
-    <h1>You & the mountains</h1>
-    <p>
-      You wanted to leave everything.
-      <br>
-      Live in Himachal.
-      <br>
-      Or a jungle.
-      <br><br>
-      I would’ve walked there too.
-    </p>
-    <div class="buttons">
-      <button onclick="nextStep()">I know.</button>
-      <button onclick="nextStep()">You’re romantic.</button>
-    </div>
-  </div>
-
-  <!-- FINAL -->
-  <div class="step">
-    <h1>Last question</h1>
-    <p>
-      Should this story stay here…
-      <br>
-      or continue someday?
-    </p>
-    <div class="buttons">
-      <button onclick="alert('No pressure. Truly.')">Stay here.</button>
-      <button onclick="alert('Some stories don’t end.')">Continue someday.</button>
-    </div>
+  <div class="buttons">
+    <button onclick="answerYes()">Yes</button>
+    <button onclick="answerNo()">No</button>
   </div>
 
 </div>
