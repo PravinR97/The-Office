@@ -1,57 +1,61 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f3f4f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: #0e0e0e;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
 }
 
-.card {
-  background: white;
-  padding: 30px;
-  max-width: 520px;
-  text-align: center;
-  border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-.hidden {
+.step {
   display: none;
+  text-align: center;
+  animation: fade 0.6s ease;
+}
+
+.step.active {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.buttons {
+  margin-top: 30px;
 }
 
 button {
-  margin: 12px 6px 0;
-  padding: 12px 20px;
+  background: #fff;
+  color: #000;
   border: none;
-  background: #2563eb;
-  color: white;
-  border-radius: 8px;
+  padding: 12px 22px;
+  margin: 10px;
+  border-radius: 25px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
-  background: #1e40af;
+  background: #ffdde1;
 }
 
-.img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-
-.quote {
-  font-style: italic;
-  margin-top: 15px;
-}
-
-.secret {
-  font-size: 12px;
-  color: #6b7280;
-  cursor: pointer;
-}
-
-.end {
-  margin-top: 20px;
-  font-weight: bold;
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
