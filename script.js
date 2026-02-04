@@ -3,8 +3,8 @@ let sceneIndex = 0;
 
 const scenes = [
   {
-    title: "Michael Scott Moment",
-    text: "“Somehow I manage.”\n\nAnd somehow… I still think about you.",
+    title: "Michael Scott wants to have a Moment with you so....",
+    text: ""Uh...nope. Nope. This isn't the surprise. It's surprising because you didn't expect it, but you will...you'll know it when you see it."",
     bg: "images/michael.jpg",
     sound: "theme.mp3"
   },
