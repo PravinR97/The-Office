@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f3f4f6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,10 +10,10 @@ body {
 .card {
   background: white;
   padding: 30px;
-  max-width: 500px;
+  max-width: 520px;
   text-align: center;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
 }
 
 .hidden {
@@ -21,7 +21,7 @@ body {
 }
 
 button {
-  margin-top: 20px;
+  margin: 12px 6px 0;
   padding: 12px 20px;
   border: none;
   background: #2563eb;
@@ -34,17 +34,24 @@ button:hover {
   background: #1e40af;
 }
 
+.img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
 .quote {
   font-style: italic;
-  margin-top: 10px;
+  margin-top: 15px;
+}
+
+.secret {
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
 }
 
 .end {
   margin-top: 20px;
   font-weight: bold;
-}
-.img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 15px;
 }
