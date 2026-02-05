@@ -1,21 +1,65 @@
 html, body {
   margin: 0;
-  height: 80%;
+  height: 100%;
   font-family: Georgia, serif;
 }
 
 /* Main scene */
 #scene {
   height: 80vh;
-  background-size: cover;
-  background-position: center;
+  position: relative; /* keep pseudo / video background and overlay stacked */
+  overflow: hidden;
+  /* fallback static image (reduced size) */
+  background-image: url('assets/office.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* reduce the static image size so it does not dominate the layout */
+  background-size: 50% auto;
   transition: background-image 1s ease;
 }
 
-/* Dark cinematic overlay */
-.overlay {
+/* Option A: GIF as background using a pseudo-element (works with pure CSS) */
+#scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Replace with your gif path */
+  background-image: url('assets/bg.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* use cover for a full-bleed look, or contain / percentage if you want it smaller */
+  background-size: cover;
+  /* slight GPU friendly smoothing and subtle tweak to make gif look crisper */
+  image-rendering: auto;
+  /* optional filter — tweak if gif looks too bright/dim */
+  filter: saturate(1.05) contrast(1);
+  pointer-events: none;
+}
+
+/* Option B (recommended for best quality & performance): use a <video> element
+   inserted in the HTML inside #scene:
+   <video class="bg-video" autoplay muted loop playsinline>
+     <source src="assets/bg.mp4" type="video/mp4">
+   </video>
+   This CSS will style that video to behave like a background. */
+.bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.65);
+  object-fit: cover; /* preserves aspect while filling the area */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Dark cinematic overlay (text sits above the background) */
+.overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  /* reduce opacity so animated background is visible but text remains legible */
+  background: rgba(0, 0, 0, 0.45);
   color: white;
 
   display: flex;
@@ -33,7 +77,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* GIF styling */
+/* GIF styling for inline img elements (if you still show it as an <img>) */
 #gif {
   max-width: 420px;
   width: 100%;
