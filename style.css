@@ -1,153 +1,224 @@
-/* Basic styling for the scenes and overlays — improved visibility and fallbacks */
+/* Basic styles for The (IIM Jammu) Office page
+   - includes styles for layered people images, typing feel, overlays, and buttons
+*/
 
 :root{
-  --bg-dark: rgba(0,0,0,0.55);
-  --accent: #ffcccb;
-  --muted: #e6e6e6;
-  --glass: rgba(255,255,255,0.06);
+  --bg-dark: #0f1113;
+  --panel: rgba(255,255,255,0.04);
+  --accent: #ffcc00;
+  --muted: #c5c6c7;
+  --glass: rgba(255,255,255,0.03);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+html,body{
+  height:100%;
+  margin:0;
+  background: radial-gradient(ellipse at top left, #0b1220 0%, var(--bg-dark) 60%);
+  color:#eee;
+}
 
 .scene{
   min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:24px;
+  box-sizing:border-box;
   background-size:cover;
   background-position:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   position:relative;
-  color:white;
-  transition: background-image .6s ease-in-out, filter .25s ease;
-  filter: saturate(1.05) contrast(1.02);
+  overflow:hidden;
 }
 
-/* stronger overlay for better readability */
-.scene .overlay{
-  backdrop-filter: blur(6px) brightness(0.9);
-  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.5));
-  padding:28px;
+/* Layered people container (absolute, sits near the bottom to look like a background crowd) */
+.people-bg{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:36%;
+  pointer-events:none;
+  display:none;
+}
+.people-bg .person{
+  position:absolute;
+  height:110%;
+  max-height:380px;
+  transform:translateY(8%);
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+  border-radius:6px;
+  transition:transform .35s ease, opacity .35s ease;
+  opacity:0.95;
+}
+
+/* header and title */
+.scene-header{
+  width:100%;
+  max-width:920px;
+  margin-top:12px;
+  margin-bottom:18px;
+  text-align:center;
+}
+.title{
+  margin:0;
+  font-size:1.4rem;
+  letter-spacing:0.6px;
+  color:var(--accent);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+/* body panel */
+.scene-body{
+  width:100%;
+  max-width:920px;
+  background: var(--glass);
   border-radius:12px;
-  width:min(1100px, 94%);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  padding:18px;
+  box-sizing:border-box;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 30px rgba(2,6,10,0.6);
+  position:relative;
+  z-index:20;
 }
 
-h1{margin:0 0 8px;font-size:28px;letter-spacing:0.4px}
-.lead{margin:0 0 16px;font-size:16px;color:var(--muted);white-space:pre-line}
+/* main text (typing area) */
+.text{
+  font-size:1rem;
+  color:#f2f2f2;
+  min-height:64px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  margin-bottom:12px;
+}
 
+/* gif area */
 .media-row{
   display:flex;
-  gap:18px;
-  align-items:flex-start;
-  margin-top:12px;
-}
-
-/* improved gif display: border + subtle glow */
-.scene-gif{
-  width:300px;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(255,255,255,0.02) inset;
-  display:block;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.25));
-}
-
-/* If the GIF fails, we'll hide it in JS and quote box expands */
-.quote-box{
-  flex:1;
-  padding:12px 16px;
-  border-radius:8px;
-  background:var(--glass);
-  min-height:150px;
-  display:flex;
   align-items:center;
   justify-content:center;
+  margin:12px 0;
+}
+.gif{
+  max-width:40%;
+  height:auto;
+  border-radius:8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
 
-#quote{
+/* quote */
+.quote{
+  color:var(--muted);
+  font-size:0.92rem;
+  margin-top:10px;
   font-style:italic;
-  color:#fff;
-  margin:0;
-  text-align:center;
-  font-size:15px;
 }
 
 /* controls */
-.controls{display:flex;justify-content:center;margin-top:18px}
-.btn{
-  background:#111;
-  color:#fff;
-  border:2px solid rgba(255,255,255,0.08);
-  padding:10px 18px;
-  font-weight:700;
-  border-radius:8px;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .12s ease;
+.controls{
+  margin-top:14px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
 }
-.btn.small{padding:6px 10px;font-size:14px}
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.45)}
+.btn{
+  background:linear-gradient(180deg, rgba(255,204,0,0.95), rgba(200,150,0,0.9));
+  color:#111;
+  border:0;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+}
+.btn.small{ padding:6px 10px; font-size:0.9rem; border-radius:8px; }
+.btn:active{ transform:translateY(1px); }
 
 /* overlays */
-.overlay-panel{
+.overlay{
   position:fixed;
-  inset:0;
+  left:0; right:0; top:0; bottom:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,0.5);
-  z-index:60;
-  padding:20px;
+  z-index:80;
+  background: rgba(2,6,10,0.55);
 }
-
-.panel{
-  width:min(760px,96%);
-  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+.overlay-card{
+  background: #071018;
   padding:18px;
   border-radius:10px;
-  color:#fff;
+  width:90%;
+  max-width:520px;
+  color:#eee;
+  box-shadow:0 10px 40px rgba(0,0,0,0.7);
   position:relative;
-  box-shadow:0 10px 35px rgba(0,0,0,0.7);
 }
-
-.panel.final{max-height:80vh;overflow:auto}
 .close{
-  position:absolute;right:8px;top:8px;background:transparent;border:none;color:#fff;font-size:22px;cursor:pointer;
+  position:absolute;
+  right:10px;
+  top:6px;
+  border:0;
+  background:transparent;
+  color:#bbb;
+  font-size:20px;
+  cursor:pointer;
 }
 
-#questionInput{
+/* question */
+.question-prompt{
+  font-weight:700;
+  margin-bottom:10px;
+}
+.text-input{
   width:100%;
-  padding:10px 12px;
-  margin-top:12px;
+  padding:10px;
   border-radius:8px;
   border:1px solid rgba(255,255,255,0.06);
-  background:rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.02);
   color:#fff;
-  outline:none;
+  margin-bottom:12px;
 }
-
-.mcq{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.mcq-container{ display:flex; flex-wrap:wrap; gap:8px; }
 .mcqBtn{
-  background:transparent;color:#fff;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);cursor:pointer;
-}
-.mcqBtn:hover{background:rgba(255,255,255,0.03)}
-
-.final-text{
-  background:rgba(0,0,0,0.25);
-  padding:12px;border-radius:6px;font-family:inherit;color:#fff;white-space:pre-wrap;
-}
-
-/* subtle panel entrance */
-.animate-in{animation:panelIn .28s cubic-bezier(.2,.9,.2,1) both}
-@keyframes panelIn{
-  from{transform:translateY(8px) scale(.995); opacity:0}
-  to{transform:none; opacity:1}
+  background:#222;
+  padding:8px 12px;
+  border-radius:8px;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.03);
+  cursor:pointer;
 }
 
-.autoplay-hint{position:fixed;left:16px;bottom:16px;z-index:80}
-@media (max-width:760px){
-  .scene-gif{width:160px;height:120px}
-  h1{font-size:20px}
-  .quote-box{min-height:90px}
+/* finish message */
+.finish-message{
+  white-space:pre-wrap;
+  background: rgba(255,255,255,0.02);
+  padding:12px;
+  border-radius:8px;
+  max-height:50vh;
+  overflow:auto;
+  color:#f6f6f6;
+}
+
+/* autoplay hint */
+.autoplay-hint{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  padding:10px;
+  border-radius:10px;
+  z-index:90;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+@media (max-width:720px){
+  .gif{ max-width:70%; }
+  .people-bg{ height:28%; }
+  .title{ font-size:1.15rem; }
+  .scene-body{ padding:14px; }
 }
