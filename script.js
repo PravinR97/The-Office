@@ -34,12 +34,12 @@ const scenes = [
     // After the first Continue press, we will play the 'that's what she said' sfx.
     // After that, show Dwight quote and a second button to play Michael's thank-you MP3,
     // then show a short question (same as the one you had).
-    quote: "", // will be filled after the first interaction
+    quote: "Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.", // will be filled after the first interaction
     // provide an in-scene question (mirrors the earlier question)
     question: {
       type: "short",
-      key: "favorite_office_episode",
-      prompt: "Which episode of The Office made you laugh the hardest?"
+      key: "favorite_office_episode......",
+      prompt: "Which episode of The Office made you laugh the hardest?.....Mine is Diversity Day and when Dwight express his love for Angela ...With that Car Stunt"
     }
   },
 
