@@ -11,7 +11,7 @@
     <header id="topbar">
       <h1 id="title">For You</h1>
       <div id="controls">
-        <button id="enableMediaBtn" title="Enable media (required for audio/video)">Enable media</button>
+        <button id="enableMediaBtn" title="Enable audio & video (required to hear music)">Enable media</button>
         <button id="muteBtn" title="Mute / unmute">🔈</button>
         <button id="gifPauseBtn" title="Pause / play GIFs">⏸️ GIF</button>
       </div>
@@ -75,9 +75,21 @@
       </div>
     </div>
 
-    <!-- autoplay hint (shown if browser blocked play) -->
+    <!-- explicit media-enable modal (shown until user enables media) -->
+    <div id="mediaEnableOverlay" class="overlay media-enable" style="display:flex">
+      <div class="overlayCard">
+        <h2>Please tap to enable audio & video</h2>
+        <p>Browsers block autoplay by default. Tap the button below so music, voices and GIF videos can play. This is required for a full experience.</p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:16px;">
+          <button id="enableMediaOverlayBtn" class="primary">Enable media</button>
+          <button id="enableMediaLaterBtn" class="secondary">I'll enable later</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- autoplay hint (hidden normally) -->
     <div id="autoplayHint" class="hint" style="display:none">
-      <p>Browser blocked autoplay. Press "Enable media" to allow audio & video.</p>
+      <p>Audio was blocked. Tap Enable media to allow sound & looping GIFs.</p>
       <button id="autoplayPlay">Enable media</button>
     </div>
 
