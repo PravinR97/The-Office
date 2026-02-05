@@ -5,7 +5,7 @@
   font-family: 'Georgia', serif;
 }
 
-body, html {
+html, body {
   height: 100%;
 }
 
@@ -14,13 +14,14 @@ body, html {
   width: 100%;
   background-size: cover;
   background-position: center;
-  transition: background 1s ease;
+  transition: background-image 1s ease-in-out;
 }
 
 .overlay {
   height: 100%;
   width: 100%;
   background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,10 +40,12 @@ p {
   font-size: 1.4rem;
   max-width: 700px;
   margin-bottom: 40px;
+  white-space: pre-line;
 }
 
 .buttons {
   position: relative;
+  margin-top: 20px;
 }
 
 button {
@@ -67,4 +70,27 @@ button {
   background: crimson;
   color: white;
   position: absolute;
+  left: 130px;
+}
+
+/* Start Screen */
+#startScreen {
+  position: absolute;
+  inset: 0;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#startScreen h1 {
+  margin-bottom: 30px;
+}
+
+#startBtn {
+  background: gold;
+  font-size: 1.5rem;
+  padding: 18px 40px;
 }
