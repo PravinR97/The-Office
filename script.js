@@ -87,7 +87,7 @@ const scenes = [
     id: "us",
     title: "Us",
     text: "This is us — silly, imperfect, warm. A little Michael awkwardness; a lot of real feeling.",
-    bg: "images/us_bg.jpg",
+    bg: "images/Stanley.jpg",
     gif: "images/michael_us.gif",
     audio: "daffyduck.mp3",
     quote: "Pam & Jim had their story; this is ours — messy, beautiful, and mine.",
