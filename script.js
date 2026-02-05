@@ -1,90 +1,76 @@
-let currentAudio = null;
-let sceneIndex = 0;
+let index = 0;
+let audio = null;
 
 const scenes = [
   {
-    title: "Michael Scott Moment",
-    text: "“Somehow I manage.”\n\nAnd somehow… I still think about you.",
-    bg: "images/michael.jpg",
-    sound: "theme.mp3"
+    title: "Cold Open",
+    text: "Remember The Office?\nWe didn’t just watch it.\nWe lived inside it.",
+    bg: "images/office1.jpg",
+    sound: "audio/michael.mp3"
   },
   {
-    title: "Dwight Energy",
-    text: "Whenever I miss you… my brain goes full Dwight mode.",
-    bg: "images/dwight.jpg",
-    sound: "wild.mp3"
+    title: "Kelly Moment",
+    text: "I tried being calm.\nDidn’t work.\nI missed you LOUDLY.",
+    bg: "images/office1.jpg",
+    sound: "audio/kelly.mp3"
   },
   {
-    title: "Kelly Kapoor Phase",
-    text: "I tried being calm.\nDidn’t work.\nI miss you LOUDLY.",
-    bg: "images/kelly.jpg",
-    sound: "deranged.mp3"
+    title: "Jim & Pam",
+    text: "Some people don’t need drama.\nThey need consistency.\nLike us… once.",
+    bg: "images/jim_pam.jpg"
   },
   {
-    title: "Jim & Pam Truth",
-    text: "You don’t need fireworks.\nYou need someone who chooses you.\nEvery day.",
-    bg: "images/jim_pam.jpg",
-    sound: "she_said.mp3"
-  },
-  {
-    title: "Peaky Blinders Energy",
-    text: "In the end… I choose you.\nNo negotiations.",
+    title: "Peaky Blinders",
+    text: "You taught me loyalty before I understood it.",
     bg: "images/peaky.jpg",
-    sound: "wild.mp3"
+    sound: "audio/peaky.mp3"
   },
   {
-    title: "One Honest Question",
-    text: "Should this story… continue?",
+    title: "Kashmir",
+    text: "Night walks.\nAuto rides.\nCold temples.\nWarm memories.",
+    bg: "images/kashmir.jpg"
+  },
+  {
+    title: "A Pause",
+    text: "Before this continues…\nThere’s something I want you to do.",
     bg: "images/jim_pam.jpg",
-    sound: "theme.mp3",
-    final: true
+    action: "typeform"
   }
 ];
 
-const scene = document.getElementById("scene");
 const title = document.getElementById("title");
 const text = document.getElementById("text");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+const nextBtn = document.getElementById("nextBtn");
+const scene = document.getElementById("scene");
 
 function playSound(file) {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
-  currentAudio = new Audio(file);
-  currentAudio.volume = 0.8;
-  currentAudio.play();
+  if (!file) return;
+  if (audio) audio.pause();
+  audio = new Audio(file);
+  audio.play();
 }
 
 function loadScene() {
-  const s = scenes[sceneIndex];
-  scene.style.backgroundImage = `url('${s.bg}')`;
+  const s = scenes[index];
   title.innerText = s.title;
   text.innerText = s.text;
+  scene.style.backgroundImage = `url(${s.bg})`;
   playSound(s.sound);
 
-  if (s.final) {
-    noBtn.style.display = "block";
+  if (s.action === "typeform") {
+    nextBtn.innerText = "Open Quiz";
+  } else {
+    nextBtn.innerText = "Next ▶";
   }
 }
 
-yesBtn.onclick = () => {
-  sceneIndex++;
-  if (sceneIndex < scenes.length) {
-    loadScene();
-  } else {
-    title.innerText = "💛";
-    text.innerText = "That’s all.\nBut I meant every second.";
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
+nextBtn.onclick = () => {
+  if (scenes[index].action === "typeform") {
+    window.open("PASTE_TYPEFORM_LINK_HERE", "_blank");
+    return;
   }
-};
-
-noBtn.onmouseover = () => {
-  const x = Math.random() * 300 - 150;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  index++;
+  if (index < scenes.length) loadScene();
 };
 
 loadScene();
