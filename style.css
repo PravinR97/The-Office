@@ -1,124 +1,246 @@
+:root{
+  --bg-overlay: rgba(0,0,0,0.45);
+  --glass: rgba(255,255,255,0.04);
+  --accent1: #ff9a9e;
+  --accent2: #fad0c4;
+  --accent-solid: #ff6b6b;
+  --muted: rgba(255,255,255,0.9);
+  --max-content-width: 900px;
+}
+
+/* Basic page / typography */
 html, body {
   margin: 0;
   height: 100%;
   font-family: Georgia, serif;
+  color: var(--muted);
+  background: #000;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-/* Main scene */
+/* Main scene - make immersive */
 #scene {
-  height: 80vh;
+  height: 100vh; /* full viewport for immersive effect */
   position: relative; /* keep pseudo / video background and overlay stacked */
   overflow: hidden;
-  /* fallback static image (reduced size) */
-  background-image: url('assets/office.jpg');
+  background-image: url('assets/office.jpg'); /* fallback static image */
   background-repeat: no-repeat;
   background-position: center center;
-  /* reduce the static image size so it does not dominate the layout */
-  background-size: 50% auto;
-  transition: background-image 1s ease;
+  background-size: 50% auto; /* reduced static size so gif/video dominates */
+  transition: background-image 1s ease, background-size 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Option A: GIF as background using a pseudo-element (works with pure CSS) */
+/* Option A: GIF as background using pseudo-element */
 #scene::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  /* Replace with your gif path */
-  background-image: url('assets/bg.gif');
+  background-image: url('assets/bg.gif'); /* replace with your gif path */
   background-repeat: no-repeat;
   background-position: center center;
-  /* use cover for a full-bleed look, or contain / percentage if you want it smaller */
-  background-size: cover;
-  /* slight GPU friendly smoothing and subtle tweak to make gif look crisper */
+  background-size: cover; /* full-bleed gif */
   image-rendering: auto;
-  /* optional filter — tweak if gif looks too bright/dim */
   filter: saturate(1.05) contrast(1);
   pointer-events: none;
 }
 
-/* Option B (recommended for best quality & performance): use a <video> element
-   inserted in the HTML inside #scene:
-   <video class="bg-video" autoplay muted loop playsinline>
-     <source src="assets/bg.mp4" type="video/mp4">
-   </video>
-   This CSS will style that video to behave like a background. */
+/* Option B: video background (recommended for quality/perf) */
 .bg-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* preserves aspect while filling the area */
+  object-fit: cover; /* preserves aspect while filling area */
   z-index: 1;
   pointer-events: none;
+  background: transparent;
 }
 
 /* Dark cinematic overlay (text sits above the background) */
 .overlay {
   position: relative;
   z-index: 2;
-  height: 100%;
-  /* reduce opacity so animated background is visible but text remains legible */
-  background: rgba(0, 0, 0, 0.45);
-  color: white;
-
+  max-width: var(--max-content-width);
+  width: calc(100% - 48px);
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35));
+  backdrop-filter: blur(4px);
+  color: var(--muted);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  padding: 40px;
+  padding: clamp(20px, 4vw, 40px);
   text-align: center;
+  border-radius: 14px;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.6);
+  gap: 8px;
 }
 
 /* Title */
 h1 {
-  font-size: 2.8rem;
-  margin-bottom: 20px;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  margin: 0 0 8px 0;
+  line-height: 1.05;
+  letter-spacing: 0.4px;
 }
 
-/* GIF styling for inline img elements (if you still show it as an <img>) */
+/* Main paragraph / scene text */
+p {
+  max-width: 700px;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  line-height: 1.6;
+  white-space: pre-line;
+  margin: 0;
+}
+
+/* Quote block styling */
+blockquote#quote {
+  margin: 8px 0 0 0;
+  font-style: italic;
+  color: #fff;
+  opacity: 0.95;
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  border-left: 3px solid rgba(255,255,255,0.08);
+  padding-left: 12px;
+  max-width: 680px;
+}
+
+/* GIF inline element (if used alongside background) */
 #gif {
   max-width: 420px;
   width: 100%;
   border-radius: 14px;
-  margin: 20px 0;
+  margin: 18px 0;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
   animation: fadeIn 0.8s ease;
+  z-index: 3;
+  display: block;
 }
 
-/* Text */
-p {
-  max-width: 700px;
-  font-size: 1.3rem;
-  line-height: 1.6;
-  white-space: pre-line;
-}
+/* Controls / button */
+.controls { margin-top: 18px; display:flex; gap:12px; align-items:center; justify-content:center; }
 
-/* Button */
-button {
-  margin-top: 30px;
-  padding: 14px 35px;
+button#nextBtn {
+  margin-top: 10px;
+  padding: 12px 30px;
   border-radius: 30px;
-  font-size: 1.2rem;
-  background: gold;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  font-weight: 700;
+  color: #222;
+  box-shadow: 0 10px 24px rgba(255,140,140,0.12);
 }
 
-button:hover {
-  transform: scale(1.05);
+button#nextBtn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 30px rgba(0,0,0,0.4); }
+
+/* Modal / overlay for questions and final message */
+.overlayModal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 40;
+  padding: 20px;
 }
 
-/* Subtle fade animation */
+.card {
+  background: linear-gradient(180deg, rgba(10,10,12,0.9), rgba(8,8,10,0.95));
+  color: var(--muted);
+  padding: 18px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 720px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.closeBtn {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #0f0f10;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+/* MCQ (multiple choice) buttons */
+.mcqBtn {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+/* Final message text */
+.finalText {
+  white-space: pre-wrap;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  color: #fff8;
+  margin: 12px 0 0 0;
+}
+
+/* small animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  #scene { background-size: 120% auto; }
+  .card { padding: 14px; }
+  blockquote#quote { font-size: 0.95rem; }
+  #gif { max-width: 320px; }
+}
+
+/* Small utility to hide audio controls if any visible */
+#sceneAudio { display: none; }
+
+/* Make sure interactive elements are on top */
+#scene::before,
+.bg-video { z-index: 1 }
+.overlay { z-index: 2 }
+.overlayModal { z-index: 50 }
+
+/* Handy debug helper (uncomment when developing)
+#scene { outline: 1px dashed rgba(255,255,255,0.03); }
+*/
