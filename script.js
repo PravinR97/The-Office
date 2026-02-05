@@ -1,11 +1,11 @@
 /* script.js (updated)
-   - Better media enable flow (user must click "Enable media")
-   - Reliable GIF/Video handling with fallbacks
-   - Audio play attempts only after user enables media
-   - Stops overlapping audio
-   - More episodes added that include personal photos + Office stills
+   - Explicit media-enable overlay (required gesture) and AudioContext resume
+   - Added two "sadness" episodes and a caring episode that uses your personal photos
+   - Ensures audio won't overlap; GIF/video only plays after media enabled
+   - Uses the exact personal photo filenames you requested as thumbs/people
 */
 
+/* SFX candidates (try several filenames) */
 const ANSWER_SFX_CANDIDATES = [
   "audio/Thats_What_she_said.mp3",
   "audio/ThatsWhatSheSaid.mp3",
@@ -14,10 +14,11 @@ const ANSWER_SFX_CANDIDATES = [
   "images/shesaid.mp3"
 ];
 
-let mediaEnabled = false;
-let muted = false;
-
-/* Scenes: added 4 more episodes as requested */
+/* Scenes: includes previous scenes plus two sadness episodes and one care/gallery episode.
+   I've added the personal photo filenames you provided in the "care" episode:
+   "Ddddddd_1", "DDDDDD2", "Dddddd3", "Devyani_3", "devuuu_5", "dddduuuu_3", "Devuuuu_2"
+   (assumed to be in the images/ folder with .jpg extension — adjust if extensions differ)
+*/
 const scenes = [
   {
     id: "intro",
@@ -26,7 +27,7 @@ const scenes = [
     bg: "images/The_office_image.jpg",
     gif: "images/Michael_Im_dead_Inside.gif",
     people: ["images/jim_1.jpg", "images/kelly_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", tr: "images/devuuu_5.jpg", bl: "images/Devuuu_2.jpg", br: "images/ddddduuuu_3.jpg" },
+    thumbs: { tl: "images/Ddddddd_1.jpg", tr: "images/DDDDDD2.jpg", bl: "images/Dddddd3.jpg", br: "images/Devyani_3.jpg" },
     quote: "Would I rather be feared or loved? Easy. Both. — Michael Scott",
     question: { type: "short", key: "favorite_office_episode", prompt: "Which episode of The Office made you laugh the hardest?" }
   },
@@ -38,71 +39,67 @@ const scenes = [
 Tell me one tiny thing from the day that made you smile.`,
     bg: "images/office_bg2.jpg",
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg", "images/Michael_1.jpg", "images/pam_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", tr: "images/Devuuu_2.jpg", bl: "images/ddddduuuu_3.jpg", br: "images/Devu1.jpg" },
+    people: ["images/kelly_1.jpg", "images/Michael_Crying.jpg", "images/pam_1.jpg"],
+    thumbs: { tl: "images/devuuu_5.jpg", tr: "images/devvvvv_5.jpg", bl: "images/ddddduuuu_3.jpg", br: "images/Devuuuu_2.jpg" },
     quote: "Sarcastic? Always. Missing you? Always more.",
     question: { type: "short", key: "how_are_you_feeling_today", prompt: "Tell me one tiny thing from the day that made you smile (even if tiny)." }
   },
 
+  // Sadness episode 1
   {
-    id: "coffee-date",
-    title: "Coffee Date (MBA chaiwala)",
-    text: `MBA chaiwala — I was wrong. Toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nI'm sorry for that moment.`,
-    bg: "images/Devuuu_2.jpg",
-    gif: "images/dwight_smile.gif",
-    people: ["images/dwight_1.jpg","images/michael_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
-    quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott",
-    question: { type: "short", key: "mba_chaiwala_fix", prompt: "What one small thing could I do to make this right?" },
-    audio: "audio/soft_piano_loop.mp3"
+    id: "sadness-1",
+    title: "I'm so sorry — I was sad",
+    text: `I am very sad and sorry for not acting properly. I want you to live happily. I should have shown I cared more. I'm sorry.`,
+    bg: "images/kelly_1.jpg",
+    gif: "images/dwight_cry_1.gif",
+    people: ["images/kelly_1.jpg", "images/dwight_cry_1.jpg"],
+    thumbs: { tl: "images/Ddddddd_1.jpg", tr: "images/devuuu_5.jpg" },
+    quote: "Sometimes the worst thing is when you know you messed up — and you only want to fix it.",
+    audio: "audio/soft_piano_loop.mp3",
+    question: { type: "short", key: "sadness1_repair", prompt: "One thing I can do right now to show I'm sorry?" }
   },
 
+  // Sadness episode 2
   {
-    id: "maggie-concert",
-    title: "Concert Night (Maggie's place)",
-    text: `At Maggie's place we had our moment. I am very sorry for that. I never wanted to hurt you.`,
-    bg: "images/devvvvv_5.jpg",
-    gif: "images/Michael_Dance_2.gif",
-    people: ["images/pam_1.jpg","images/jim_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/Devu1.jpg" },
-    quote: "I am running away from my responsibilities. And it feels good. — (not this time)",
-    question: { type: "short", key: "maggie_place_fix", prompt: "What helped you calm down that day?" },
-    audio: "audio/soft_guitar_loop.mp3"
+    id: "sadness-2",
+    title: "I didn't show it — but I care",
+    text: `I care always, even when I didn't show it. I'm sorry I made you feel alone. Please know I'm here.`,
+    bg: "images/Dddddd3.jpg",
+    gif: "images/Michael_Crying.gif",
+    people: ["images/dwight_cry_2.jpg", "images/kelly_1.jpg"],
+    thumbs: { tl: "images/Devuuuu_2.jpg", br: "images/ddddduuuu_3.jpg" },
+    quote: "I wish I had been better at showing what matters.",
+    audio: "audio/ambient_strings.mp3",
+    question: { type: "short", key: "sadness2_repair", prompt: "What would make you feel safer with me again?" }
   },
 
+  // Care / gallery episode (use all the personal photos you listed)
   {
-    id: "kashmir-night",
-    title: "Kashmir — Night & Morning",
-    text: `The night in Kashmir was magic. The morning I ruined it and I'm sorry.\nI will do better. I will make it right.`,
-    bg: "images/Devu1.jpg",
+    id: "care-gallery",
+    title: "I love you — my everything",
+    text: `You are beautiful, cute, funny, loving, and everything I want to protect. These are moments I keep with me.\nThank you for being you.`,
+    bg: "images/ddddduuuu_3.jpg",
     gif: "images/heart_fireworks.gif",
-    people: ["images/michael_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddddd_1.jpg" },
-    quote: "I wish there was a way to know you’re in the good old days before you’ve actually left them.",
-    question: { type: "short", key: "kashmir_fix", prompt: "If I could change one thing from that trip, what should I do first?" },
-    audio: "audio/ambient_strings.mp3"
-  },
-
-  {
-    id: "football-banter",
-    title: "Football Banter",
-    text: `You and football — I tease, you roll your eyes, we both laugh. Which team are you secretly cheering for?`,
-    bg: "images/football_bg.jpg",
-    gif: "images/goal_cheer.gif",
-    people: ["images/whole_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
-    question: { type: "mcq", key: "football_interest", prompt: "Who would you pick?", choices: ["Arsenal","Barcelona","Snacks > Football","I don't care"] }
-  },
-
-  {
-    id: "katakirr-misal",
-    title: "Katakirr Misal — The Truth",
-    text: `I haven't eaten Katakirr misal in a long time — the places I went with you mean more than the food. I will never go alone or with anyone else.`,
-    bg: "images/misal_bg.jpg",
-    gif: "images/misal_giggle.gif",
-    people: ["images/dwight_1.jpg"],
-    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
-    quote: "And to be clear: I will not go alone — that's my promise.",
+    // include all the personal photos user asked for (assumes .jpg)
+    people: [
+      "images/Ddddddd_1.jpg",
+      "images/DDDDDD2.jpg",
+      "images/Dddddd3.jpg",
+      "images/Devyani_3.jpg",
+      "images/devuuu_5.jpg",
+      "images/dddduuuu_3.jpg",
+      "images/Devuuuu_2.jpg"
+    ],
+    // set corners to ensure they show
+    thumbs: {
+      tl: "images/Ddddddd_1.jpg",
+      tr: "images/DDDDDD2.jpg",
+      bl: "images/Dddddd3.jpg",
+      br: "images/Devyani_3.jpg"
+    },
+    quote: "Will you let me show up better? I love your smile, your small laugh, the way you are.",
+    audio: "audio/soft_guitar_loop.mp3",
+    question: { type: "short", key: "care_gallery_what", prompt: "Tell me one little thing about you I should never forget." }
   },
 
   {
@@ -120,8 +117,12 @@ let index = 0;
 let responses = {};
 const sceneState = {};
 
+let mediaEnabled = false;
+let audioCtx = null;
+let muted = false;
+
+/* DOM */
 const sceneEl = document.getElementById("scene");
-const titleEl = document.getElementById("title");
 const sceneTitle = document.getElementById("sceneTitle");
 const textEl = document.getElementById("text");
 const quoteEl = document.getElementById("quote");
@@ -137,7 +138,6 @@ const thumbTR = document.getElementById("thumb-top-right");
 const thumbBL = document.getElementById("thumb-bottom-left");
 const thumbBR = document.getElementById("thumb-bottom-right");
 
-/* overlays */
 const questionOverlay = document.getElementById("questionOverlay");
 const questionPrompt = document.getElementById("questionPrompt");
 const mcqContainer = document.getElementById("mcqContainer");
@@ -146,14 +146,17 @@ const questionSubmit = document.getElementById("questionSubmit");
 const questionSkip = document.getElementById("questionSkip");
 const questionClose = document.getElementById("questionClose");
 
+const mediaEnableOverlay = document.getElementById("mediaEnableOverlay");
+const enableMediaOverlayBtn = document.getElementById("enableMediaOverlayBtn");
+const enableMediaLaterBtn = document.getElementById("enableMediaLaterBtn");
+const enableMediaBtn = document.getElementById("enableMediaBtn");
+const autoplayHint = document.getElementById("autoplayHint");
+const autoplayPlay = document.getElementById("autoplayPlay");
+
 const finishOverlay = document.getElementById("finishOverlay");
 const finishMessage = document.getElementById("finishMessage");
 const finishClose = document.getElementById("finishClose");
 const finishSend = document.getElementById("finishSend");
-
-const enableMediaBtn = document.getElementById("enableMediaBtn");
-const autoplayHint = document.getElementById("autoplayHint");
-const autoplayPlay = document.getElementById("autoplayPlay");
 
 const bgAudio = document.getElementById("bgAudio");
 const sfxAudio = document.getElementById("sfxAudio");
@@ -164,13 +167,8 @@ const gifPauseBtn = document.getElementById("gifPauseBtn");
 
 /* ---------- Helpers ---------- */
 
-function safeLog(...args) { try { console.log(...args); } catch(e) {} }
-
 function setBackground(url) {
-  if (!url) {
-    sceneEl.style.backgroundImage = "";
-    return;
-  }
+  if (!url) { sceneEl.style.backgroundImage = ""; return; }
   const img = new Image();
   img.onload = () => {
     sceneEl.style.backgroundImage = `url("${url}")`;
@@ -186,12 +184,14 @@ function setBackground(url) {
 function renderPeople(list = []) {
   peopleBg.innerHTML = "";
   if (!list || list.length === 0) return;
-  list.slice(0,4).forEach((src, i) => {
+  list.slice(0, 6).forEach((src, i) => {
     const img = document.createElement("img");
     img.className = "person";
     img.src = src;
     img.alt = "";
     img.style.zIndex = 20 + i;
+    img.style.left = `${6 + i * 9}%`;
+    img.style.bottom = `${-6 + (i % 3) * 4}%`;
     img.addEventListener("error", () => img.style.display = "none");
     peopleBg.appendChild(img);
   });
@@ -216,9 +216,7 @@ function setCornerThumbs(obj = {}) {
   });
 }
 
-/* showMedia: prefer video (mp4/webm) if available, otherwise show gif image.
-   We attempt to test video by setting src and listening for loadedmetadata/onerror.
-*/
+/* showMedia: prefer mp4/webm if present for reliability; otherwise gif image */
 function showMedia(gifPath, videoPath, fallbackImage) {
   gifImg.style.display = "none";
   gifVideo.style.display = "none";
@@ -227,86 +225,57 @@ function showMedia(gifPath, videoPath, fallbackImage) {
 
   const tryVideo = (path) => new Promise((resolve, reject) => {
     if (!path) return reject();
-    // Create temporary video to test
     const testVideo = document.createElement("video");
     testVideo.src = path;
     testVideo.preload = "metadata";
     testVideo.muted = true;
-    const ok = () => {
-      testVideo.removeEventListener("loadedmetadata", ok);
-      testVideo.removeEventListener("error", fail);
-      resolve(path);
-    };
-    const fail = () => {
-      testVideo.removeEventListener("loadedmetadata", ok);
-      testVideo.removeEventListener("error", fail);
-      reject();
-    };
+    const ok = () => { testVideo.removeEventListener("loadedmetadata", ok); testVideo.removeEventListener("error", fail); resolve(path); };
+    const fail = () => { testVideo.removeEventListener("loadedmetadata", ok); testVideo.removeEventListener("error", fail); reject(); };
     testVideo.addEventListener("loadedmetadata", ok);
     testVideo.addEventListener("error", fail);
-    // try load
     testVideo.load();
   });
 
-  // try explicit videoPath first, else try replacing .gif -> .mp4/.webm
-  const candidates = [];
-  if (videoPath) candidates.push(videoPath);
-  if (gifPath) {
-    candidates.push(gifPath.replace(/\.gif$/i, ".mp4"));
-    candidates.push(gifPath.replace(/\.gif$/i, ".webm"));
-  }
-
-  // attempt videos in order; if none, fallback to img gif or fallbackImage
   (async () => {
+    const candidates = [];
+    if (videoPath) candidates.push(videoPath);
+    if (gifPath) {
+      candidates.push(gifPath.replace(/\.gif$/i, ".mp4"));
+      candidates.push(gifPath.replace(/\.gif$/i, ".webm"));
+    }
     for (const c of candidates) {
       try {
         await tryVideo(c);
         gifVideo.src = c;
         gifVideo.style.display = "block";
-        if (mediaEnabled) {
-          gifVideo.play().catch(()=>{});
-        }
+        if (mediaEnabled) gifVideo.play().catch(()=>{});
         return;
-      } catch (e) {
-        continue;
-      }
+      } catch (e) { continue; }
     }
-    // no video candidate worked — try gif image
+    // fallback to gif image
     if (gifPath) {
       const test = new Image();
-      test.onload = () => {
-        gifImg.src = gifPath;
-        gifImg.style.display = "block";
-      };
+      test.onload = () => { gifImg.src = gifPath; gifImg.style.display = "block"; };
       test.onerror = () => {
-        if (fallbackImage) {
-          gifImg.src = fallbackImage;
-          gifImg.style.display = "block";
-        } else {
-          gifImg.style.display = "none";
-        }
+        if (fallbackImage) { gifImg.src = fallbackImage; gifImg.style.display = "block"; } else { gifImg.style.display = "none"; }
       };
       test.src = gifPath;
       return;
     }
-    // fallback image only
     if (fallbackImage) {
       const test = new Image();
-      test.onload = () => {
-        gifImg.src = fallbackImage;
-        gifImg.style.display = "block";
-      };
+      test.onload = () => { gifImg.src = fallbackImage; gifImg.style.display = "block"; };
       test.onerror = () => gifImg.style.display = "none";
       test.src = fallbackImage;
     }
   })();
 }
 
-/* audio helpers */
+/* Audio helpers */
 function stopAllAudio() {
   try { bgAudio.pause(); bgAudio.currentTime = 0; } catch(e) {}
-  try { voiceAudio.pause(); voiceAudio.currentTime = 0; } catch(e) {}
   try { sfxAudio.pause(); sfxAudio.currentTime = 0; } catch(e) {}
+  try { voiceAudio.pause(); voiceAudio.currentTime = 0; } catch(e) {}
 }
 
 function setMute(v) {
@@ -318,25 +287,16 @@ function setMute(v) {
 }
 
 function playBg(src) {
-  if (!src) {
-    fadeOut(bgAudio);
-    return;
-  }
+  if (!src) { fadeOut(bgAudio); return; }
+  stopAllAudio();
   if (!mediaEnabled) {
-    mediaStatus.innerText = "Scene audio ready; tap Enable media to play.";
+    mediaStatus.innerText = "Scene audio ready — press Enable media to play.";
+    bgAudio.src = src; // set so ready when enabled
     return;
   }
-  if (bgAudio.src && bgAudio.src.includes(src)) {
-    // already loaded
-    try { bgAudio.play().catch(()=>{}); } catch(e){}
-    return;
-  }
-  fadeOut(bgAudio, 200);
   bgAudio.src = src;
   bgAudio.volume = muted ? 0 : 0.36;
-  bgAudio.play().catch(() => {
-    mediaStatus.innerText = "Browser blocked autoplay; press Enable media.";
-  });
+  bgAudio.play().catch(() => { mediaStatus.innerText = "Browser blocked audio playback."; });
 }
 
 function fadeOut(audioEl, ms = 300) {
@@ -349,38 +309,31 @@ function fadeOut(audioEl, ms = 300) {
     const t = setInterval(() => {
       i++;
       audioEl.volume = Math.max(0, start * (1 - i / steps));
-      if (i >= steps) {
-        clearInterval(t);
-        audioEl.pause();
-        audioEl.volume = start;
-      }
+      if (i >= steps) { clearInterval(t); audioEl.pause(); audioEl.volume = start; }
     }, step);
-  } catch (e) {
-    audioEl.pause();
-  }
+  } catch (e) { audioEl.pause(); }
 }
 
-/* Play SFX robustly from candidate paths */
+/* play sfx candidates (tries multiple filenames) */
 function playSfxCandidates() {
   let idx = 0;
-  const sfx = sfxAudio;
   function tryNext() {
     if (idx >= ANSWER_SFX_CANDIDATES.length) return;
     const candidate = ANSWER_SFX_CANDIDATES[idx++];
-    sfx.src = candidate;
-    sfx.volume = muted ? 0 : 0.95;
-    sfx.play().then(()=>{}).catch(() => {
+    sfxAudio.src = candidate;
+    sfxAudio.volume = muted ? 0 : 0.95;
+    sfxAudio.play().catch(() => {
       setTimeout(tryNext, 200);
     });
   }
   if (!mediaEnabled) {
-    mediaStatus.innerText = "SFX ready — click Enable media to hear it.";
+    mediaStatus.innerText = "SFX ready — press Enable media to hear it.";
     return;
   }
   tryNext();
 }
 
-/* Typing effect */
+/* typing effect */
 function typeText(el, text, speed = 30) {
   return new Promise(resolve => {
     el.innerText = "";
@@ -398,7 +351,7 @@ function typeText(el, text, speed = 30) {
   });
 }
 
-/* Question overlay */
+/* show question overlay */
 function showQuestion(q) {
   if (!q) return;
   questionPrompt.innerText = q.prompt;
@@ -429,11 +382,9 @@ function showQuestion(q) {
 function hideQuestion() { questionOverlay.style.display = "none"; }
 
 /* ---------- Scene load & navigation ---------- */
-
 function loadScene() {
   const current = scenes[index];
   if (!current) return;
-  // reset UI
   setBackground(current.bg || "");
   sceneTitle.innerText = current.title || "";
   quoteEl.innerText = current.quote || "";
@@ -443,24 +394,12 @@ function loadScene() {
   textEl.innerText = "";
   mediaStatus.innerText = "";
 
-  // set next button text
   nextBtn.disabled = true;
   nextBtn.innerText = "Continue";
 
-  // handle different scene types
-  if (current.id === "intro") {
-    typeText(textEl, current.text || "", 36).then(() => {
-      nextBtn.disabled = false;
-      sceneState.introStep = 0;
-    });
-    return;
-  }
-
-  // normal scene: type text then enable button
   typeText(textEl, current.text || "", 28).then(() => {
     nextBtn.disabled = false;
     nextBtn.innerText = current.final ? "FINISH" : "NEXT";
-    // scene audio indicator
     if (current.audio) {
       scenePlayAudio.style.display = "inline-block";
       scenePlayAudio.dataset.src = current.audio;
@@ -468,30 +407,32 @@ function loadScene() {
     } else {
       scenePlayAudio.style.display = "none";
     }
-    // show question if present
     if (current.question) {
       setTimeout(() => showQuestion(current.question), 700);
     } else {
       hideQuestion();
     }
   });
+
+  // if current has audio and mediaEnabled, play it automatically (gentle)
+  if (current.audio && mediaEnabled) {
+    playBg(current.audio);
+  } else if (current.audio) {
+    bgAudio.src = current.audio; // cache for later
+  } else {
+    fadeOut(bgAudio);
+  }
 }
 
-/* proceedAfterAnswer: default next scene */
-function proceedAfterAnswer() {
-  nextScene();
-}
+function proceedAfterAnswer() { nextScene(); }
 
 function nextScene() {
   index++;
-  if (index >= scenes.length) {
-    showFinal();
-    return;
-  }
+  if (index >= scenes.length) { showFinal(); return; }
   loadScene();
 }
 
-/* ---------- Intro special flow: small SFX and voice clip sequence ---------- */
+/* Intro special flow (sfx + voice) */
 function handleIntroClick() {
   const current = scenes[index];
   if (!current || current.id !== "intro") return;
@@ -499,7 +440,6 @@ function handleIntroClick() {
 
   if (sceneState.introStep === 0) {
     nextBtn.disabled = true;
-    // play that's what she said SFX
     playSfxCandidates();
     setTimeout(() => {
       quoteEl.innerText = "Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing. — Dwight Schrute";
@@ -512,16 +452,9 @@ function handleIntroClick() {
 
   if (sceneState.introStep === 1) {
     nextBtn.disabled = true;
-    // voice clip
     voiceAudio.src = "audio/Michael_scott_thank_you.mp3";
     voiceAudio.volume = muted ? 0 : 0.95;
-    if (!mediaEnabled) {
-      mediaStatus.innerText = "Voice clip ready — press Enable media to hear it.";
-    } else {
-      voiceAudio.play().catch(() => {
-        mediaStatus.innerText = "Browser blocked voice playback.";
-      });
-    }
+    if (mediaEnabled) voiceAudio.play().catch(()=>{ mediaStatus.innerText = "Voice blocked."; });
     setTimeout(() => {
       if (current.question) showQuestion(current.question);
       nextBtn.innerText = "let's gooooooo";
@@ -531,7 +464,6 @@ function handleIntroClick() {
     return;
   }
 
-  // step 2 -> if question visible, collect answer then next scene
   if (sceneState.introStep === 2) {
     if (questionOverlay.style.display === "flex") {
       const val = questionInput.value.trim();
@@ -564,30 +496,20 @@ function submitQuestion() {
   proceedAfterAnswer();
 }
 
-function handleMCQClick(choice, key) {
-  playSfxCandidates();
-  responses[key] = choice;
-  hideQuestion();
-  proceedAfterAnswer();
-}
-
-/* ---------- Final message ---------- */
+/* ---------- Final ---------- */
 function showFinal() {
   const ep = responses.favorite_office_episode || "our favourite silly episode";
   const smile = responses.how_are_you_feeling_today || "that tiny thing you smiled about";
-  const mbaFix = responses.mba_chaiwala_fix || "let me make it up to you";
-  const maggieFix = responses.maggie_place_fix || "I will calm things next time";
-  const kashFix = responses.kashmir_fix || "plan a redo trip just for us";
-  const sport = responses.football_interest || "your playful choices";
+  const s1 = responses.sadness1_repair || "let me try to make it right";
+  const s2 = responses.sadness2_repair || "I'll work to be better";
+  const care = responses.care_gallery_what || "the way you laugh";
 
   const message = [
     "Hey love — I made this for you.",
     `I remember laughing with you at ${ep}.`,
     `You told me today: ${smile}. That made me smile too.`,
-    `For MBA chaiwala: ${mbaFix}.`,
-    `For Maggie's place: ${maggieFix}.`,
-    `For Kashmir: ${kashFix}.`,
-    `Even when you pretend not to care about football: ${sport}.`,
+    `For the times I was sad and hurt you: ${s1} / ${s2}.`,
+    `One thing I promise: I'll keep ${care} close and never forget.`,
     "",
     "I'm sorry for the times I hurt you. I regret the bad things I've done.",
     "I hope you are doing fine. I love you, I care for you, and I want to keep making better memories with you.",
@@ -604,19 +526,9 @@ function showFinal() {
 nextBtn.addEventListener("click", () => {
   const current = scenes[index];
   if (!current) return;
-  if (current.id === "intro") {
-    handleIntroClick();
-    return;
-  }
-  // if question visible, submit
-  if (questionOverlay.style.display === "flex") {
-    submitQuestion();
-    return;
-  }
-  if (current.final) {
-    showFinal();
-    return;
-  }
+  if (current.id === "intro") { handleIntroClick(); return; }
+  if (questionOverlay.style.display === "flex") { submitQuestion(); return; }
+  if (current.final) { showFinal(); return; }
   nextScene();
 });
 
@@ -624,14 +536,12 @@ nextBtn.addEventListener("click", () => {
 scenePlayAudio.addEventListener("click", () => {
   const src = scenePlayAudio.dataset.src;
   if (!src) return;
-  stopAllAudio();
   if (!mediaEnabled) {
-    mediaStatus.innerText = "Enable media first to play scene audio.";
+    mediaStatus.innerText = "Please enable media to play audio.";
     return;
   }
-  bgAudio.src = src;
-  bgAudio.volume = muted ? 0 : 0.36;
-  bgAudio.play().catch(() => { mediaStatus.innerText = "Browser blocked audio playback."; });
+  stopAllAudio();
+  playBg(src);
 });
 
 /* question overlay handlers */
@@ -654,42 +564,57 @@ finishSend.addEventListener("click", () => {
   });
 });
 
-/* enable media button: this is the user's explicit interaction to allow audio/video */
-enableMediaBtn.addEventListener("click", async () => {
+/* enable media: user gesture required for audio/video */
+async function enableMedia() {
+  if (mediaEnabled) return;
   mediaEnabled = true;
-  enableMediaBtn.style.display = "none";
-  // try to play small silent sound to get permission
+  // resume AudioContext if needed
   try {
-    sfxAudio.src = ANSWER_SFX_CANDIDATES[0];
-    sfxAudio.volume = muted ? 0 : 0.0001;
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+  } catch (e) {
+    // ignored
+  }
+
+  // try play a very short silent buffer or tiny sfx to get permission
+  try {
+    sfxAudio.src = ANSWER_SFX_CANDIDATES[0] || "";
+    sfxAudio.volume = 0.01;
     await sfxAudio.play().catch(()=>{});
     sfxAudio.pause();
-  } catch(e) {}
-  // try to autoplay any visible video
-  try {
-    if (gifVideo && gifVideo.src) {
-      gifVideo.play().catch(()=>{});
-    }
-    mediaStatus.innerText = "Media enabled — audio & video allowed.";
-  } catch(e){}
-});
+  } catch (e) {}
 
-/* autoplay hint button */
-autoplayPlay.addEventListener("click", () => {
-  mediaEnabled = true;
-  autoplayHint.style.display = "none";
-});
+  // play any visible gif video
+  try { if (gifVideo && gifVideo.src) gifVideo.play().catch(()=>{}); } catch(e){}
+
+  // hide overlays if present
+  if (mediaEnableOverlay) mediaEnableOverlay.style.display = "none";
+  if (autoplayHint) autoplayHint.style.display = "none";
+
+  // if current scene had bgAudio set, try to play it
+  try {
+    const current = scenes[index];
+    if (current && current.audio) { playBg(current.audio); }
+    if (bgAudio.src && !bgAudio.paused) { /* playing */ }
+  } catch (e) {}
+}
+
+/* Enable media buttons */
+enableMediaOverlayBtn.addEventListener("click", async () => { await enableMedia(); });
+enableMediaLaterBtn.addEventListener("click", () => { mediaEnableOverlay.style.display = "none"; });
+enableMediaBtn.addEventListener("click", async () => { await enableMedia(); autoplayHint.style.display = "none"; });
+
+autoplayPlay.addEventListener("click", async () => { await enableMedia(); autoplayHint.style.display = "none"; });
 
 /* mute & gif pause */
 muteBtn.addEventListener("click", () => setMute(!muted));
 gifPauseBtn.addEventListener("click", () => {
-  if (gifVideo.style.display === "block" && !gifVideo.paused) {
-    gifVideo.pause();
-    gifPauseBtn.innerText = "▶ GIF";
-  } else {
-    try { gifVideo.play().catch(()=>{}); } catch(e){}
-    gifPauseBtn.innerText = "⏸️ GIF";
-  }
+  if (gifVideo.style.display === "block" && !gifVideo.paused) { gifVideo.pause(); gifPauseBtn.innerText = "▶ GIF"; }
+  else { try { gifVideo.play().catch(()=>{}); } catch(e){} gifPauseBtn.innerText = "⏸️ GIF"; }
 });
 
 /* keyboard: Enter submits question */
@@ -697,7 +622,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && questionOverlay.style.display === "flex") submitQuestion();
 });
 
-/* ---------- Preload assets (images + audio hints) ---------- */
+/* ---------- Preload assets ---------- */
 function preloadAssets() {
   const urls = new Set();
   scenes.forEach(s => {
@@ -719,14 +644,7 @@ function init() {
   responses = {};
   setMute(false);
   loadScene();
+  // show media enable overlay initially (you can hide it if you prefer)
+  mediaEnableOverlay.style.display = "flex";
 }
 init();
-
-/* safety: if scene contains voice/long audio and user hasn't enabled media, prompt them */
-bgAudio.addEventListener("play", () => {
-  if (!mediaEnabled) {
-    autoplayHint.style.display = "block";
-  } else {
-    autoplayHint.style.display = "none";
-  }
-});
