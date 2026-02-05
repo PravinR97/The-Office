@@ -9,11 +9,11 @@
 const scenes = [
   {
     id: "intro-office",
-    title: "Another Normal Day at Dunder Mifflin",
-    text: "We laughed, we paused, we rewatched.\nThis is our little world.",
-    bg: "assets/images/office_bg1.jpg",
+    title: "Welcome to Dunder Mifflin , JAMMU BRANCH",
+    text: "I don't Know why I created this Website ..then I remembered this.....“Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.” – Michael Scott",
+    bg: "assets/images/dwight_cry_1.jpg",
     gif: "assets/gifs/jim_look.gif",
-    audio: "assets/audio/office_theme_loop.mp3",
+    audio: "assets/audio/Michael_scott_thank_you.mp3",
     quote: "Sometimes I'll start a sentence and I don't even know where it's going."
   },
   {
