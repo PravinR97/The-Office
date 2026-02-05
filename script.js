@@ -28,8 +28,8 @@ const scenes = [
     quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott"
   },
   {
-    id: "jim-knows",
-    title: "That Look",
+    id: "Jim / Devyaniiii-knows",
+    title: "That Look when I do something very wrong and Unlikable",
     text: "Remember the look Jim gave Pam? I have that look saved as my 'serious face when you laugh at my jokes' setting.",
     bg: "images/office_bg2.jpg",
     gif: "images/jim_look.gif",
