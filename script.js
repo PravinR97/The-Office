@@ -1,76 +1,55 @@
-let index = 0;
-let audio = null;
-
 const scenes = [
   {
-    title: "Cold Open",
-    text: "Remember The Office?\nWe didn’t just watch it.\nWe lived inside it.",
-    bg: "images/office1.jpg",
-    sound: "audio/michael.mp3"
+    title: "The Office Begins",
+    text: "Another normal day at Dunder Mifflin.\nOr so they think.",
+    bg: "images/office_bg1.jpg",
+    gif: "images/jim_look.gif"
   },
   {
-    title: "Kelly Moment",
-    text: "I tried being calm.\nDidn’t work.\nI missed you LOUDLY.",
-    bg: "images/office1.jpg",
-    sound: "audio/kelly.mp3"
+    title: "Jim Knows",
+    text: "That look.\nThat silence.\nThat moment.",
+    bg: "images/office_bg2.jpg",
+    gif: "images/pam_smile.gif"
   },
   {
-    title: "Jim & Pam",
-    text: "Some people don’t need drama.\nThey need consistency.\nLike us… once.",
-    bg: "images/jim_pam.jpg"
+    title: "Michael Scott Energy",
+    text: "Confidence.\nNo filter.\nNo awareness.",
+    bg: "images/office_bg3.jpg",
+    gif: "images/michael_laugh.gif"
   },
   {
-    title: "Peaky Blinders",
-    text: "You taught me loyalty before I understood it.",
-    bg: "images/peaky.jpg",
-    sound: "audio/peaky.mp3"
-  },
-  {
-    title: "Kashmir",
-    text: "Night walks.\nAuto rides.\nCold temples.\nWarm memories.",
-    bg: "images/kashmir.jpg"
-  },
-  {
-    title: "A Pause",
-    text: "Before this continues…\nThere’s something I want you to do.",
-    bg: "images/jim_pam.jpg",
-    action: "typeform"
+    title: "For You ❤️",
+    text: "Some episodes make you laugh.\nSome make you feel.\nThis one is for you.",
+    bg: "images/office_bg2.jpg",
+    gif: "images/pam_smile.gif"
   }
 ];
 
-const title = document.getElementById("title");
-const text = document.getElementById("text");
-const nextBtn = document.getElementById("nextBtn");
-const scene = document.getElementById("scene");
+let index = 0;
 
-function playSound(file) {
-  if (!file) return;
-  if (audio) audio.pause();
-  audio = new Audio(file);
-  audio.play();
-}
+const sceneDiv = document.getElementById("scene");
+const titleEl = document.getElementById("title");
+const textEl = document.getElementById("text");
+const gifEl = document.getElementById("gif");
+const btn = document.getElementById("nextBtn");
 
 function loadScene() {
-  const s = scenes[index];
-  title.innerText = s.title;
-  text.innerText = s.text;
-  scene.style.backgroundImage = `url(${s.bg})`;
-  playSound(s.sound);
+  const current = scenes[index];
 
-  if (s.action === "typeform") {
-    nextBtn.innerText = "Open Quiz";
-  } else {
-    nextBtn.innerText = "Next ▶";
-  }
+  sceneDiv.style.backgroundImage = `url(${current.bg})`;
+  titleEl.innerText = current.title;
+  textEl.innerText = current.text;
+
+  gifEl.style.display = current.gif ? "block" : "none";
+  gifEl.src = current.gif || "";
 }
 
-nextBtn.onclick = () => {
-  if (scenes[index].action === "typeform") {
-    window.open("https://form.typeform.com/to/XGOLFc3e", "_blank");
-    return;
-  }
+btn.addEventListener("click", () => {
   index++;
-  if (index < scenes.length) loadScene();
-};
+  if (index >= scenes.length) {
+    index = 0; // loop OR remove this line to stop
+  }
+  loadScene();
+});
 
 loadScene();
