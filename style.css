@@ -1,96 +1,44 @@
-* {
+body, html {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Georgia', serif;
-}
-
-html, body {
   height: 100%;
+  font-family: Georgia, serif;
 }
 
 #scene {
   height: 100vh;
-  width: 100%;
   background-size: cover;
   background-position: center;
-  transition: background-image 1s ease-in-out;
+  transition: background-image 1s ease;
 }
 
 .overlay {
   height: 100%;
-  width: 100%;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(3px);
+  background: rgba(0,0,0,0.6);
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
-  padding: 30px;
+  padding: 40px;
   text-align: center;
 }
 
 h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 2.8rem;
 }
 
 p {
-  font-size: 1.4rem;
   max-width: 700px;
-  margin-bottom: 40px;
+  font-size: 1.3rem;
   white-space: pre-line;
 }
 
-.buttons {
-  position: relative;
-  margin-top: 20px;
-}
-
 button {
-  font-size: 1.2rem;
-  padding: 15px 30px;
-  margin: 10px;
-  border: none;
+  margin-top: 30px;
+  padding: 14px 35px;
   border-radius: 30px;
+  font-size: 1.2rem;
+  background: gold;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#yesBtn {
-  background: gold;
-}
-
-#yesBtn:hover {
-  transform: scale(1.1);
-}
-
-#noBtn {
-  background: crimson;
-  color: white;
-  position: absolute;
-  left: 130px;
-}
-
-/* Start Screen */
-#startScreen {
-  position: absolute;
-  inset: 0;
-  background: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-#startScreen h1 {
-  margin-bottom: 30px;
-}
-
-#startBtn {
-  background: gold;
-  font-size: 1.5rem;
-  padding: 18px 40px;
 }
