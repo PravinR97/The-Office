@@ -1,15 +1,14 @@
 /* Updated script.js — implements your requested changes:
-   - removed Mummy & Ishaan scene, added Family scene
-   - added "Us" scene with Michael gif + relationship quote
+   - typing effect for intro, layered background images for "people waiting"
+   - custom intro flow (Continue -> "that's what she said" -> Dwight quote -> play Michael audio -> show question)
+   - Episode 2 expanded text, images and new "Diversity Day" next label
    - improved image/gif fallbacks and background load check
    - "That's what she said" SFX plays every time a question is answered
    - Katakirr misal line with joking "that's what she said" after it
    - final message includes apology + affection
+   - exported as a single script to copy into repo
 */
 
-/* Helper: filenames to try for the "that's what she said" effect.
-   The repo screenshot contains multiple similarly-named files; we attempt sensible fallbacks.
-*/
 const ANSWER_SFX_CANDIDATES = [
   "Thats_What_she_said.mp3",
   "That's_What_she_said.mp3",
@@ -17,30 +16,65 @@ const ANSWER_SFX_CANDIDATES = [
   "ThatsWhatSheSaid.mp3"
 ];
 
+/* Scenes */
 const scenes = [
   {
     id: "intro-office",
-    title: "Welcome to Dunder Mifflin — JAMMU BRANCH",
-    text: "I don't know why I made this website... then I remembered the only thing better than chaos is a little shared chaos with you.",
-    bg: "images/office_bg1.jpg",
+    title: "Welcome to Dunder Mifflin — IIM Jammu Branch",
+    // The main intro line will be typed out slowly instead of appearing instantly.
+    text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......",
+    // instead of a single background, we show multiple "people waiting" images stacked
+    people: [
+      "images/Stanley_angry_Look.jpg",
+      "images/Jim_face.jpg",
+      "images/Dwight_with_jimFace.jpg",
+      "images/Jim_as_Dwight.jpg"
+    ],
     gif: "Michael_Im_dead_Inside.gif",
-    audio: "Michael_scott_thank_you.mp3",
-    quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott"
-  },
-  {
-    id: "Jim / Devyaniiii-knows",
-    title: "That Look when I do something wrong and very Unlikable",
-    text: "Remember the look Jim gave Pam? I have that look saved as my 'serious face when you laugh at my jokes' setting.",
-    bg: "images/Jim_face_While_Onphone.jpg",
-    gif: "Stanley_gif_1.gif",
-    audio: "That's_What_she_said.mp3",
-    quote: "You miss 100% of the shots you don't take. — Michael Scott/n and  ",
+    // After the first Continue press, we will play the 'that's what she said' sfx.
+    // After that, show Dwight quote and a second button to play Michael's thank-you MP3,
+    // then show a short question (same as the one you had).
+    quote: "", // will be filled after the first interaction
+    // provide an in-scene question (mirrors the earlier question)
     question: {
       type: "short",
       key: "favorite_office_episode",
       prompt: "Which episode of The Office made you laugh the hardest?"
     }
   },
+
+  {
+    id: "Jim / Devyaniiii-knows",
+    title: "That Look when I do something wrong and very Unlikable",
+    // updated to the user's requested style: sarcastic but obviously missing them; office & peaky references + The Prestige quote
+    text: `How am I feeling? Oh, absolutely fantastic. Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% *and* definitely not thinking about you. 
+(And okay fine, maybe I'm thinking about you a little. Like the way Jim thinks when he hides a smile after Pam laughs.) 
+
+Remember that Peaky silence when the Shelbys make plans? That's the energy: dramatic, slightly terrifying, and somehow romantic. And like The Prestige says: "Are you watching closely?" — I'm watching you, in my head, replaying small stupid things you do.
+
+Also: I didn't want to write this. But... what can I do? What can I do...?`,
+    // allow multiple people images here too, some used as background
+    people: [
+      "images/kelly_1.jpg",
+      "images/Stanley_angry_Look.jpg",
+      "images/Michael_Scott_1.jpg",
+      "images/Dwight_Cry1.jpg",
+      "images/Dwight_pam_Cry.jpg"
+    ],
+    bg: "images/office_bg2.jpg",
+    gif: "Michael_Im_dead_Inside.gif",
+    audio: "shesaid.mp3", // we'll also trigger the "that's what she said" SFX when appropriate
+    quote: "Sarcastic? Always. Missing you? Always more.",
+    question: {
+      type: "short",
+      key: "how_are_you_feeling",
+      prompt: "Tell me one tiny thing from the day that made you smile (even if it was tiny)."
+    },
+    // label the next button specially for this scene
+    nextLabel: "Diversity Day"
+  },
+
+  // keep the rest of your scenes mostly as before (I've preserved them but you can edit further)
   {
     id: "michael-energy",
     title: "Michael Energy",
@@ -81,7 +115,6 @@ const scenes = [
     }
   },
 
-  // new "Us" scene to show relationship presence
   {
     id: "us",
     title: "Us",
@@ -118,8 +151,7 @@ const scenes = [
     bg: "images/vaishno_bg.jpg",
     gif: "images/temple.gif",
     audio: "punish.mp3",
-    quote: "A promise to be there for you — starting now.",
-
+    quote: "A promise to be there for you — starting now."
   },
   {
     id: "kashmir",
@@ -138,7 +170,7 @@ const scenes = [
   {
     id: "footballlllll",
     title: "Football but why , Kay garaj aahe he add karaycha faltu darr veles ",
-    text: "I love ___ ___ ___. Mi pan n kahi pan karat basto n madhech Football aanto madhech ... but you know Arsenal is 1st in league in Champions League , Premier League , Carabao Cup Final.......Very Happy year this year for me and Arsenal",
+    text: "I love ___ ___ ___. Mi pan n kahi pan karat basto n madhech Football aanto madhech ... but you know Arsenal is 1st in league in Champions League , Premier League , Carabao Cup Final.......",
     bg: "images/football_bg.jpg",
     gif: "images/football_reaction.gif",
     audio: "goal_cheer.mp3",
@@ -151,16 +183,15 @@ const scenes = [
     }
   },
 
-  // Katakirr misal scene (funny, personal)
   {
     id: "katakirr",
     title: "Katakirr Misal (the truth)",
     text: "I haven't eaten Katakirr misal in a long time — the places I went with you mean more than the food. I will never go alone or with anyone else. (laugh)",
     bg: "images/misal_bg.jpg",
     gif: "images/misal_giggle.gif",
-    audio: "shesaid.mp3", // We'll also trigger the answer SFX after this line
-    quote: "And to be clear: I will not go alone — that's my promise.",
-    // no question here, but we will play That's-what-she-said SFX once this scene shows
+    // keep audio but we will also trigger the answer SFX after this line
+    audio: "shesaid.mp3",
+    quote: "And to be clear: I will not go alone — that's my promise."
   },
 
   {
@@ -186,9 +217,11 @@ const scenes = [
 
 let index = 0;
 const responses = {}; // collected answers
+const sceneState = {}; // per-scene ephemeral state (for multi-step scenes like intro)
 
 // DOM elements
 const sceneDiv = document.getElementById("scene");
+const peopleBg = document.getElementById("peopleBg");
 const titleEl = document.getElementById("title");
 const textEl = document.getElementById("text");
 const gifEl = document.getElementById("gif");
@@ -204,7 +237,7 @@ const finishMessage = document.getElementById("finishMessage");
 const autoplayHint = document.getElementById("autoplayHint");
 const startAudioBtn = document.getElementById("startAudioBtn");
 
-/* Preload and check background before applying (so broken backgrounds don't produce blank white) */
+/* Helpers: set background (single) */
 function setBackground(url) {
   if (!url) {
     sceneDiv.style.backgroundImage = "";
@@ -215,13 +248,35 @@ function setBackground(url) {
     sceneDiv.style.backgroundImage = `url("${url}")`;
   };
   test.onerror = () => {
-    // fallback gradient if bg couldn't load
     sceneDiv.style.backgroundImage = `linear-gradient(135deg,#333,#111)`;
   };
   test.src = url;
 }
 
-/* Gif fallback: hide gif if not loaded and expand quote area */
+/* Render layered people images (stacked) */
+function renderPeople(people = []) {
+  peopleBg.innerHTML = "";
+  if (!people || people.length === 0) {
+    peopleBg.style.display = "none";
+    return;
+  }
+  peopleBg.style.display = "block";
+  // show up to 4 images in a stacked row, last image on top
+  people.slice(0, 4).forEach((src, i) => {
+    const img = document.createElement("img");
+    img.className = "person";
+    img.src = src;
+    img.alt = "";
+    // stagger offsets for the stacked look
+    img.style.zIndex = 10 + i;
+    img.style.left = `${5 + i * 8}%`;
+    img.style.bottom = `${-6 + i * 3}%`;
+    img.addEventListener("error", () => img.style.display = "none");
+    peopleBg.appendChild(img);
+  });
+}
+
+/* Gif fallback: hide gif if not loaded */
 gifEl.addEventListener("error", () => {
   gifEl.style.display = "none";
 });
@@ -266,9 +321,7 @@ if (startAudioBtn) {
 
 /* Attempt to play the "that's what she said" SFX from multiple possible filenames */
 function playAnswerSfx() {
-  // create an ephemeral audio element to play SFX without affecting scene audio
   const sfx = new Audio();
-  // try candidates in sequence until one loads and plays
   let tried = 0;
   function tryNext() {
     if (tried >= ANSWER_SFX_CANDIDATES.length) return;
@@ -278,12 +331,27 @@ function playAnswerSfx() {
     const p = sfx.play();
     if (p !== undefined) {
       p.catch(() => {
-        // try another candidate
         tryNext();
       });
     }
   }
   tryNext();
+}
+
+/* typing effect helper: types text into an element */
+function typeText(element, text, speed = 40, cb) {
+  element.innerText = "";
+  let i = 0;
+  function step() {
+    if (i <= text.length) {
+      element.innerText = text.slice(0, i);
+      i++;
+      setTimeout(step, speed + Math.random() * 30);
+    } else {
+      if (cb) cb();
+    }
+  }
+  step();
 }
 
 /* show question overlay */
@@ -303,7 +371,6 @@ function showQuestion(q) {
       b.className = "mcqBtn";
       b.innerText = c;
       b.addEventListener("click", () => {
-        // play the cheeky SFX when she answers
         playAnswerSfx();
         responses[q.key] = c;
         hideQuestion();
@@ -360,15 +427,41 @@ function showFinal() {
 /* Load a scene: background, text, gif, audio, and question handling */
 function loadScene() {
   const current = scenes[index];
+  if (!current) return;
+
+  // clear people bg unless scene provides people array
+  renderPeople(current.people || []);
+
   setBackground(current.bg || "");
   titleEl.innerText = current.title || "";
+
+  // For intro: use typing on the main text and a staged flow
+  if (current.id === "intro-office") {
+    // typing effect
+    typeText(textEl, current.text || "", 45, () => {
+      // after typing completes, make sure button shows "Continue"
+      btn.innerText = "Continue";
+      btn.disabled = false;
+      quoteEl.innerText = "";
+      gifEl.style.display = "block";
+      gifEl.src = current.gif || "";
+      // initialize intro scene state
+      sceneState.introStep = sceneState.introStep || 0;
+    });
+    // hide question overlay until later step in intro flow
+    hideQuestion();
+    // do not auto-play intro audio here (we'll play SFX and michael clip as per flow)
+    playAudio("");
+    return;
+  }
+
+  // Non-intro scenes:
   textEl.innerText = current.text || "";
   quoteEl.innerText = current.quote || "";
 
   if (current.gif) {
     gifEl.style.display = "block";
     gifEl.src = current.gif;
-    // if GIF fails, onerror hides gif (see listener above)
   } else {
     gifEl.style.display = "none";
     gifEl.src = "";
@@ -376,9 +469,8 @@ function loadScene() {
 
   playAudio(current.audio || "");
 
-  // if this is the katakirr scene, after showing text, play the cheeky SFX
+  // Katakirr: short delay and then cheeky sfx
   if (current.id === "katakirr") {
-    // play the "that's what she said" after a short delay to match the joke
     setTimeout(() => {
       playAnswerSfx();
     }, 1000);
@@ -392,7 +484,8 @@ function loadScene() {
     hideQuestion();
   }
 
-  btn.innerText = current.final ? "FINISH" : "NEXT";
+  btn.innerText = current.nextLabel || (current.final ? "FINISH" : "NEXT");
+  btn.disabled = false;
 }
 
 /* Advance to next scene */
@@ -405,32 +498,89 @@ function nextScene() {
   loadScene();
 }
 
-/* Next button behavior: handle short answer submission + final */
+/* Next button behavior: handle short answer submission + final + special intro flow */
 btn.addEventListener("click", () => {
   const current = scenes[index];
-  // If current scene had a short-answer question visible, collect answer
-  if (current.question && current.question.type === "short" && questionOverlay.style.display === "flex") {
+
+  // Special multi-step intro flow
+  if (current && current.id === "intro-office") {
+    sceneState.introStep = sceneState.introStep || 0;
+
+    // Step 0: first Continue pressed -> play that's what she said sfx, then show Dwight quote, change button label
+    if (sceneState.introStep === 0) {
+      btn.disabled = true;
+      playAnswerSfx(); // That's what she said on pressing Continue
+      // small dramatic pause then set Dwight quote
+      setTimeout(() => {
+        quoteEl.innerText = `Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing. — Dwight Schrute`;
+        btn.innerText = "You wanna listen ...that's what she said";
+        btn.disabled = false;
+        sceneState.introStep = 1;
+      }, 800);
+      return;
+    }
+
+    // Step 1: user pressed the "you wanna listen..." -> play Michael_scott_thank_you.mp3, then show question & change button label
+    if (sceneState.introStep === 1) {
+      btn.disabled = true;
+      // play Michael clip as requested
+      playAudio("Michael_scott_thank_you.mp3");
+      // after a short while, show the question overlay and set button to the requested "let's gooooooo"
+      setTimeout(() => {
+        // show the question that is stored in the scene
+        if (current.question) {
+          showQuestion(current.question);
+        }
+        btn.innerText = "let's gooooooo";
+        btn.disabled = false;
+        sceneState.introStep = 2;
+      }, 1200);
+      return;
+    }
+
+    // Step 2: if question overlay is visible, clicking NEXT should collect short answer (if any) or move forward
+    if (sceneState.introStep === 2) {
+      if (current.question && current.question.type === "short" && questionOverlay.style.display === "flex") {
+        const val = questionInput.value.trim();
+        if (val && val.toLowerCase() !== "skip") {
+          playAnswerSfx();
+          responses[current.question.key] = val;
+        }
+        hideQuestion();
+        // move to next scene
+        nextScene();
+        return;
+      } else {
+        // if overlay is not visible, just move on
+        nextScene();
+        return;
+      }
+    }
+  }
+
+  // General case: If current scene had a short-answer question visible, collect answer
+  if (current && current.question && current.question.type === "short" && questionOverlay.style.display === "flex") {
     const val = questionInput.value.trim();
     if (val && val.toLowerCase() !== "skip") {
-      // play cheeky sfx when she answers
       playAnswerSfx();
       responses[current.question.key] = val;
       hideQuestion();
       nextScene();
       return;
     } else {
-      // allow skip or empty, move forward
       hideQuestion();
       nextScene();
       return;
     }
   }
 
-  if (current.final) {
+  // final button
+  if (current && current.final) {
     showFinal();
     return;
   }
 
+  // default advance
   nextScene();
 });
 
@@ -450,10 +600,16 @@ function preloadAssets() {
   scenes.forEach(s => {
     if (s.bg) { const i = new Image(); i.src = s.bg; }
     if (s.gif) { const g = new Image(); g.src = s.gif; }
+    // preload people images if provided
+    if (s.people && Array.isArray(s.people)) {
+      s.people.forEach(p => { const pi = new Image(); pi.src = p; });
+    }
     if (s.audio) {
       try { const a = new Audio(); a.src = s.audio; } catch(e) {}
     }
   });
 }
 preloadAssets();
+
+/* start on load */
 loadScene();
