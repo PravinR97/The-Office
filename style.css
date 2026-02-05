@@ -1,4 +1,4 @@
-/* style.css - updated to ensure thumbnails, media and overlays display well */
+/* style.css - updated UI including media-enable overlay and improved thumbnail handling */
 
 /* Basic reset & fonts */
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,10 +53,14 @@ html,body,#app { height: 100%; font-family: Inter, system-ui, -apple-system, "Se
 /* final message */
 .finalText { white-space:pre-wrap; background:linear-gradient(180deg,#0d0d10,#071018); padding:12px; border-radius:8px; color:#ffeedd; max-height:60vh; overflow:auto; }
 
+/* media-enable overlay special */
+.media-enable .overlayCard { text-align:center; max-width:720px; }
+.media-enable p { color:#ddd; margin-top:8px; }
+
 /* autoplay hint */
 .hint { position:fixed; right:18px; bottom:18px; background:#111; border:1px solid rgba(255,255,255,0.06); padding:12px; border-radius:8px; z-index:200; }
 
-/* media status */
+/* media status text */
 .media-status { color:#ffd; font-size:0.9rem; margin-left:8px; }
 
 /* responsive */
