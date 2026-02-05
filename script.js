@@ -66,7 +66,6 @@ const scenes = [
     }
   },
 
-  // REPLACED mummy-ishaan with a family-themed scene
   {
     id: "family-ties",
     title: "Family Holds Together",
@@ -101,7 +100,7 @@ const scenes = [
   {
     id: "himachal-dream",
     title: "Himachal Dreams",
-    text: "You said you'd leave everything and live in Himachal. I think I could follow you anywhere — but only if there's good tea.",
+    text: "what I thought of when You said you'd leave everything and live in Himachal (Sound). I think I could follow you anywhere — but only if there's good Zamindar Dhaba Nearby and Burger King.",
     bg: "images/himachal_bg.jpg",
     gif: "images/trek.gif",
     audio: "nogod.mp3",
@@ -114,17 +113,13 @@ const scenes = [
   },
   {
     id: "vaishno-devi",
-    title: "Vaishno Devi",
-    text: "You went three times. I wish I had gone with you.",
+    title: "Whenver the Topic Vaishno Devi come....I know what you think of me ",
+    text: "I am so sorrryyyyyyyyyy for thatttttttt",
     bg: "images/vaishno_bg.jpg",
     gif: "images/temple.gif",
     audio: "punish.mp3",
     quote: "A promise to be there for you — starting now.",
-    question: {
-      type: "short",
-      key: "vaishno_memory",
-      prompt: "What do you remember about your favourite trip to Vaishno Devi?"
-    }
+
   },
   {
     id: "kashmir",
@@ -141,9 +136,9 @@ const scenes = [
     }
   },
   {
-    id: "football-tease",
-    title: "Football Tease",
-    text: "I love Arsenal, Barca and Messi. You pretend not to care — but you smile when I shout at the TV.",
+    id: "footballlllll",
+    title: "Football but why , Kay garaj aahe he add karaycha faltu darr veles ",
+    text: "I love ___ ___ ___. Mi pan n kahi pan karat basto n madhech Football aanto madhech ... but you know Arsenal is 1st in league in Champions League , Premier League , Carabao Cup Final.......Very Happy year this year for me and Arsenal",
     bg: "images/football_bg.jpg",
     gif: "images/football_reaction.gif",
     audio: "goal_cheer.mp3",
@@ -151,8 +146,8 @@ const scenes = [
     question: {
       type: "mcq",
       key: "football_interest",
-      prompt: "Are you Team Arsenal, Team Barca, or 'I just enjoy snacks'?",
-      choices: ["Arsenal", "Barcelona", "Snacks > Football", "Messi is magic"]
+      prompt: "Are you Team Arsenal, Team Barca, or 'I just don't give fuck about you and your football'?",
+      choices: ["Arsenal", "Barcelona", "Snacks > Football", "fuck it"]
     }
   },
 
