@@ -1,61 +1,65 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Office — A Silly Surprise</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Optional: include canvas-confetti CDN in index.html if you want confetti -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script> -->
+  <title>The (IIM Jammu) Office — For You</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main id="scene" class="scene">
-    <div class="overlay">
-      <h1 id="title">Welcome</h1>
-      <p id="text" class="lead">Loading...</p>
+    <!-- layered people background container (for intro & other scenes that provide multiple images) -->
+    <div id="peopleBg" class="people-bg" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <h1 id="title" class="title"></h1>
+    </header>
+
+    <section class="scene-body">
+      <div id="text" class="text"></div>
 
       <div class="media-row">
-        <img id="gif" class="scene-gif" alt="scene gif" />
-        <div class="quote-box">
-          <p id="quote"></p>
-        </div>
+        <img id="gif" class="gif" src="" alt="" />
       </div>
 
-      <div class="controls">
-        <button id="nextBtn" class="btn">NEXT</button>
+      <div id="quote" class="quote"></div>
+
+      <div id="controls" class="controls">
+        <button id="nextBtn" class="btn">Continue</button>
+      </div>
+    </section>
+
+    <!-- audio for scene music/background (autoplay handling) -->
+    <audio id="sceneAudio" preload="auto"></audio>
+
+    <!-- autoplay hint / start button for mobile browsers -->
+    <div id="autoplayHint" class="autoplay-hint" style="display:none;">
+      <p>Tap to enable sound</p>
+      <button id="startAudioBtn" class="btn small">Start audio</button>
+    </div>
+
+    <!-- question overlay (short / mcq) -->
+    <div id="questionOverlay" class="overlay" style="display:none;">
+      <div class="overlay-card">
+        <button id="questionClose" class="close">×</button>
+        <p id="questionPrompt" class="question-prompt"></p>
+        <input id="questionInput" class="text-input" placeholder="Type your answer..." />
+        <div id="mcqContainer" class="mcq-container"></div>
+      </div>
+    </div>
+
+    <!-- final message overlay -->
+    <div id="finishOverlay" class="overlay" style="display:none;">
+      <div class="overlay-card">
+        <button id="finishClose" class="close">×</button>
+        <pre id="finishMessage" class="finish-message"></pre>
+        <div class="finish-actions">
+          <button id="finishSend" class="btn">Copy message</button>
+        </div>
       </div>
     </div>
   </main>
-
-  <!-- Hidden audio element used by script -->
-  <audio id="sceneAudio" preload="auto"></audio>
-
-  <!-- Question overlay -->
-  <div id="questionOverlay" class="overlay-panel" style="display:none">
-    <div class="panel animate-in">
-      <button id="questionClose" class="close">&times;</button>
-      <h3 id="questionPrompt">Question</h3>
-      <input id="questionInput" type="text" placeholder="Type your answer..." />
-      <div id="mcqContainer" class="mcq"></div>
-    </div>
-  </div>
-
-  <!-- Final overlay -->
-  <div id="finishOverlay" class="overlay-panel" style="display:none">
-    <div class="panel final">
-      <button id="finishClose" class="close">&times;</button>
-      <h2>Final Message</h2>
-      <pre id="finishMessage" class="final-text"></pre>
-      <div class="final-actions">
-        <button id="finishSend" class="btn">Copy message</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Small visible control to start audio if autoplay blocked -->
-  <div id="autoplayHint" class="autoplay-hint" style="display:none">
-    <button id="startAudioBtn" class="btn small">Tap to play audio</button>
-  </div>
 
   <script src="script.js"></script>
 </body>
