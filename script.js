@@ -1,143 +1,110 @@
-/* script.js
-   - Scenes: Intro, Episode 2 (That Look), Episode 3 (Fights: MBA chaiwala, Maggie, Kashmir), Final
-   - GIF fallback handling (video/static), corner thumbnails, single bg audio, sfx audio, no overlaps
-   - Typing effect, question overlays, and safe autoplay handling
+/* script.js (updated)
+   - Better media enable flow (user must click "Enable media")
+   - Reliable GIF/Video handling with fallbacks
+   - Audio play attempts only after user enables media
+   - Stops overlapping audio
+   - More episodes added that include personal photos + Office stills
 */
 
-/* ---------- Configuration & assets ---------- */
 const ANSWER_SFX_CANDIDATES = [
-  "images/That's_what_she_said.mp3",
-  "images/Thats_What_she_said.mp3",
-  "images/shesaid.mp3",
+  "audio/Thats_What_she_said.mp3",
   "audio/ThatsWhatSheSaid.mp3",
+  "audio/shesaid.mp3",
+  "images/That's_what_she_said.mp3",
+  "images/shesaid.mp3"
 ];
 
+let mediaEnabled = false;
+let muted = false;
+
+/* Scenes: added 4 more episodes as requested */
 const scenes = [
-  // Intro
   {
     id: "intro",
-    title: "Welcome to Dunder Mifflin — IIM Jammu Branch",
+    title: "Welcome — I made this for you",
     text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you — tiny memories, big apologies, and a million 'that's what she said' moments.",
     bg: "images/The_office_image.jpg",
     gif: "images/Michael_Im_dead_Inside.gif",
     people: ["images/jim_1.jpg", "images/kelly_1.jpg"],
-    thumbs: {
-      tl: "images/devvvvv_5.jpg",
-      tr: "images/devuuu_5.jpg",
-      bl: "images/Devvvvv_2.jpg",
-      br: "images/ddddduuuu_3.jpg"
-    },
+    thumbs: { tl: "images/devvvvv_5.jpg", tr: "images/devuuu_5.jpg", bl: "images/Devuuu_2.jpg", br: "images/ddddduuuu_3.jpg" },
     quote: "Would I rather be feared or loved? Easy. Both. — Michael Scott",
-    question: {
-      type: "short",
-      key: "favorite_office_episode",
-      prompt: "Which episode of The Office made you laugh the hardest?"
-    }
+    question: { type: "short", key: "favorite_office_episode", prompt: "Which episode of The Office made you laugh the hardest?" }
   },
 
-  // Episode 2 - That Look / Missing you
   {
     id: "that-look",
     title: "That Look — Missing You",
-    text:
-`How am I feeling? Oh, absolutely fantastic. Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% and definitely not thinking about you.
-(And okay fine, maybe I'm thinking about you a little. Like the way Jim hides a smile after Pam laughs.)
-
-Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
-
-Tell me one tiny thing from the day that made you smile (even if it was tiny).`,
+    text: `How am I feeling? Oh, absolutely fantastic. Like unbelievably fine — but maybe thinking about you a little.
+Tell me one tiny thing from the day that made you smile.`,
     bg: "images/office_bg2.jpg",
     gif: "images/Michael_Dance_2.gif",
     people: ["images/kelly_1.jpg", "images/Michael_1.jpg", "images/pam_1.jpg"],
-    thumbs: {
-      tl: "images/devvvvv_5.jpg",
-      tr: "images/Devuuu_2.jpg",
-      bl: "images/ddddduuuu_3.jpg",
-      br: "images/Devu1.jpg"
-    },
+    thumbs: { tl: "images/devvvvv_5.jpg", tr: "images/Devuuu_2.jpg", bl: "images/ddddduuuu_3.jpg", br: "images/Devu1.jpg" },
     quote: "Sarcastic? Always. Missing you? Always more.",
-    question: {
-      type: "short",
-      key: "how_are_you_feeling_today",
-      prompt: "Tell me one tiny thing from the day that made you smile (even if tiny)."
-    }
+    question: { type: "short", key: "how_are_you_feeling_today", prompt: "Tell me one tiny thing from the day that made you smile (even if tiny)." }
   },
 
-  // Episode 3 - Fights (3 micro-scenes inside)
   {
-    id: "fights",
-    title: "Episode 3 — Fights & Sorry",
-    // we'll show sections in order with their own images/quotes; text here is an intro
-    text: "This part is important. I want to say sorry for three moments I regret. I'll walk through each memory and ask one small question.",
-    bg: "images/whole_1.jpg",
-    gif: "images/heart_fireworks.gif",
-    people: ["images/dwight_1.jpg", "images/jim_1.jpg"],
-    thumbs: {
-      tl: "images/devvvvv_5.jpg",
-      tr: "images/Devuuu_2.jpg",
-      bl: "images/ddddduuuu_3.jpg",
-      br: "images/Devu1.jpg"
-    },
-    quote: "I wish there was a way to know you’re in the good old days before you’ve actually left them. — Andy (for the vibe)",
-    fights: [
-      {
-        id: "mba-chaiwala",
-        title: "MBA Chaiwala — I was wrong",
-        text: `At MBA chaiwala — toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na.`,
-        bg: "images/office_bg2.jpg",
-        people: ["images/dwight_cry_1.jpg", "images/Michael_Crying.jpg"],
-        gif: "images/Dwight_let's_do_this.gif",
-        quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott",
-        thumbs: {
-          tl: "images/devvvvv_5.jpg",
-          br: "images/ddddduuuu_3.jpg"
-        },
-        question: {
-          type: "short",
-          key: "mba_chaiwala_fix",
-          prompt: "What one small thing could I do to make this right?"
-        }
-      },
-      {
-        id: "maggie-place",
-        title: "Fight at Maggie's place",
-        text: `Fight at Maggie's place... I am very sorry for thattttttt. I know even Kashavar we fought and it hurt. I didn't mean to make things messy. Maaf kar, I love you.`,
-        bg: "images/Devuuu_2.jpg",
-        people: ["images/pam_1.jpg", "images/jim_1.jpg"],
-        gif: "images/Michael_Dance_2.gif",
-        quote: `I am running away from my responsibilities. And it feels good. — (but not this time)`,
-        thumbs: {
-          tl: "images/devvvvv_5.jpg",
-          br: "images/Devu1.jpg"
-        },
-        question: {
-          type: "short",
-          key: "maggie_place_fix",
-          prompt: "What helped you calm down that day?"
-        }
-      },
-      {
-        id: "kashmir-fight",
-        title: "Kashmir — Night was magic, morning I ruined it",
-        text: `That night in Kashmir was magic. The morning turned bad because of me. I am so sorry — my mistake and my regrets. Sorrrrryyyyyyy.\nI will never forget the stars. Let me fix this memory for us.`,
-        bg: "images/Devu1.jpg",
-        people: ["images/michael_1.jpg"],
-        gif: "images/heart_fireworks.gif",
-        quote: "I wish there was a way to know you’re in the good old days before you’ve actually left them.",
-        thumbs: {
-          tl: "images/devvvvv_5.jpg",
-          br: "images/ddddddd_1.jpg"
-        },
-        question: {
-          type: "short",
-          key: "kashmir_fix",
-          prompt: "If I could change one thing from that trip, what should I do first?"
-        }
-      }
-    ]
+    id: "coffee-date",
+    title: "Coffee Date (MBA chaiwala)",
+    text: `MBA chaiwala — I was wrong. Toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nI'm sorry for that moment.`,
+    bg: "images/Devuuu_2.jpg",
+    gif: "images/dwight_smile.gif",
+    people: ["images/dwight_1.jpg","images/michael_1.jpg"],
+    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
+    quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott",
+    question: { type: "short", key: "mba_chaiwala_fix", prompt: "What one small thing could I do to make this right?" },
+    audio: "audio/soft_piano_loop.mp3"
   },
 
-  // Final
+  {
+    id: "maggie-concert",
+    title: "Concert Night (Maggie's place)",
+    text: `At Maggie's place we had our moment. I am very sorry for that. I never wanted to hurt you.`,
+    bg: "images/devvvvv_5.jpg",
+    gif: "images/Michael_Dance_2.gif",
+    people: ["images/pam_1.jpg","images/jim_1.jpg"],
+    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/Devu1.jpg" },
+    quote: "I am running away from my responsibilities. And it feels good. — (not this time)",
+    question: { type: "short", key: "maggie_place_fix", prompt: "What helped you calm down that day?" },
+    audio: "audio/soft_guitar_loop.mp3"
+  },
+
+  {
+    id: "kashmir-night",
+    title: "Kashmir — Night & Morning",
+    text: `The night in Kashmir was magic. The morning I ruined it and I'm sorry.\nI will do better. I will make it right.`,
+    bg: "images/Devu1.jpg",
+    gif: "images/heart_fireworks.gif",
+    people: ["images/michael_1.jpg"],
+    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddddd_1.jpg" },
+    quote: "I wish there was a way to know you’re in the good old days before you’ve actually left them.",
+    question: { type: "short", key: "kashmir_fix", prompt: "If I could change one thing from that trip, what should I do first?" },
+    audio: "audio/ambient_strings.mp3"
+  },
+
+  {
+    id: "football-banter",
+    title: "Football Banter",
+    text: `You and football — I tease, you roll your eyes, we both laugh. Which team are you secretly cheering for?`,
+    bg: "images/football_bg.jpg",
+    gif: "images/goal_cheer.gif",
+    people: ["images/whole_1.jpg"],
+    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
+    question: { type: "mcq", key: "football_interest", prompt: "Who would you pick?", choices: ["Arsenal","Barcelona","Snacks > Football","I don't care"] }
+  },
+
+  {
+    id: "katakirr-misal",
+    title: "Katakirr Misal — The Truth",
+    text: `I haven't eaten Katakirr misal in a long time — the places I went with you mean more than the food. I will never go alone or with anyone else.`,
+    bg: "images/misal_bg.jpg",
+    gif: "images/misal_giggle.gif",
+    people: ["images/dwight_1.jpg"],
+    thumbs: { tl: "images/devvvvv_5.jpg", br: "images/ddddduuuu_3.jpg" },
+    quote: "And to be clear: I will not go alone — that's my promise.",
+  },
+
   {
     id: "final",
     title: "To You — A Little Quiz, A Lot of Love",
@@ -148,13 +115,11 @@ Tell me one tiny thing from the day that made you smile (even if it was tiny).`,
   }
 ];
 
-/* ---------- State ---------- */
+/* ---------- State & DOM ---------- */
 let index = 0;
 let responses = {};
-let sceneState = {}; // for multi-step flows (intro, fights)
-let fightsIndex = 0; // for internal fights iteration
+const sceneState = {};
 
-/* ---------- DOM ---------- */
 const sceneEl = document.getElementById("scene");
 const titleEl = document.getElementById("title");
 const sceneTitle = document.getElementById("sceneTitle");
@@ -164,6 +129,8 @@ const gifImg = document.getElementById("gifImg");
 const gifVideo = document.getElementById("gifVideo");
 const peopleBg = document.getElementById("peopleBg");
 const nextBtn = document.getElementById("nextBtn");
+const scenePlayAudio = document.getElementById("scenePlayAudio");
+const mediaStatus = document.getElementById("mediaStatus");
 
 const thumbTL = document.getElementById("thumb-top-left");
 const thumbTR = document.getElementById("thumb-top-right");
@@ -184,26 +151,26 @@ const finishMessage = document.getElementById("finishMessage");
 const finishClose = document.getElementById("finishClose");
 const finishSend = document.getElementById("finishSend");
 
-/* audio elements */
+const enableMediaBtn = document.getElementById("enableMediaBtn");
+const autoplayHint = document.getElementById("autoplayHint");
+const autoplayPlay = document.getElementById("autoplayPlay");
+
 const bgAudio = document.getElementById("bgAudio");
 const sfxAudio = document.getElementById("sfxAudio");
 const voiceAudio = document.getElementById("voiceAudio");
 
-/* control buttons */
 const muteBtn = document.getElementById("muteBtn");
 const gifPauseBtn = document.getElementById("gifPauseBtn");
-const playAudioBtn = document.getElementById("playAudioBtn");
-const autoplayHint = document.getElementById("autoplayHint");
-const autoplayPlay = document.getElementById("autoplayPlay");
 
 /* ---------- Helpers ---------- */
+
+function safeLog(...args) { try { console.log(...args); } catch(e) {} }
 
 function setBackground(url) {
   if (!url) {
     sceneEl.style.backgroundImage = "";
     return;
   }
-  // use cover background; try preload and fallback
   const img = new Image();
   img.onload = () => {
     sceneEl.style.backgroundImage = `url("${url}")`;
@@ -211,7 +178,7 @@ function setBackground(url) {
     sceneEl.style.backgroundPosition = "center";
   };
   img.onerror = () => {
-    sceneEl.style.backgroundImage = `linear-gradient(135deg,#222,#0b0b0b)`;
+    sceneEl.style.backgroundImage = `linear-gradient(135deg,#222,#111)`;
   };
   img.src = url;
 }
@@ -231,7 +198,6 @@ function renderPeople(list = []) {
 }
 
 function setCornerThumbs(obj = {}) {
-  // show/hide and set srcs; if missing, hide
   const mapping = [
     [thumbTL, obj.tl],
     [thumbTR, obj.tr],
@@ -250,78 +216,132 @@ function setCornerThumbs(obj = {}) {
   });
 }
 
-/* GIF / video handling: prefer img gif, if not available and there's a .mp4 variant, use video.
-   We'll accept either a gif path, or provide an optional video property on scene.
+/* showMedia: prefer video (mp4/webm) if available, otherwise show gif image.
+   We attempt to test video by setting src and listening for loadedmetadata/onerror.
 */
 function showMedia(gifPath, videoPath, fallbackImage) {
-  // hide both first
   gifImg.style.display = "none";
   gifVideo.style.display = "none";
   gifVideo.pause();
   gifVideo.removeAttribute("src");
 
-  if (!gifPath && !videoPath && !fallbackImage) return;
-
-  if (gifPath) {
-    const test = new Image();
-    test.onload = () => {
-      gifImg.src = gifPath;
-      gifImg.style.display = "block";
-      gifImg.alt = "";
+  const tryVideo = (path) => new Promise((resolve, reject) => {
+    if (!path) return reject();
+    // Create temporary video to test
+    const testVideo = document.createElement("video");
+    testVideo.src = path;
+    testVideo.preload = "metadata";
+    testVideo.muted = true;
+    const ok = () => {
+      testVideo.removeEventListener("loadedmetadata", ok);
+      testVideo.removeEventListener("error", fail);
+      resolve(path);
     };
-    test.onerror = () => {
-      // try video fallback
-      if (videoPath) {
-        gifVideo.src = videoPath;
+    const fail = () => {
+      testVideo.removeEventListener("loadedmetadata", ok);
+      testVideo.removeEventListener("error", fail);
+      reject();
+    };
+    testVideo.addEventListener("loadedmetadata", ok);
+    testVideo.addEventListener("error", fail);
+    // try load
+    testVideo.load();
+  });
+
+  // try explicit videoPath first, else try replacing .gif -> .mp4/.webm
+  const candidates = [];
+  if (videoPath) candidates.push(videoPath);
+  if (gifPath) {
+    candidates.push(gifPath.replace(/\.gif$/i, ".mp4"));
+    candidates.push(gifPath.replace(/\.gif$/i, ".webm"));
+  }
+
+  // attempt videos in order; if none, fallback to img gif or fallbackImage
+  (async () => {
+    for (const c of candidates) {
+      try {
+        await tryVideo(c);
+        gifVideo.src = c;
         gifVideo.style.display = "block";
-        gifVideo.play().catch(()=>{});
-      } else if (fallbackImage) {
+        if (mediaEnabled) {
+          gifVideo.play().catch(()=>{});
+        }
+        return;
+      } catch (e) {
+        continue;
+      }
+    }
+    // no video candidate worked — try gif image
+    if (gifPath) {
+      const test = new Image();
+      test.onload = () => {
+        gifImg.src = gifPath;
+        gifImg.style.display = "block";
+      };
+      test.onerror = () => {
+        if (fallbackImage) {
+          gifImg.src = fallbackImage;
+          gifImg.style.display = "block";
+        } else {
+          gifImg.style.display = "none";
+        }
+      };
+      test.src = gifPath;
+      return;
+    }
+    // fallback image only
+    if (fallbackImage) {
+      const test = new Image();
+      test.onload = () => {
         gifImg.src = fallbackImage;
         gifImg.style.display = "block";
-      } else {
-        gifImg.style.display = "none";
-      }
-    };
-    test.src = gifPath;
-    return;
-  }
-
-  // if gif not provided but video present
-  if (videoPath) {
-    gifVideo.src = videoPath;
-    gifVideo.style.display = "block";
-    gifVideo.play().catch(()=>{});
-    return;
-  }
-
-  if (fallbackImage) {
-    gifImg.src = fallbackImage;
-    gifImg.style.display = "block";
-  }
+      };
+      test.onerror = () => gifImg.style.display = "none";
+      test.src = fallbackImage;
+    }
+  })();
 }
 
-/* Audio safety: single bgAudio for ambience/long clips, sfxAudio for short sounds; voiceAudio for voice clips.
-   Always stop background audio before playing a non-looping voice clip unless voice is short.
-*/
-function playBg(src, { fade = false } = {}) {
+/* audio helpers */
+function stopAllAudio() {
+  try { bgAudio.pause(); bgAudio.currentTime = 0; } catch(e) {}
+  try { voiceAudio.pause(); voiceAudio.currentTime = 0; } catch(e) {}
+  try { sfxAudio.pause(); sfxAudio.currentTime = 0; } catch(e) {}
+}
+
+function setMute(v) {
+  muted = v;
+  bgAudio.muted = v;
+  sfxAudio.muted = v;
+  voiceAudio.muted = v;
+  muteBtn.innerText = v ? "🔇" : "🔈";
+}
+
+function playBg(src) {
   if (!src) {
     fadeOut(bgAudio);
     return;
   }
+  if (!mediaEnabled) {
+    mediaStatus.innerText = "Scene audio ready; tap Enable media to play.";
+    return;
+  }
   if (bgAudio.src && bgAudio.src.includes(src)) {
-    // already playing
+    // already loaded
+    try { bgAudio.play().catch(()=>{}); } catch(e){}
     return;
   }
   fadeOut(bgAudio, 200);
   bgAudio.src = src;
   bgAudio.volume = muted ? 0 : 0.36;
-  const p = bgAudio.play();
-  if (p !== undefined) p.catch(() => showAutoplayHint());
+  bgAudio.play().catch(() => {
+    mediaStatus.innerText = "Browser blocked autoplay; press Enable media.";
+  });
 }
 
 function fadeOut(audioEl, ms = 300) {
   try {
-    if (!audioEl.src || audioEl.paused) return audioEl.pause();
+    if (!audioEl.src || audioEl.paused) { audioEl.pause(); return; }
     const start = audioEl.volume;
     const step = 50;
     const steps = Math.max(1, Math.floor(ms / step));
@@ -340,40 +360,24 @@ function fadeOut(audioEl, ms = 300) {
   }
 }
 
-function stopAllAudio() {
-  try { bgAudio.pause(); } catch (e) {}
-  try { sfxAudio.pause(); } catch (e) {}
-  try { voiceAudio.pause(); } catch (e) {}
-}
-
-let muted = false;
-function setMute(v) {
-  muted = v;
-  bgAudio.muted = v;
-  sfxAudio.muted = v;
-  voiceAudio.muted = v;
-  muteBtn.innerText = v ? "🔇" : "🔈";
-}
-
-/* Play SFX robustly by trying candidate filenames */
+/* Play SFX robustly from candidate paths */
 function playSfxCandidates() {
   let idx = 0;
   const sfx = sfxAudio;
-  function tryOne() {
+  function tryNext() {
     if (idx >= ANSWER_SFX_CANDIDATES.length) return;
     const candidate = ANSWER_SFX_CANDIDATES[idx++];
     sfx.src = candidate;
-    sfx.currentTime = 0;
-    sfx.volume = muted ? 0 : 0.9;
-    const p = sfx.play();
-    if (p !== undefined) {
-      p.then(() => {}).catch(() => {
-        // try next after short delay
-        setTimeout(tryOne, 200);
-      });
-    }
+    sfx.volume = muted ? 0 : 0.95;
+    sfx.play().then(()=>{}).catch(() => {
+      setTimeout(tryNext, 200);
+    });
   }
-  tryOne();
+  if (!mediaEnabled) {
+    mediaStatus.innerText = "SFX ready — click Enable media to hear it.";
+    return;
+  }
+  tryNext();
 }
 
 /* Typing effect */
@@ -394,7 +398,7 @@ function typeText(el, text, speed = 30) {
   });
 }
 
-/* Show question overlay */
+/* Question overlay */
 function showQuestion(q) {
   if (!q) return;
   questionPrompt.innerText = q.prompt;
@@ -422,92 +426,59 @@ function showQuestion(q) {
   questionOverlay.style.display = "flex";
 }
 
-/* Hide question */
-function hideQuestion() {
-  questionOverlay.style.display = "none";
-}
+function hideQuestion() { questionOverlay.style.display = "none"; }
 
-/* ---------- Scene loading / navigation ---------- */
+/* ---------- Scene load & navigation ---------- */
 
 function loadScene() {
   const current = scenes[index];
   if (!current) return;
-  // reset fightsIndex if entering fights scene
-  if (current.id === "fights") {
-    fightsIndex = 0;
-    sceneState.fightsStep = 0;
-  }
-
-  // set backgrounds & media
+  // reset UI
   setBackground(current.bg || "");
   sceneTitle.innerText = current.title || "";
   quoteEl.innerText = current.quote || "";
-
   renderPeople(current.people || []);
   setCornerThumbs(current.thumbs || {});
-
-  // media handling: we use gif path and optional video fallback
   showMedia(current.gif || "", current.video || "", current.bg || "");
-
-  // reset content text
   textEl.innerText = "";
+  mediaStatus.innerText = "";
 
-  // special-case intro: type text and multi-step
+  // set next button text
+  nextBtn.disabled = true;
+  nextBtn.innerText = "Continue";
+
+  // handle different scene types
   if (current.id === "intro") {
-    nextBtn.disabled = true;
-    nextBtn.innerText = "Continue";
     typeText(textEl, current.text || "", 36).then(() => {
       nextBtn.disabled = false;
       sceneState.introStep = 0;
-      // clear quote until button pressed (quote is already in quoteEl)
     });
-    // don't autoplay background audio for intro (user may want to press)
-    playBg("");
     return;
   }
 
-  // special-case fights: show intro then start micro-scenes when Next pressed
-  if (current.id === "fights") {
-    // show the intro text typed quickly then set button to start micro-scenes
-    nextBtn.disabled = true;
-    nextBtn.innerText = "Start";
-    typeText(textEl, current.text || "", 28).then(() => {
-      nextBtn.disabled = false;
-    });
-    playBg(""); // no music until micro scene chooses one
-    return;
-  }
-
-  // generic scenes:
-  textEl.innerText = current.text || "";
-  nextBtn.innerText = current.final ? "FINISH" : "NEXT";
-  nextBtn.disabled = false;
-
-  // play a gentle background if provided
-  if (current.bgAudio) {
-    playBg(current.bgAudio);
-  } else {
-    playBg(""); // ensure nothing else plays
-  }
-
-  // show question if scene has question (small delay)
-  if (current.question) {
-    setTimeout(() => showQuestion(current.question), 700);
-  } else {
-    hideQuestion();
-  }
+  // normal scene: type text then enable button
+  typeText(textEl, current.text || "", 28).then(() => {
+    nextBtn.disabled = false;
+    nextBtn.innerText = current.final ? "FINISH" : "NEXT";
+    // scene audio indicator
+    if (current.audio) {
+      scenePlayAudio.style.display = "inline-block";
+      scenePlayAudio.dataset.src = current.audio;
+      mediaStatus.innerText = "Scene audio available (press Play)";
+    } else {
+      scenePlayAudio.style.display = "none";
+    }
+    // show question if present
+    if (current.question) {
+      setTimeout(() => showQuestion(current.question), 700);
+    } else {
+      hideQuestion();
+    }
+  });
 }
 
-/* Proceed after answering a question (default: next scene) */
+/* proceedAfterAnswer: default next scene */
 function proceedAfterAnswer() {
-  const current = scenes[index];
-  if (!current) return;
-  if (current.id === "fights") {
-    // If in fights micro-scene and we answered a fight question, advance fights index
-    handleNextFight();
-    return;
-  }
-  // otherwise next scene
   nextScene();
 }
 
@@ -520,32 +491,37 @@ function nextScene() {
   loadScene();
 }
 
-/* ---------- Intro button flow ---------- */
-async function handleIntroClick() {
+/* ---------- Intro special flow: small SFX and voice clip sequence ---------- */
+function handleIntroClick() {
   const current = scenes[index];
   if (!current || current.id !== "intro") return;
   sceneState.introStep = sceneState.introStep || 0;
 
-  // Step 0: press Continue -> play SFX, show Dwight quote, change button
   if (sceneState.introStep === 0) {
     nextBtn.disabled = true;
+    // play that's what she said SFX
     playSfxCandidates();
     setTimeout(() => {
       quoteEl.innerText = "Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing. — Dwight Schrute";
       nextBtn.innerText = "You wanna listen ... that's what she said";
       nextBtn.disabled = false;
       sceneState.introStep = 1;
-    }, 800);
+    }, 900);
     return;
   }
 
-  // Step 1: user presses to play Michael clip -> play voice clip, then show question
   if (sceneState.introStep === 1) {
     nextBtn.disabled = true;
-    voiceAudio.src = "images/Michael_scott_thank_you.mp3";
-    voiceAudio.volume = muted ? 0 : 0.9;
-    const p = voiceAudio.play();
-    if (p !== undefined) p.catch(() => showAutoplayHint());
+    // voice clip
+    voiceAudio.src = "audio/Michael_scott_thank_you.mp3";
+    voiceAudio.volume = muted ? 0 : 0.95;
+    if (!mediaEnabled) {
+      mediaStatus.innerText = "Voice clip ready — press Enable media to hear it.";
+    } else {
+      voiceAudio.play().catch(() => {
+        mediaStatus.innerText = "Browser blocked voice playback.";
+      });
+    }
     setTimeout(() => {
       if (current.question) showQuestion(current.question);
       nextBtn.innerText = "let's gooooooo";
@@ -555,9 +531,9 @@ async function handleIntroClick() {
     return;
   }
 
-  // Step 2: if question visible, collect and move on
+  // step 2 -> if question visible, collect answer then next scene
   if (sceneState.introStep === 2) {
-    if (questionOverlay.style.display === "flex" && current.question && current.question.type === "short") {
+    if (questionOverlay.style.display === "flex") {
       const val = questionInput.value.trim();
       if (val && val.toLowerCase() !== "skip") {
         playSfxCandidates();
@@ -573,64 +549,36 @@ async function handleIntroClick() {
   }
 }
 
-/* ---------- Fights micro-scene handling ---------- */
-
-function startFightsSequence() {
-  fightsIndex = 0;
-  loadFight(fightsIndex);
-}
-
-function loadFight(i) {
-  const fights = (scenes[index] && scenes[index].fights) || [];
-  if (i < 0 || i >= fights.length) return;
-  const f = fights[i];
-  // set scene text and media
-  sceneTitle.innerText = f.title;
-  quoteEl.innerText = f.quote || "";
-  setBackground(f.bg || scenes[index].bg || "");
-  renderPeople(f.people || []);
-  setCornerThumbs(f.thumbs || {});
-
-  // show the fight-specific gif
-  showMedia(f.gif || "", f.video || "", f.bg || "");
-
-  // type the fight text
-  nextBtn.disabled = true;
-  nextBtn.innerText = "Continue";
-  typeText(textEl, f.text || "", 28).then(() => {
-    // after text typed, show the question overlay after slight pause
-    setTimeout(() => {
-      nextBtn.disabled = false;
-      if (f.question) showQuestion(f.question);
-    }, 700);
-  });
-
-  // play a gentle background ambience specific for fights if desired
-  // we keep bgAudio muted unless user starts audio
-  playBg(""); // don't auto-play long music; user can start audio
-}
-
-function handleNextFight() {
-  const fights = (scenes[index] && scenes[index].fights) || [];
-  // if current fight had a question, its answer is already stored via submit handler
-  fightsIndex++;
-  if (fightsIndex >= fights.length) {
-    // done with fights, proceed to next scene
-    nextScene();
-    return;
+/* ---------- Question submit/skip ---------- */
+function submitQuestion() {
+  const key = questionOverlay.dataset.key;
+  if (!key) { hideQuestion(); return; }
+  const val = questionInput.value.trim();
+  if (val && val.toLowerCase() !== "skip") {
+    playSfxCandidates();
+    responses[key] = val;
+  } else {
+    responses[key] = "skipped";
   }
-  loadFight(fightsIndex);
+  hideQuestion();
+  proceedAfterAnswer();
+}
+
+function handleMCQClick(choice, key) {
+  playSfxCandidates();
+  responses[key] = choice;
+  hideQuestion();
+  proceedAfterAnswer();
 }
 
 /* ---------- Final message ---------- */
 function showFinal() {
-  // assemble message using collected responses
   const ep = responses.favorite_office_episode || "our favourite silly episode";
   const smile = responses.how_are_you_feeling_today || "that tiny thing you smiled about";
   const mbaFix = responses.mba_chaiwala_fix || "let me make it up to you";
   const maggieFix = responses.maggie_place_fix || "I will calm things next time";
   const kashFix = responses.kashmir_fix || "plan a redo trip just for us";
-  const usmem = responses.us_memory || "the little moment you smiled that I keep replaying";
+  const sport = responses.football_interest || "your playful choices";
 
   const message = [
     "Hey love — I made this for you.",
@@ -639,7 +587,7 @@ function showFinal() {
     `For MBA chaiwala: ${mbaFix}.`,
     `For Maggie's place: ${maggieFix}.`,
     `For Kashmir: ${kashFix}.`,
-    `One tiny moment of us I keep: ${usmem}.`,
+    `Even when you pretend not to care about football: ${sport}.`,
     "",
     "I'm sorry for the times I hurt you. I regret the bad things I've done.",
     "I hope you are doing fine. I love you, I care for you, and I want to keep making better memories with you.",
@@ -651,97 +599,48 @@ function showFinal() {
   finishOverlay.style.display = "flex";
 }
 
-/* ---------- Event wiring ---------- */
+/* ---------- Events ---------- */
 
-nextBtn.addEventListener("click", (ev) => {
+nextBtn.addEventListener("click", () => {
   const current = scenes[index];
-  // special flows
-  if (current && current.id === "intro") {
+  if (!current) return;
+  if (current.id === "intro") {
     handleIntroClick();
     return;
   }
-  if (current && current.id === "fights") {
-    // if we're on fights intro (sceneState.fightsStep 0), start sequence
-    if (!sceneState.fightsStep || sceneState.fightsStep === 0) {
-      sceneState.fightsStep = 1;
-      startFightsSequence();
-      return;
-    } else {
-      // Otherwise, if fights are already running but the user clicked Next (not during a question),
-      // we should just advance to the next micro-step or show question if any
-      // (To keep UX consistent, the question submit advances the sequence)
-      // Try to advance to next fight when Next clicked and question not visible
-      if (questionOverlay.style.display !== "flex") {
-        handleNextFight();
-      }
-      return;
-    }
-  }
-
-  // general case: if a short question is visible, submit it
+  // if question visible, submit
   if (questionOverlay.style.display === "flex") {
-    // emulate submit
     submitQuestion();
     return;
   }
-
-  // final
-  if (current && current.final) {
+  if (current.final) {
     showFinal();
     return;
   }
-
-  // default advance
   nextScene();
 });
 
-/* Question submit/skip handlers */
-function submitQuestion() {
-  const key = questionOverlay.dataset.key;
-  if (!key) { hideQuestion(); return; }
-  const currentScene = scenes[index];
-
-  // MCQ handled at creation; here handle short input
-  const q = (currentScene && currentScene.question) || findFightQuestionByKey(key);
-  if (q && q.type === "short") {
-    const val = questionInput.value.trim();
-    if (val && val.toLowerCase() !== "skip") {
-      playSfxCandidates();
-      responses[key] = val;
-    }
-    hideQuestion();
-    // proceed appropriately
-    if (currentScene.id === "fights") {
-      // if we are inside fights, proceed to next fight
-      handleNextFight();
-    } else {
-      nextScene();
-    }
-  } else {
-    hideQuestion();
+/* scene audio play button */
+scenePlayAudio.addEventListener("click", () => {
+  const src = scenePlayAudio.dataset.src;
+  if (!src) return;
+  stopAllAudio();
+  if (!mediaEnabled) {
+    mediaStatus.innerText = "Enable media first to play scene audio.";
+    return;
   }
-}
+  bgAudio.src = src;
+  bgAudio.volume = muted ? 0 : 0.36;
+  bgAudio.play().catch(() => { mediaStatus.innerText = "Browser blocked audio playback."; });
+});
 
-function findFightQuestionByKey(key) {
-  const fights = (scenes[index] && scenes[index].fights) || [];
-  for (const f of fights) {
-    if (f.question && f.question.key === key) return f.question;
-  }
-  return null;
-}
-
+/* question overlay handlers */
 questionSubmit.addEventListener("click", submitQuestion);
 questionSkip.addEventListener("click", () => {
   const key = questionOverlay.dataset.key;
   if (key) responses[key] = "skipped";
   hideQuestion();
-  // continue after skip
-  const current = scenes[index];
-  if (current && current.id === "fights") {
-    handleNextFight();
-  } else {
-    nextScene();
-  }
+  proceedAfterAnswer();
 });
 questionClose.addEventListener("click", hideQuestion);
 
@@ -755,7 +654,33 @@ finishSend.addEventListener("click", () => {
   });
 });
 
-/* top controls */
+/* enable media button: this is the user's explicit interaction to allow audio/video */
+enableMediaBtn.addEventListener("click", async () => {
+  mediaEnabled = true;
+  enableMediaBtn.style.display = "none";
+  // try to play small silent sound to get permission
+  try {
+    sfxAudio.src = ANSWER_SFX_CANDIDATES[0];
+    sfxAudio.volume = muted ? 0 : 0.0001;
+    await sfxAudio.play().catch(()=>{});
+    sfxAudio.pause();
+  } catch(e) {}
+  // try to autoplay any visible video
+  try {
+    if (gifVideo && gifVideo.src) {
+      gifVideo.play().catch(()=>{});
+    }
+    mediaStatus.innerText = "Media enabled — audio & video allowed.";
+  } catch(e){}
+});
+
+/* autoplay hint button */
+autoplayPlay.addEventListener("click", () => {
+  mediaEnabled = true;
+  autoplayHint.style.display = "none";
+});
+
+/* mute & gif pause */
 muteBtn.addEventListener("click", () => setMute(!muted));
 gifPauseBtn.addEventListener("click", () => {
   if (gifVideo.style.display === "block" && !gifVideo.paused) {
@@ -766,30 +691,13 @@ gifPauseBtn.addEventListener("click", () => {
     gifPauseBtn.innerText = "⏸️ GIF";
   }
 });
-playAudioBtn.addEventListener("click", () => {
-  // if bgAudio has a source, try play it; else play a short voice to trigger autoplay permission
-  try {
-    if (bgAudio.src) {
-      bgAudio.play().catch(()=>{});
-    } else {
-      // small safe click-trigger sound
-      sfxAudio.src = ANSWER_SFX_CANDIDATES[0];
-      sfxAudio.play().catch(()=>{});
-    }
-  } catch(e){}
+
+/* keyboard: Enter submits question */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && questionOverlay.style.display === "flex") submitQuestion();
 });
 
-/* autoplay hint */
-function showAutoplayHint() {
-  autoplayHint.style.display = "block";
-}
-autoplayPlay.addEventListener("click", () => {
-  autoplayHint.style.display = "none";
-  // attempt to play bg if set
-  try { bgAudio.play().catch(()=>{}); } catch(e){}
-});
-
-/* ---------- Preload assets ---------- */
+/* ---------- Preload assets (images + audio hints) ---------- */
 function preloadAssets() {
   const urls = new Set();
   scenes.forEach(s => {
@@ -798,44 +706,27 @@ function preloadAssets() {
     if (s.video) urls.add(s.video);
     if (s.people && Array.isArray(s.people)) s.people.forEach(p => urls.add(p));
     if (s.thumbs) Object.values(s.thumbs).forEach(t => t && urls.add(t));
-    if (s.fights && Array.isArray(s.fights)) {
-      s.fights.forEach(f => {
-        if (f.bg) urls.add(f.bg);
-        if (f.gif) urls.add(f.gif);
-        if (f.people && Array.isArray(f.people)) f.people.forEach(p => urls.add(p));
-        if (f.thumbs) Object.values(f.thumbs).forEach(t => t && urls.add(t));
-      });
-    }
+    if (s.audio) urls.add(s.audio);
   });
-  // Preload images
-  urls.forEach(u => {
-    const im = new Image();
-    im.src = u;
-  });
-  // preload sfx candidate URLs as audio elements (but don't play)
-  ANSWER_SFX_CANDIDATES.forEach(src => {
-    try { const a = new Audio(); a.src = src; } catch(e){}
-  });
+  urls.forEach(u => { const i = new Image(); i.src = u; });
+  ANSWER_SFX_CANDIDATES.forEach(a => { try { const ad = new Audio(); ad.src = a; } catch(e){} });
 }
 preloadAssets();
 
-/* ---------- Initialize ---------- */
+/* ---------- Init ---------- */
 function init() {
-  titleEl.innerText = "For You";
-  // load first scene
   index = 0;
   responses = {};
-  sceneState = {};
-  loadScene();
-  // default mute false
   setMute(false);
+  loadScene();
 }
-
 init();
 
-/* Ensure safe behavior when user navigates via keyboard: allow Enter to submit question */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && questionOverlay.style.display === "flex") {
-    submitQuestion();
+/* safety: if scene contains voice/long audio and user hasn't enabled media, prompt them */
+bgAudio.addEventListener("play", () => {
+  if (!mediaEnabled) {
+    autoplayHint.style.display = "block";
+  } else {
+    autoplayHint.style.display = "none";
   }
 });
