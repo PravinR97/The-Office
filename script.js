@@ -1,9 +1,21 @@
-/* Updated script.js
-   - Paths updated to use the images/ folder and audio files present in the repo root (as uploaded).
-   - Added more sarcastic / funny quotes (The Office, Peaky Blinders, Bridgerton).
-   - Improved audio autoplay handling (visible "tap to play" when blocked).
-   - Better UX for short-answer and MCQ questions, and safer string usage.
+/* Updated script.js — implements your requested changes:
+   - removed Mummy & Ishaan scene, added Family scene
+   - added "Us" scene with Michael gif + relationship quote
+   - improved image/gif fallbacks and background load check
+   - "That's what she said" SFX plays every time a question is answered
+   - Katakirr misal line with joking "that's what she said" after it
+   - final message includes apology + affection
 */
+
+/* Helper: filenames to try for the "that's what she said" effect.
+   The repo screenshot contains multiple similarly-named files; we attempt sensible fallbacks.
+*/
+const ANSWER_SFX_CANDIDATES = [
+  "Thats_What_she_said.mp3",
+  "That's_What_she_said.mp3",
+  "shesaid.mp3",
+  "ThatsWhatSheSaid.mp3"
+];
 
 const scenes = [
   {
@@ -22,7 +34,7 @@ const scenes = [
     bg: "images/office_bg2.jpg",
     gif: "images/jim_look.gif",
     audio: "That's_What_she_said.mp3",
-    quote: "You miss 100% of the shots you don't take. - Michael Scott",
+    quote: "You miss 100% of the shots you don't take. — Michael Scott",
     question: {
       type: "short",
       key: "favorite_office_episode",
@@ -32,7 +44,7 @@ const scenes = [
   {
     id: "michael-energy",
     title: "Michael Energy",
-    text: "Confidence and nonsense in equal measure — in short: peak Michael.",
+    text: "Confidence and nonsense in equal measure — peak Michael energy.",
     bg: "images/office_bg3.jpg",
     gif: "images/Michael_Gif_2.jpg",
     audio: "cage.mp3",
@@ -41,7 +53,7 @@ const scenes = [
   {
     id: "peaky",
     title: "Peaky Vibes",
-    text: "We binge Peaky Blinders together — so intense, so dramatic (and we both love Tommy's coat).",
+    text: "We binge Peaky Blinders together — so intense, so dramatic.",
     bg: "images/peaky_bg.jpg",
     gif: "images/peaky.gif",
     audio: "theme.mp3",
@@ -49,24 +61,43 @@ const scenes = [
     question: {
       type: "mcq",
       key: "peaky_character",
-      prompt: "Who's the most dangerous-looking? (pick one)",
-      choices: ["Tommy", "Arthur", "Polly", "They're all very dark and brooding"]
+      prompt: "Who's the most dangerously charismatic? (pick one)",
+      choices: ["Tommy", "Arthur", "Polly", "All very broody"]
     }
   },
+
+  // REPLACED mummy-ishaan with a family-themed scene
   {
-    id: "mummy-ishaan",
-    title: "Mummy & Ishaan",
-    text: "You love Mummy & Ishaan quietly. You act chidchidi but your heart is full.",
+    id: "family-ties",
+    title: "Family Holds Together",
+    text: "Family isn't perfect — it's the stubborn glue that keeps the good and messy parts together.",
     bg: "images/family_bg.jpg",
     gif: "images/family.gif",
-    audio: "shesaid.mp3",
-    quote: "Family is more than blood — it's the small stubborn things we do for each other.",
+    audio: "deranged.mp3",
+    quote: "Family will carry you through — even when you don't ask them to. — Peaky office vibes",
     question: {
       type: "short",
-      key: "what_she_loves_most",
-      prompt: "What's one small thing you love about Mummy or Ishaan?"
+      key: "family_thing",
+      prompt: "What's one small family memory that always makes you smile?"
     }
   },
+
+  // new "Us" scene to show relationship presence
+  {
+    id: "us",
+    title: "Us",
+    text: "This is us — silly, imperfect, warm. A little Michael awkwardness; a lot of real feeling.",
+    bg: "images/us_bg.jpg",
+    gif: "images/michael_us.gif",
+    audio: "daffyduck.mp3",
+    quote: "Pam & Jim had their story; this is ours — messy, beautiful, and mine.",
+    question: {
+      type: "short",
+      key: "us_memory",
+      prompt: "Tell me one tiny moment of us you still keep in your head"
+    }
+  },
+
   {
     id: "himachal-dream",
     title: "Himachal Dreams",
@@ -84,7 +115,7 @@ const scenes = [
   {
     id: "vaishno-devi",
     title: "Vaishno Devi",
-    text: "You went three times. I wish I had gone with you. Forgive me for the trips I missed.",
+    text: "You went three times. I wish I had gone with you.",
     bg: "images/vaishno_bg.jpg",
     gif: "images/temple.gif",
     audio: "punish.mp3",
@@ -98,7 +129,7 @@ const scenes = [
   {
     id: "kashmir",
     title: "Kashmir Nights",
-    text: "BurgerKing, dosa, midnight walks, cold water on temple steps. My favourite days were with you.",
+    text: "BurgerKing, dosa, midnight walks — my favourite days were with you.",
     bg: "images/kashmir_bg.jpg",
     gif: "images/srinagar_night.gif",
     audio: "wild.mp3",
@@ -112,7 +143,7 @@ const scenes = [
   {
     id: "football-tease",
     title: "Football Tease",
-    text: "I love Arsenal, Barca and Messi. You pretend not to care — but you smile when I scream at the TV.",
+    text: "I love Arsenal, Barca and Messi. You pretend not to care — but you smile when I shout at the TV.",
     bg: "images/football_bg.jpg",
     gif: "images/football_reaction.gif",
     audio: "goal_cheer.mp3",
@@ -124,13 +155,26 @@ const scenes = [
       choices: ["Arsenal", "Barcelona", "Snacks > Football", "Messi is magic"]
     }
   },
+
+  // Katakirr misal scene (funny, personal)
+  {
+    id: "katakirr",
+    title: "Katakirr Misal (the truth)",
+    text: "I haven't eaten Katakirr misal in a long time — the places I went with you mean more than the food. I will never go alone or with anyone else. (laugh)",
+    bg: "images/misal_bg.jpg",
+    gif: "images/misal_giggle.gif",
+    audio: "shesaid.mp3", // We'll also trigger the answer SFX after this line
+    quote: "And to be clear: I will not go alone — that's my promise.",
+    // no question here, but we will play That's-what-she-said SFX once this scene shows
+  },
+
   {
     id: "bridgerton-tease",
     title: "A Little Bridgerton",
-    text: "A dash of drama, a pinch of romance, and you asking who's that duke again — classic Bridgerton energy.",
+    text: "A dash of drama, a pinch of romance, and you asking 'who's that duke again' — classic Bridgerton energy.",
     bg: "images/bridgerton_bg.jpg",
     gif: "images/bridgerton.gif",
-    audio: "deranged.mp3",
+    audio: "theme.mp3",
     quote: "When in doubt, say something witty and let everyone else be confused."
   },
   {
@@ -140,7 +184,7 @@ const scenes = [
     bg: "images/final_bg.jpg",
     gif: "images/heart_fireworks.gif",
     audio: "daffyduck.mp3",
-    quote: "Pam & Jim had their story; this is ours — messy, beautiful, and mine.",
+    quote: "This is mine to keep, but I wanted you to see it first.",
     final: true
   }
 ];
@@ -165,29 +209,29 @@ const finishMessage = document.getElementById("finishMessage");
 const autoplayHint = document.getElementById("autoplayHint");
 const startAudioBtn = document.getElementById("startAudioBtn");
 
-// Preload images and audio if available
-function preloadAssets() {
-  scenes.forEach(s => {
-    if (s.bg) { const i = new Image(); i.src = s.bg; }
-    if (s.gif) { const g = new Image(); g.src = s.gif; }
-    if (s.audio) {
-      // create Audio object but don't play
-      try {
-        const a = new Audio();
-        a.src = s.audio;
-      } catch (e) { /* ignore */ }
-    }
-  });
-}
-
+/* Preload and check background before applying (so broken backgrounds don't produce blank white) */
 function setBackground(url) {
   if (!url) {
     sceneDiv.style.backgroundImage = "";
     return;
   }
-  sceneDiv.style.backgroundImage = `url("${url}")`;
+  const test = new Image();
+  test.onload = () => {
+    sceneDiv.style.backgroundImage = `url("${url}")`;
+  };
+  test.onerror = () => {
+    // fallback gradient if bg couldn't load
+    sceneDiv.style.backgroundImage = `linear-gradient(135deg,#333,#111)`;
+  };
+  test.src = url;
 }
 
+/* Gif fallback: hide gif if not loaded and expand quote area */
+gifEl.addEventListener("error", () => {
+  gifEl.style.display = "none";
+});
+
+/* play audio with autoplay handling */
 function playAudio(src) {
   if (!src) {
     audioEl.pause();
@@ -196,10 +240,9 @@ function playAudio(src) {
   }
   audioEl.src = src;
   audioEl.currentTime = 0;
-  const playPromise = audioEl.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(() => {
-      // Autoplay blocked — show tap hint
+  const promise = audioEl.play();
+  if (promise !== undefined) {
+    promise.catch(() => {
       showAutoplayHint();
     });
   }
@@ -210,25 +253,45 @@ function showAutoplayHint() {
   if (!hint) return;
   hint.style.display = "block";
 }
-
 function hideAutoplayHint() {
   const hint = document.getElementById("autoplayHint");
   if (!hint) return;
   hint.style.display = "none";
 }
-
 if (startAudioBtn) {
   startAudioBtn.addEventListener("click", () => {
-    // try playing current audio again
     hideAutoplayHint();
     const current = scenes[index];
     if (current && current.audio) {
       audioEl.src = current.audio;
-      audioEl.play().catch(() => {});
+      audioEl.play().catch(()=>{});
     }
   });
 }
 
+/* Attempt to play the "that's what she said" SFX from multiple possible filenames */
+function playAnswerSfx() {
+  // create an ephemeral audio element to play SFX without affecting scene audio
+  const sfx = new Audio();
+  // try candidates in sequence until one loads and plays
+  let tried = 0;
+  function tryNext() {
+    if (tried >= ANSWER_SFX_CANDIDATES.length) return;
+    const candidate = ANSWER_SFX_CANDIDATES[tried++];
+    sfx.src = candidate;
+    sfx.currentTime = 0;
+    const p = sfx.play();
+    if (p !== undefined) {
+      p.catch(() => {
+        // try another candidate
+        tryNext();
+      });
+    }
+  }
+  tryNext();
+}
+
+/* show question overlay */
 function showQuestion(q) {
   if (!q) return;
   questionPrompt.innerText = q.prompt;
@@ -245,6 +308,8 @@ function showQuestion(q) {
       b.className = "mcqBtn";
       b.innerText = c;
       b.addEventListener("click", () => {
+        // play the cheeky SFX when she answers
+        playAnswerSfx();
         responses[q.key] = c;
         hideQuestion();
         nextScene();
@@ -258,45 +323,46 @@ function showQuestion(q) {
   questionOverlay.style.display = "flex";
 }
 
+/* hide question */
 function hideQuestion() {
   questionOverlay.style.display = "none";
 }
 
+/* show final assembled message (includes apology & affection) */
 function showFinal() {
-  // assemble a short message using responses
   const ep = responses.favorite_office_episode || "our favourite silly episode";
   const food = responses.best_food_memory || "that delicious dosa/burger";
   const vaish = responses.vaishno_memory || "your Vaishno Devi stories";
   const hima = responses.live_in_himachal || "a mountain getaway";
-  const familyThing = responses.what_she_loves_most || "the small ways you love";
+  const familyThing = responses.family_thing || responses.what_she_loves_most || "the small ways you love";
   const sport = responses.football_interest || responses.peaky_character || "your playful choices";
+  const usmem = responses.us_memory || "the little moment you smiled that I keep replaying";
 
   const message = [
     "Hey love — I made this for you.",
     `I remember laughing with you at ${ep}.`,
     `I want to try ${food} again with you.`,
-    `I hear your Vaishno memories in your voice: "${vaish}".`,
+    `I remember your Vaishno story: "${vaish}".`,
     `If you want Himachal, I will come: ${hima}.`,
     `I love the ways you love: ${familyThing}.`,
     `Even when you pretend not to care about football: ${sport}.`,
+    `One tiny moment of us I keep: ${usmem}.`,
     "",
-    "These things are mine to keep — just ours.",
+    "I also want to say I'm sorry for the times I hurt you. I regret the bad things I've done.",
+    "I hope you are doing fine. I love you, I care for you, and I want to keep making better memories with you.",
+    "",
     "Will you give me one more chance to make new memories?"
   ].join("\n");
 
   finishMessage.innerText = message;
   finishOverlay.style.display = "flex";
 
-  // small celebration if confetti lib loaded
   if (window.confetti) {
-    confetti({
-      particleCount: 100,
-      spread: 60,
-      origin: { y: 0.2 }
-    });
+    confetti({ particleCount: 100, spread: 60, origin: { y: 0.2 } });
   }
 }
 
+/* Load a scene: background, text, gif, audio, and question handling */
 function loadScene() {
   const current = scenes[index];
   setBackground(current.bg || "");
@@ -307,15 +373,22 @@ function loadScene() {
   if (current.gif) {
     gifEl.style.display = "block";
     gifEl.src = current.gif;
+    // if GIF fails, onerror hides gif (see listener above)
   } else {
     gifEl.style.display = "none";
     gifEl.src = "";
   }
 
-  // play audio for scene
   playAudio(current.audio || "");
 
-  // If scene has a question, show it after a short delay
+  // if this is the katakirr scene, after showing text, play the cheeky SFX
+  if (current.id === "katakirr") {
+    // play the "that's what she said" after a short delay to match the joke
+    setTimeout(() => {
+      playAnswerSfx();
+    }, 1000);
+  }
+
   if (current.question) {
     setTimeout(() => {
       showQuestion(current.question);
@@ -324,40 +397,40 @@ function loadScene() {
     hideQuestion();
   }
 
-  // update button text for final
   btn.innerText = current.final ? "FINISH" : "NEXT";
 }
 
+/* Advance to next scene */
 function nextScene() {
   index++;
   if (index >= scenes.length) {
-    // reached end — show final reveal if not already final
     showFinal();
     return;
   }
   loadScene();
 }
 
-// handle main button
+/* Next button behavior: handle short answer submission + final */
 btn.addEventListener("click", () => {
   const current = scenes[index];
   // If current scene had a short-answer question visible, collect answer
   if (current.question && current.question.type === "short" && questionOverlay.style.display === "flex") {
     const val = questionInput.value.trim();
     if (val && val.toLowerCase() !== "skip") {
+      // play cheeky sfx when she answers
+      playAnswerSfx();
       responses[current.question.key] = val;
       hideQuestion();
       nextScene();
       return;
-    } else if (val.toLowerCase() === "skip" || val === "") {
-      // allow skip
+    } else {
+      // allow skip or empty, move forward
       hideQuestion();
       nextScene();
       return;
     }
   }
 
-  // If on final scene, reveal final message
   if (current.final) {
     showFinal();
     return;
@@ -366,11 +439,10 @@ btn.addEventListener("click", () => {
   nextScene();
 });
 
-// close handlers
+/* close handlers */
 document.getElementById("questionClose").addEventListener("click", hideQuestion);
 document.getElementById("finishClose").addEventListener("click", () => finishOverlay.style.display = "none");
 document.getElementById("finishSend").addEventListener("click", () => {
-  // copy final message to clipboard or notify
   navigator.clipboard.writeText(finishMessage.innerText).then(() => {
     alert("Message copied — you can paste it into a chat or save it.");
   }).catch(() => {
@@ -378,6 +450,15 @@ document.getElementById("finishSend").addEventListener("click", () => {
   });
 });
 
-// small safety: ensure elements exist before starting
+/* Preload images/audio and start */
+function preloadAssets() {
+  scenes.forEach(s => {
+    if (s.bg) { const i = new Image(); i.src = s.bg; }
+    if (s.gif) { const g = new Image(); g.src = s.gif; }
+    if (s.audio) {
+      try { const a = new Audio(); a.src = s.audio; } catch(e) {}
+    }
+  });
+}
 preloadAssets();
 loadScene();
