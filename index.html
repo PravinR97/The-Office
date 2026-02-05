@@ -1,65 +1,93 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The (IIM Jammu) Office — For You</title>
+  <title>For You — A Little Office Tour</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main id="scene" class="scene">
-    <!-- layered people background container (for intro & other scenes that provide multiple images) -->
-    <div id="peopleBg" class="people-bg" aria-hidden="true"></div>
-
-    <header class="scene-header">
-      <h1 id="title" class="title"></h1>
+  <div id="app">
+    <header id="topbar">
+      <h1 id="title">Loading...</h1>
+      <div id="controls">
+        <button id="muteBtn" title="Mute / unmute">🔈</button>
+        <button id="gifPauseBtn" title="Pause / play GIFs">⏸️ GIF</button>
+        <button id="playAudioBtn" title="Start audio if autoplay blocked">▶ Play Audio</button>
+      </div>
     </header>
 
-    <section class="scene-body">
-      <div id="text" class="text"></div>
-
-      <div class="media-row">
-        <img id="gif" class="gif" src="" alt="" />
+    <main id="scene" role="main" aria-live="polite">
+      <!-- layered people thumbnails (corners & stacked) -->
+      <div id="cornerThumbs">
+        <img id="thumb-top-left" class="corner-thumb" src="" alt="" />
+        <img id="thumb-top-right" class="corner-thumb" src="" alt="" />
+        <img id="thumb-bottom-left" class="corner-thumb" src="" alt="" />
+        <img id="thumb-bottom-right" class="corner-thumb" src="" alt="" />
       </div>
 
-      <div id="quote" class="quote"></div>
+      <!-- stacked characters / people -->
+      <div id="peopleBg" aria-hidden="true"></div>
 
-      <div id="controls" class="controls">
-        <button id="nextBtn" class="btn">Continue</button>
+      <!-- main media area: background set via CSS, media overlay for gif/video -->
+      <div id="media">
+        <img id="gifImg" alt="" />
+        <video id="gifVideo" muted loop playsinline></video>
       </div>
-    </section>
 
-    <!-- audio for scene music/background (autoplay handling) -->
-    <audio id="sceneAudio" preload="auto"></audio>
+      <!-- content panel -->
+      <div id="contentPanel">
+        <h2 id="sceneTitle"></h2>
+        <div id="text"></div>
+        <blockquote id="quote"></blockquote>
 
-    <!-- autoplay hint / start button for mobile browsers -->
-    <div id="autoplayHint" class="autoplay-hint" style="display:none;">
-      <p>Tap to enable sound</p>
-      <button id="startAudioBtn" class="btn small">Start audio</button>
-    </div>
-
-    <!-- question overlay (short / mcq) -->
-    <div id="questionOverlay" class="overlay" style="display:none;">
-      <div class="overlay-card">
-        <button id="questionClose" class="close">×</button>
-        <p id="questionPrompt" class="question-prompt"></p>
-        <input id="questionInput" class="text-input" placeholder="Type your answer..." />
-        <div id="mcqContainer" class="mcq-container"></div>
+        <div id="actionRow">
+          <button id="nextBtn" class="primary">Loading...</button>
+        </div>
       </div>
-    </div>
+    </main>
 
-    <!-- final message overlay -->
-    <div id="finishOverlay" class="overlay" style="display:none;">
-      <div class="overlay-card">
-        <button id="finishClose" class="close">×</button>
-        <pre id="finishMessage" class="finish-message"></pre>
-        <div class="finish-actions">
-          <button id="finishSend" class="btn">Copy message</button>
+    <!-- question overlay -->
+    <div id="questionOverlay" class="overlay" style="display:none">
+      <div class="overlayCard">
+        <button id="questionClose" class="closeX">✕</button>
+        <h3 id="questionPrompt"></h3>
+        <div id="mcqContainer" class="mcq"></div>
+        <input id="questionInput" type="text" placeholder="Type your answer..." />
+        <div class="overlayActions">
+          <button id="questionSubmit" class="primary">Submit</button>
+          <button id="questionSkip">Skip</button>
         </div>
       </div>
     </div>
-  </main>
+
+    <!-- final overlay -->
+    <div id="finishOverlay" class="overlay" style="display:none">
+      <div class="overlayCard">
+        <button id="finishClose" class="closeX">✕</button>
+        <h3>One last thing...</h3>
+        <pre id="finishMessage" class="finalText"></pre>
+        <div class="overlayActions">
+          <button id="finishSend" class="primary">Copy message</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- autoplay hint -->
+    <div id="autoplayHint" class="hint" style="display:none">
+      <p>Audio was blocked by the browser. Tap Play to hear clips.</p>
+      <button id="autoplayPlay">Play</button>
+    </div>
+
+    <!-- hidden audio elements -->
+    <audio id="bgAudio" loop></audio>
+    <audio id="sfxAudio"></audio>
+    <audio id="voiceAudio"></audio>
+
+    <footer id="footer">
+      <small>Made with a bit of Michael-level confidence and a lot of heart.</small>
+    </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
