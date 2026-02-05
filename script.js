@@ -66,7 +66,7 @@ function loadScene() {
 
 nextBtn.onclick = () => {
   if (scenes[index].action === "typeform") {
-    window.open("PASTE_TYPEFORM_LINK_HERE", "_blank");
+    window.open("https://form.typeform.com/to/XGOLFc3e", "_blank");
     return;
   }
   index++;
