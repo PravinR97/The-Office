@@ -1,4 +1,4 @@
-/* Basic styling for the scenes and overlays */
+/* Basic styling for the scenes and overlays — improved visibility and fallbacks */
 
 :root{
   --bg-dark: rgba(0,0,0,0.55);
@@ -19,12 +19,14 @@ html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Seg
   justify-content:center;
   position:relative;
   color:white;
-  transition: background-image .6s ease-in-out;
+  transition: background-image .6s ease-in-out, filter .25s ease;
+  filter: saturate(1.05) contrast(1.02);
 }
 
+/* stronger overlay for better readability */
 .scene .overlay{
-  backdrop-filter: blur(4px);
-  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+  backdrop-filter: blur(6px) brightness(0.9);
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.5));
   padding:28px;
   border-radius:12px;
   width:min(1100px, 94%);
@@ -41,21 +43,24 @@ h1{margin:0 0 8px;font-size:28px;letter-spacing:0.4px}
   margin-top:12px;
 }
 
+/* improved gif display: border + subtle glow */
 .scene-gif{
-  width:260px;
-  height:160px;
+  width:300px;
+  height:180px;
   object-fit:cover;
   border-radius:8px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  box-shadow:0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(255,255,255,0.02) inset;
   display:block;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.25));
 }
 
+/* If the GIF fails, we'll hide it in JS and quote box expands */
 .quote-box{
   flex:1;
   padding:12px 16px;
   border-radius:8px;
   background:var(--glass);
-  min-height:120px;
+  min-height:150px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -72,17 +77,17 @@ h1{margin:0 0 8px;font-size:28px;letter-spacing:0.4px}
 /* controls */
 .controls{display:flex;justify-content:center;margin-top:18px}
 .btn{
-  background:#000000cc;
+  background:#111;
   color:#fff;
   border:2px solid rgba(255,255,255,0.08);
   padding:10px 18px;
-  font-weight:600;
+  font-weight:700;
   border-radius:8px;
   cursor:pointer;
   transition:transform .12s ease, box-shadow .12s ease;
 }
 .btn.small{padding:6px 10px;font-size:14px}
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.45)}
 
 /* overlays */
 .overlay-panel{
@@ -91,7 +96,7 @@ h1{margin:0 0 8px;font-size:28px;letter-spacing:0.4px}
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,0.45);
+  background:rgba(0,0,0,0.5);
   z-index:60;
   padding:20px;
 }
@@ -131,6 +136,13 @@ h1{margin:0 0 8px;font-size:28px;letter-spacing:0.4px}
 .final-text{
   background:rgba(0,0,0,0.25);
   padding:12px;border-radius:6px;font-family:inherit;color:#fff;white-space:pre-wrap;
+}
+
+/* subtle panel entrance */
+.animate-in{animation:panelIn .28s cubic-bezier(.2,.9,.2,1) both}
+@keyframes panelIn{
+  from{transform:translateY(8px) scale(.995); opacity:0}
+  to{transform:none; opacity:1}
 }
 
 .autoplay-hint{position:fixed;left:16px;bottom:16px;z-index:80}
