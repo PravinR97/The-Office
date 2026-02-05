@@ -23,18 +23,18 @@ const scenes = [
     title: "Welcome to Dunder Mifflin — JAMMU BRANCH",
     text: "I don't know why I made this website... then I remembered the only thing better than chaos is a little shared chaos with you.",
     bg: "images/office_bg1.jpg",
-    gif: "images/Michael_gif_1.jpg",
+    gif: "Michael_Im_dead_Inside.gif",
     audio: "Michael_scott_thank_you.mp3",
     quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott"
   },
   {
     id: "Jim / Devyaniiii-knows",
-    title: "That Look when I do something very wrong and Unlikable",
+    title: "That Look when I do something wrong and very Unlikable",
     text: "Remember the look Jim gave Pam? I have that look saved as my 'serious face when you laugh at my jokes' setting.",
-    bg: "images/office_bg2.jpg",
-    gif: "images/jim_look.gif",
+    bg: "images/Jim_face_While_Onphone.jpg",
+    gif: "Stanley_gif_1.gif",
     audio: "That's_What_she_said.mp3",
-    quote: "You miss 100% of the shots you don't take. — Michael Scott",
+    quote: "You miss 100% of the shots you don't take. — Michael Scott/n and  ",
     question: {
       type: "short",
       key: "favorite_office_episode",
@@ -46,7 +46,7 @@ const scenes = [
     title: "Michael Energy",
     text: "Confidence and nonsense in equal measure — peak Michael energy.",
     bg: "images/office_bg3.jpg",
-    gif: "images/Michael_Gif_2.jpg",
+    gif: "Kevin_destroying_kitchen.gif",
     audio: "cage.mp3",
     quote: "I am Beyoncé, always. — Michael Scott"
   },
@@ -87,8 +87,8 @@ const scenes = [
     id: "us",
     title: "Us",
     text: "This is us — silly, imperfect, warm. A little Michael awkwardness; a lot of real feeling.",
-    bg: "images/Stanley.jpg",
-    gif: "images/michael_us.gif",
+    bg: "images/Kelly_kapoor_Couple.jpg",
+    gif: "Stanley_gif_1.gif",
     audio: "daffyduck.mp3",
     quote: "Pam & Jim had their story; this is ours — messy, beautiful, and mine.",
     question: {
