@@ -1,20 +1,13 @@
-/* Basic styles for The (IIM Jammu) Office page
-   - includes styles for layered people images, typing feel, overlays, and buttons
-*/
-
 :root{
-  --bg-dark: #0f1113;
-  --panel: rgba(255,255,255,0.04);
-  --accent: #ffcc00;
-  --muted: #c5c6c7;
-  --glass: rgba(255,255,255,0.03);
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg:#0f1113;
+  --accent:#ffcc00;
+  --glass:rgba(255,255,255,0.05);
 }
 
-html,body{
-  height:100%;
+body{
   margin:0;
-  background: radial-gradient(ellipse at top left, #0b1220 0%, var(--bg-dark) 60%);
+  background:radial-gradient(circle at top left,#0b1220,var(--bg));
+  font-family:Segoe UI,Roboto,Arial,sans-serif;
   color:#eee;
 }
 
@@ -23,202 +16,89 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:flex-start;
   padding:24px;
-  box-sizing:border-box;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  overflow:hidden;
 }
 
-/* Layered people container (absolute, sits near the bottom to look like a background crowd) */
-.people-bg{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:36%;
-  pointer-events:none;
-  display:none;
-}
-.people-bg .person{
-  position:absolute;
-  height:110%;
-  max-height:380px;
-  transform:translateY(8%);
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
-  border-radius:6px;
-  transition:transform .35s ease, opacity .35s ease;
-  opacity:0.95;
-}
-
-/* header and title */
 .scene-header{
-  width:100%;
-  max-width:920px;
-  margin-top:12px;
-  margin-bottom:18px;
-  text-align:center;
-}
-.title{
-  margin:0;
-  font-size:1.4rem;
-  letter-spacing:0.6px;
-  color:var(--accent);
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
-
-/* body panel */
-.scene-body{
-  width:100%;
-  max-width:920px;
-  background: var(--glass);
-  border-radius:12px;
-  padding:18px;
-  box-sizing:border-box;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 6px 30px rgba(2,6,10,0.6);
-  position:relative;
-  z-index:20;
-}
-
-/* main text (typing area) */
-.text{
-  font-size:1rem;
-  color:#f2f2f2;
-  min-height:64px;
-  line-height:1.45;
-  white-space:pre-wrap;
   margin-bottom:12px;
 }
 
-/* gif area */
+.title{
+  color:var(--accent);
+  text-align:center;
+}
+
+.scene-body{
+  max-width:900px;
+  width:100%;
+  background:var(--glass);
+  padding:20px;
+  border-radius:14px;
+  backdrop-filter:blur(6px);
+}
+
+.text{
+  min-height:80px;
+  font-size:1.05rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
 .media-row{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:12px 0;
+  text-align:center;
+  margin:14px 0;
 }
+
 .gif{
-  max-width:40%;
-  height:auto;
-  border-radius:8px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  max-width:65%;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
-/* quote */
 .quote{
-  color:var(--muted);
-  font-size:0.92rem;
-  margin-top:10px;
   font-style:italic;
+  color:#ccc;
 }
 
-/* controls */
 .controls{
-  margin-top:14px;
   display:flex;
   justify-content:center;
   gap:12px;
+  margin-top:16px;
 }
+
 .btn{
-  background:linear-gradient(180deg, rgba(255,204,0,0.95), rgba(200,150,0,0.9));
-  color:#111;
+  background:linear-gradient(#ffcc00,#d4a900);
   border:0;
   padding:10px 18px;
   border-radius:10px;
-  font-weight:600;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  font-weight:600;
 }
-.btn.small{ padding:6px 10px; font-size:0.9rem; border-radius:8px; }
-.btn:active{ transform:translateY(1px); }
 
-/* overlays */
 .overlay{
   position:fixed;
-  left:0; right:0; top:0; bottom:0;
-  display:flex;
+  inset:0;
+  display:none;
   align-items:center;
   justify-content:center;
-  z-index:80;
-  background: rgba(2,6,10,0.55);
-}
-.overlay-card{
-  background: #071018;
-  padding:18px;
-  border-radius:10px;
-  width:90%;
-  max-width:520px;
-  color:#eee;
-  box-shadow:0 10px 40px rgba(0,0,0,0.7);
-  position:relative;
-}
-.close{
-  position:absolute;
-  right:10px;
-  top:6px;
-  border:0;
-  background:transparent;
-  color:#bbb;
-  font-size:20px;
-  cursor:pointer;
+  background:rgba(0,0,0,.6);
 }
 
-/* question */
-.question-prompt{
-  font-weight:700;
-  margin-bottom:10px;
+.overlay-card{
+  background:#08131d;
+  padding:20px;
+  border-radius:12px;
+  width:90%;
+  max-width:420px;
 }
+
 .text-input{
   width:100%;
   padding:10px;
   border-radius:8px;
-  border:1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,.1);
+  background:#000;
   color:#fff;
   margin-bottom:12px;
-}
-.mcq-container{ display:flex; flex-wrap:wrap; gap:8px; }
-.mcqBtn{
-  background:#222;
-  padding:8px 12px;
-  border-radius:8px;
-  color:#fff;
-  border:1px solid rgba(255,255,255,0.03);
-  cursor:pointer;
-}
-
-/* finish message */
-.finish-message{
-  white-space:pre-wrap;
-  background: rgba(255,255,255,0.02);
-  padding:12px;
-  border-radius:8px;
-  max-height:50vh;
-  overflow:auto;
-  color:#f6f6f6;
-}
-
-/* autoplay hint */
-.autoplay-hint{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  background:rgba(0,0,0,0.6);
-  color:#fff;
-  padding:10px;
-  border-radius:10px;
-  z-index:90;
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-@media (max-width:720px){
-  .gif{ max-width:70%; }
-  .people-bg{ height:28%; }
-  .title{ font-size:1.15rem; }
-  .scene-body{ padding:14px; }
 }
