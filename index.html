@@ -1,42 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Office — Not Real Life</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8"/>
+  <title>The Office — Only Here</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
+<div id="bgGif"></div>
+
 <main class="scene">
-  <header class="scene-header">
-    <h1 id="title" class="title"></h1>
-  </header>
+  <h1 id="title"></h1>
 
-  <section class="scene-body">
-    <div id="text" class="text"></div>
-
-    <div class="media-row">
-      <img id="mediaImage" class="gif" />
-    </div>
-
-    <div id="quote" class="quote"></div>
-
-    <div id="controls" class="controls"></div>
-  </section>
-
-  <audio id="sceneAudio"></audio>
-
-  <!-- Question Overlay -->
-  <div id="questionOverlay" class="overlay">
-    <div class="overlay-card">
-      <p class="question-prompt">Before you go…</p>
-      <input id="answerInput" class="text-input" placeholder="Type your answer…" />
-      <button id="submitAnswer" class="btn">Submit</button>
-    </div>
+  <div id="content">
+    <p id="text"></p>
+    <img id="image"/>
+    <p id="quote"></p>
   </div>
 
+  <div id="controls"></div>
 </main>
+
+<audio id="audio"></audio>
+
+<div id="questionOverlay">
+  <div class="card">
+    <p>One last thing…</p>
+    <input id="answer" placeholder="Type here…"/>
+    <button id="submit">Submit</button>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
