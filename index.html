@@ -1,37 +1,94 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>The Office — Only Here</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>For You — A Little Office Tour</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="app">
+    <header id="topbar">
+      <h1 id="title">Loading...</h1>
+      <div id="controls">
+        <button id="muteBtn" title="Mute / unmute">🔈</button>
+        <button id="gifPauseBtn" title="Pause / play GIFs">⏸️ GIF</button>
+        <button id="playAudioBtn" title="Start audio if autoplay blocked">▶ Play Audio</button>
+      </div>
+    </header>
 
-<div id="bg"></div>
+    <main id="scene" role="main" aria-live="polite">
+      <!-- layered people thumbnails (corners & stacked) -->
+      <div id="cornerThumbs">
+        <img id="thumb-top-left" class="corner-thumb" src="" alt="" />
+        <img id="thumb-top-right" class="corner-thumb" src="" alt="" />
+        <img id="thumb-bottom-left" class="corner-thumb" src="" alt="" />
+        <img id="thumb-bottom-right" class="corner-thumb" src="" alt="" />
+      </div>
 
-<main id="scene">
-  <h1 id="title"></h1>
+      <!-- stacked characters / people -->
+      <div id="peopleBg" aria-hidden="true"></div>
 
-  <div id="content">
-    <p id="text"></p>
-    <img id="image"/>
-    <p id="quote"></p>
+      <!-- main media area: background set via CSS, media overlay for gif/video -->
+      <div id="media">
+        <img id="gifImg" alt="" />
+        <video id="gifVideo" muted loop playsinline></video>
+      </div>
+
+      <!-- content panel -->
+      <div id="contentPanel">
+        <h2 id="sceneTitle"></h2>
+        <div id="text"></div>
+        <blockquote id="quote"></blockquote>
+
+        <div id="actionRow">
+          <button id="nextBtn" class="primary">Loading...</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- question overlay -->
+    <div id="questionOverlay" class="overlay" style="display:none">
+      <div class="overlayCard">
+        <button id="questionClose" class="closeX">✕</button>
+        <h3 id="questionPrompt"></h3>
+        <div id="mcqContainer" class="mcq"></div>
+        <input id="questionInput" type="text" placeholder="Type your answer..." />
+        <div class="overlayActions">
+          <button id="questionSubmit" class="primary">Submit</button>
+          <button id="questionSkip">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- final overlay -->
+    <div id="finishOverlay" class="overlay" style="display:none">
+      <div class="overlayCard">
+        <button id="finishClose" class="closeX">✕</button>
+        <h3>One last thing...</h3>
+        <pre id="finishMessage" class="finalText"></pre>
+        <div class="overlayActions">
+          <button id="finishSend" class="primary">Copy message</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- autoplay hint -->
+    <div id="autoplayHint" class="hint" style="display:none">
+      <p>Audio was blocked by the browser. Tap Play to hear clips.</p>
+      <button id="autoplayPlay">Play</button>
+    </div>
+
+    <!-- hidden audio elements -->
+    <audio id="bgAudio" loop></audio>
+    <audio id="sfxAudio"></audio>
+    <audio id="voiceAudio"></audio>
+
+    <footer id="footer">
+      <small>Made with a bit of Michael-level confidence and a lot of heart.</small>
+    </footer>
   </div>
 
-  <div id="controls"></div>
-</main>
-
-<audio id="audio"></audio>
-
-<div id="questionOverlay">
-  <div class="card">
-    <p>One last thing…</p>
-    <input id="answer" placeholder="Type your answer…"/>
-    <button id="submit">Submit</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
