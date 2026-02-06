@@ -1,70 +1,65 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Office — Episode</title>
+  <title>The (IIM Jammu) Office — For You</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <!-- First / intro slide with Yes/No -->
-    <div id="intro" class="centered">
-      <h1>Starting...</h1>
-      <p>DO you wanna go forward here (not in real life)... or in both?</p>
-      <div id="intro-buttons">
-        <button id="yesBtn" class="btn primary">Yes</button>
-        <button id="noBtn" class="btn ghost">No</button>
+  <main id="scene" class="scene">
+    <!-- layered people background container (for intro & other scenes that provide multiple images) -->
+    <div id="peopleBg" class="people-bg" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <h1 id="title" class="title"></h1>
+    </header>
+
+    <section class="scene-body">
+      <div id="text" class="text"></div>
+
+      <div class="media-row">
+        <img id="gif" class="gif" src="" alt="" />
       </div>
-      <div id="dwight-quote" class="hidden">
-        <blockquote>
-          "Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing."
-        </blockquote>
-        <small>— Dwight</small>
+
+      <div id="quote" class="quote"></div>
+
+      <div id="controls" class="controls">
+        <button id="nextBtn" class="btn">Continue</button>
+      </div>
+    </section>
+
+    <!-- audio for scene music/background (autoplay handling) -->
+    <audio id="sceneAudio" preload="auto"></audio>
+
+    <!-- autoplay hint / start button for mobile browsers -->
+    <div id="autoplayHint" class="autoplay-hint" style="display:none;">
+      <p>Tap to enable sound</p>
+      <button id="startAudioBtn" class="btn small">Start audio</button>
+    </div>
+
+    <!-- question overlay (short / mcq) -->
+    <div id="questionOverlay" class="overlay" style="display:none;">
+      <div class="overlay-card">
+        <button id="questionClose" class="close">×</button>
+        <p id="questionPrompt" class="question-prompt"></p>
+        <input id="questionInput" class="text-input" placeholder="Type your answer..." />
+        <div id="mcqContainer" class="mcq-container"></div>
       </div>
     </div>
 
-    <!-- Main slideshow area -->
-    <div id="player" class="hidden">
-      <div id="stage">
-        <img id="slideImage" src="" alt="slide" />
-        <div id="caption"></div>
-        <div id="controls">
-          <button id="prevBtn" class="btn">Prev</button>
-          <button id="pauseBtn" class="btn">Pause</button>
-          <button id="nextBtn" class="btn">Next</button>
-          <label class="mute">
-            <input type="checkbox" id="muteToggle" />
-            Mute
-          </label>
+    <!-- final message overlay -->
+    <div id="finishOverlay" class="overlay" style="display:none;">
+      <div class="overlay-card">
+        <button id="finishClose" class="close">×</button>
+        <pre id="finishMessage" class="finish-message"></pre>
+        <div class="finish-actions">
+          <button id="finishSend" class="btn">Copy message</button>
         </div>
       </div>
-      <div id="thumbnails"></div>
     </div>
-
-    <!-- Final questionnaire shown AFTER the episode -->
-    <div id="questionnaire" class="hidden centered">
-      <h2>One last thing...</h2>
-      <p>Please fill the short fields and press Submit. This appears only after the episode finishes.</p>
-
-      <form id="finalForm">
-        <label>Episode moment (ep):<br/><input type="text" name="ep" placeholder="e.g. beach day" /></label>
-        <label>What they said (smile):<br/><input type="text" name="smile" placeholder="e.g. 'You brightened my day'" /></label>
-        <label>Small apology part 1 (s1):<br/><input type="text" name="s1" /></label>
-        <label>Small apology part 2 (s2):<br/><input type="text" name="s2" /></label>
-        <label>Care word (care):<br/><input type="text" name="care" /></label>
-        <div class="form-actions">
-          <button type="submit" class="btn primary">Submit</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Final message block -->
-    <div id="finalMessage" class="hidden centered">
-      <h2>Final</h2>
-      <div id="finalText" class="final-text"></div>
-    </div>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
