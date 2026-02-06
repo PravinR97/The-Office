@@ -26,10 +26,10 @@ const scenes = [
     text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you — tiny memories, big apologies, and a million 'that's what she said' moments.",
     bg: "images/The_office_image.jpg",
     gif: "images/Michael_Im_dead_Inside.gif",
-    people: ["images/jim_1.jpg", "images/kelly_1.jpg"],
-    thumbs: { tl: "images/Ddddddd_1.jpg", tr: "images/DDDDDD2.jpg", bl: "images/Dddddd3.jpg", br: "images/Devyani_3.jpg" },
+    people: ["images/jim_1.jpg", "images/kelly_1.jpg" , "images/Ddddddd_1.jpg", "images/DDDDDD2.jpg"],
+    thumbs: { bl: "images/Dddddd3.jpg", br: "images/Devyani_3.jpg" },
     quote: "Would I rather be feared or loved? Easy. Both. — Michael Scott",
-    question: { type: "short", key: "favorite_office_episode", prompt: "Which episode of The Office made you laugh the hardest?" }
+    question: { type: "short", key: "favorite_office_episode", prompt: "Which episode of The Office made you laugh the hardest .... You saw it 2-3 timesss so and with me ..you must not be knoww...we were watching it from distance?" }
   },
 
   {
@@ -55,7 +55,7 @@ Tell me one tiny thing from the day that made you smile.`,
     people: ["images/kelly_1.jpg", "images/dwight_cry_1.jpg"],
     thumbs: { tl: "images/Ddddddd_1.jpg", tr: "images/devuuu_5.jpg" },
     quote: "Sometimes the worst thing is when you know you messed up — and you only want to fix it.",
-    audio: "audio/soft_piano_loop.mp3",
+    audio: "soft_piano_loop.mp3",
     question: { type: "short", key: "sadness1_repair", prompt: "One thing I can do right now to show I'm sorry?" }
   },
 
@@ -63,13 +63,13 @@ Tell me one tiny thing from the day that made you smile.`,
   {
     id: "sadness-2",
     title: "I didn't show it — but I care",
-    text: `I care always, even when I didn't show it. I'm sorry I made you feel alone. Please know I'm here.`,
+    text: `I care always, even when I didn't show it. I'm sorry I made you feel alone. Please know I'm here. Also I don't smile properly `,
     bg: "images/Dddddd3.jpg",
     gif: "images/Michael_Crying.gif",
-    people: ["images/dwight_cry_2.jpg", "images/kelly_1.jpg"],
+    people: ["images/dwight_cry_2.jpg", "images/dwight_cry_2.jpg"],
     thumbs: { tl: "images/Devuuuu_2.jpg", br: "images/ddddduuuu_3.jpg" },
     quote: "I wish I had been better at showing what matters.",
-    audio: "audio/ambient_strings.mp3",
+    audio: "Dwight_about_smile_chimpanzee_begging.mp3",
     question: { type: "short", key: "sadness2_repair", prompt: "What would make you feel safer with me again?" }
   },
 
@@ -98,7 +98,7 @@ Tell me one tiny thing from the day that made you smile.`,
       br: "images/Devyani_3.jpg"
     },
     quote: "Will you let me show up better? I love your smile, your small laugh, the way you are.",
-    audio: "audio/soft_guitar_loop.mp3",
+    audio: "theme.mp3",
     question: { type: "short", key: "care_gallery_what", prompt: "Tell me one little thing about you I should never forget." }
   },
 
@@ -505,16 +505,19 @@ function showFinal() {
   const care = responses.care_gallery_what || "the way you laugh";
 
   const message = [
-    "Hey love — I made this for you.",
+    "Hey Devu...Devi..Devyaniii....Cutuuuu...Sexy and beautiful eyes  — I wanted to show this to you for so many dyas...just wanted to show you.",
+   "You had a lively, playful disposition that delighted in anything ridiculous." ,
+   "In vain I have struggled. It will not do. My feelings will no longer be repressed. You must allow me to tell you how ardently I admire and love you."
+     " A person who can write a long letter with ease, cannot write ill.- Jane Austen "
     `I remember laughing with you at ${ep}.`,
     `You told me today: ${smile}. That made me smile too.`,
-    `For the times I was sad and hurt you: ${s1} / ${s2}.`,
+    `For the times I was not good and hurt you and for how many times you accepted it ...let go of me....: ${s1} / ${s2}.`,
     `One thing I promise: I'll keep ${care} close and never forget.`,
     "",
-    "I'm sorry for the times I hurt you. I regret the bad things I've done.",
-    "I hope you are doing fine. I love you, I care for you, and I want to keep making better memories with you.",
-    "",
-    "Will you give me one more chance to make new memories?"
+    "I'm sorry for the times I hurt you. I regret the bad things I've done.........also I wish I had no heart, it aches so…",
+    "I hope you are doing fine.You are the gull, D, strong and wild, fond of the storm and the wind, flying far out to sea, and happy all alone",
+    "I jus wanted you tobe happy ...and Maybe someday we will meet and will become happy at last..",
+    "?"
   ].join("\n\n");
 
   finishMessage.innerText = message;
