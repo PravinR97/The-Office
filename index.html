@@ -3,104 +3,67 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>For You — Office Tour</title>
+  <title>The Office — Episode</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
-    <header id="topbar">
-      <h1 id="title">For You</h1>
-      <div id="controls">
-        <button id="enableMediaBtn" title="Enable audio & video (required to hear music)">Enable media</button>
-        <button id="muteBtn" title="Mute / unmute">🔈</button>
-        <button id="gifPauseBtn" title="Pause / play GIFs">⏸️ GIF</button>
+    <!-- First / intro slide with Yes/No -->
+    <div id="intro" class="centered">
+      <h1>Starting...</h1>
+      <p>DO you wanna go forward here (not in real life)... or in both?</p>
+      <div id="intro-buttons">
+        <button id="yesBtn" class="btn primary">Yes</button>
+        <button id="noBtn" class="btn ghost">No</button>
       </div>
-    </header>
-
-    <main id="scene" role="main" aria-live="polite">
-      <!-- corner thumbnails (personal photos) -->
-      <div id="cornerThumbs">
-        <img id="thumb-top-left" class="corner-thumb" src="" alt="" />
-        <img id="thumb-top-right" class="corner-thumb" src="" alt="" />
-        <img id="thumb-bottom-left" class="corner-thumb" src="" alt="" />
-        <img id="thumb-bottom-right" class="corner-thumb" src="" alt="" />
-      </div>
-
-      <!-- stacked people (Office stills) -->
-      <div id="peopleBg" aria-hidden="true"></div>
-
-      <!-- media region: either gif image or looping video (mp4/webm) -->
-      <div id="media">
-        <img id="gifImg" alt="" />
-        <video id="gifVideo" muted loop playsinline></video>
-      </div>
-
-      <!-- content -->
-      <div id="contentPanel">
-        <h2 id="sceneTitle"></h2>
-        <div id="text"></div>
-        <blockquote id="quote"></blockquote>
-
-        <div id="actionRow">
-          <button id="nextBtn" class="primary">Loading...</button>
-          <button id="scenePlayAudio" class="secondary" style="display:none">Play scene audio</button>
-          <div id="mediaStatus" class="media-status"></div>
-        </div>
-      </div>
-    </main>
-
-    <!-- question overlay -->
-    <div id="questionOverlay" class="overlay" style="display:none">
-      <div class="overlayCard">
-        <button id="questionClose" class="closeX">✕</button>
-        <h3 id="questionPrompt"></h3>
-        <div id="mcqContainer" class="mcq"></div>
-        <input id="questionInput" type="text" placeholder="Type your answer..." />
-        <div class="overlayActions">
-          <button id="questionSubmit" class="primary">Submit</button>
-          <button id="questionSkip">Skip</button>
-        </div>
+      <div id="dwight-quote" class="hidden">
+        <blockquote>
+          "Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing."
+        </blockquote>
+        <small>— Dwight</small>
       </div>
     </div>
 
-    <!-- final overlay -->
-    <div id="finishOverlay" class="overlay" style="display:none">
-      <div class="overlayCard">
-        <button id="finishClose" class="closeX">✕</button>
-        <h3>One last thing...</h3>
-        <pre id="finishMessage" class="finalText"></pre>
-        <div class="overlayActions">
-          <button id="finishSend" class="primary">Copy message</button>
+    <!-- Main slideshow area -->
+    <div id="player" class="hidden">
+      <div id="stage">
+        <img id="slideImage" src="" alt="slide" />
+        <div id="caption"></div>
+        <div id="controls">
+          <button id="prevBtn" class="btn">Prev</button>
+          <button id="pauseBtn" class="btn">Pause</button>
+          <button id="nextBtn" class="btn">Next</button>
+          <label class="mute">
+            <input type="checkbox" id="muteToggle" />
+            Mute
+          </label>
         </div>
       </div>
+      <div id="thumbnails"></div>
     </div>
 
-    <!-- explicit media-enable modal (shown until user enables media) -->
-    <div id="mediaEnableOverlay" class="overlay media-enable" style="display:flex">
-      <div class="overlayCard">
-        <h2>Please tap to enable audio & video</h2>
-        <p>Browsers block autoplay by default. Tap the button below so music, voices and GIF videos can play. This is required for a full experience.</p>
-        <div style="display:flex; gap:12px; justify-content:center; margin-top:16px;">
-          <button id="enableMediaOverlayBtn" class="primary">Enable media</button>
-          <button id="enableMediaLaterBtn" class="secondary">I'll enable later</button>
+    <!-- Final questionnaire shown AFTER the episode -->
+    <div id="questionnaire" class="hidden centered">
+      <h2>One last thing...</h2>
+      <p>Please fill the short fields and press Submit. This appears only after the episode finishes.</p>
+
+      <form id="finalForm">
+        <label>Episode moment (ep):<br/><input type="text" name="ep" placeholder="e.g. beach day" /></label>
+        <label>What they said (smile):<br/><input type="text" name="smile" placeholder="e.g. 'You brightened my day'" /></label>
+        <label>Small apology part 1 (s1):<br/><input type="text" name="s1" /></label>
+        <label>Small apology part 2 (s2):<br/><input type="text" name="s2" /></label>
+        <label>Care word (care):<br/><input type="text" name="care" /></label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Submit</button>
         </div>
-      </div>
+      </form>
     </div>
 
-    <!-- autoplay hint (hidden normally) -->
-    <div id="autoplayHint" class="hint" style="display:none">
-      <p>Audio was blocked. Tap Enable media to allow sound & looping GIFs.</p>
-      <button id="autoplayPlay">Enable media</button>
+    <!-- Final message block -->
+    <div id="finalMessage" class="hidden centered">
+      <h2>Final</h2>
+      <div id="finalText" class="final-text"></div>
     </div>
-
-    <!-- hidden audio elements (preload) -->
-    <audio id="bgAudio" preload="auto" loop></audio>
-    <audio id="sfxAudio" preload="auto"></audio>
-    <audio id="voiceAudio" preload="auto"></audio>
-
-    <footer id="footer">
-      <small>Made with a bit of Michael-level confidence and a lot of heart.</small>
-    </footer>
   </div>
 
   <script src="script.js"></script>
