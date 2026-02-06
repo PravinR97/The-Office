@@ -1,104 +1,64 @@
-:root{
-  --bg:#0f1113;
-  --accent:#ffcc00;
-  --glass:rgba(255,255,255,0.05);
-}
-
 body{
   margin:0;
-  background:radial-gradient(circle at top left,#0b1220,var(--bg));
-  font-family:Segoe UI,Roboto,Arial,sans-serif;
-  color:#eee;
+  background:#000;
+  font-family:Segoe UI,Roboto,Arial;
+  color:#fff;
+  overflow:hidden;
+}
+
+#bgGif{
+  position:fixed;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:.25;
+  transition:opacity 1s, background-image 1s;
+  z-index:-1;
 }
 
 .scene{
   min-height:100vh;
   display:flex;
   flex-direction:column;
+  justify-content:center;
   align-items:center;
-  padding:24px;
-}
-
-.scene-header{
-  margin-bottom:12px;
-}
-
-.title{
-  color:var(--accent);
+  padding:30px;
   text-align:center;
 }
 
-.scene-body{
-  max-width:900px;
-  width:100%;
-  background:var(--glass);
-  padding:20px;
-  border-radius:14px;
-  backdrop-filter:blur(6px);
+#image{
+  max-width:60%;
+  margin:20px auto;
+  border-radius:12px;
+  display:none;
 }
 
-.text{
-  min-height:80px;
-  font-size:1.05rem;
-  line-height:1.5;
-  white-space:pre-wrap;
+#controls button{
+  margin:10px;
+  padding:12px 22px;
+  border-radius:12px;
+  border:none;
+  background:#ffcc00;
+  font-weight:700;
+  cursor:pointer;
 }
 
-.media-row{
-  text-align:center;
-  margin:14px 0;
-}
-
-.gif{
-  max-width:65%;
-  border-radius:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-}
-
-.quote{
+#quote{
   font-style:italic;
   color:#ccc;
 }
 
-.controls{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  margin-top:16px;
-}
-
-.btn{
-  background:linear-gradient(#ffcc00,#d4a900);
-  border:0;
-  padding:10px 18px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.overlay{
+#questionOverlay{
+  display:none;
   position:fixed;
   inset:0;
-  display:none;
+  background:rgba(0,0,0,.7);
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.6);
 }
 
-.overlay-card{
-  background:#08131d;
+.card{
+  background:#111;
   padding:20px;
   border-radius:12px;
-  width:90%;
-  max-width:420px;
-}
-
-.text-input{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#000;
-  color:#fff;
-  margin-bottom:12px;
 }
