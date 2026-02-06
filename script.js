@@ -1,149 +1,114 @@
 const title = document.getElementById("title");
 const text = document.getElementById("text");
+const img = document.getElementById("image");
 const quote = document.getElementById("quote");
 const controls = document.getElementById("controls");
-const img = document.getElementById("mediaImage");
-const audio = document.getElementById("sceneAudio");
+const audio = document.getElementById("audio");
+const bgGif = document.getElementById("bgGif");
 
-const questionOverlay = document.getElementById("questionOverlay");
-const submitAnswer = document.getElementById("submitAnswer");
+let i = 0;
 
-let slide = 0;
-
-const slides = [
+const scenes = [
   {
-    title: "Before We Begin",
-    text: "Do you wanna go forward here… not in real life… or in both?",
-    buttons: true
+    mood:"chaos",
+    bg:"Dwight_Dancing.gif",
+    text:"Do you want to go forward here… not real life… or both?",
+    buttons:true
   },
   {
-    title: "Dwight Schrute",
-    text: `"Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing."`,
-    quote: "— Dwight K. Schrute"
+    mood:"funny",
+    bg:"Dwight_would_a_Idiot.gif",
+    audio:"That's_What_she_said.mp3",
+    text:`"Whenever I'm about to do something, I think:
+Would an idiot do that?"
+— Dwight Schrute`
   },
   {
-    title: "The Office",
-    text: "Identity theft is not a joke, Jim.",
-    quote: "Millions of families suffer every year."
+    mood:"funny",
+    bg:"Michael_Dancing.gif",
+    audio:"Michael_scott_thank_you.mp3",
+    image:"Michael_Scott_1.jpg",
+    quote:`"Would I rather be feared or loved? Both."`
   },
   {
-    title: "Michael Scott",
-    text: "I am Beyoncé, always.",
-    img: "img1.jpg",
-    audio: "audio1.mp3"
+    mood:"awkward",
+    bg:"Jim_as_Dwight.jpg",
+    audio:"deranged.mp3",
+    image:"Jim_as_Dwight.jpg",
+    quote:`"Bears. Beets. Battlestar Galactica."`
   },
   {
-    title: "Jim Halpert",
-    text: "Everything I have I owe to this job… this stupid, wonderful job.",
-    img: "gif1.gif",
-    audio: "audio2.mp3"
+    mood:"warm",
+    bg:"Pam_happy.jpg",
+    audio:"theme.mp3",
+    image:"Pam_happy.jpg",
+    quote:`"When you’re a kid, you assume your parents are soulmates."`
   },
   {
-    title: "Pam Beesly",
-    text: "I feel God in this Chili’s tonight.",
-    img: "img2.jpg",
-    audio: "audio3.mp3"
+    mood:"romantic",
+    bg:"Devu1.jpeg",
+    audio:"wild.mp3",
+    image:"Devu1.jpeg",
+    text:"This part… wasn’t from The Office."
   },
   {
-    title: "Andy Bernard",
-    text: "I wish there was a way to know you're in the good old days before you've actually left them.",
-    img: "gif2.gif",
-    audio: "audio4.mp3"
-  },
-  {
-    title: "Silence",
-    text: "Sometimes the smallest moments stay the longest.",
-    img: "img3.jpg",
-    audio: "audio5.mp3"
-  },
-  {
-    title: "For You",
+    mood:"quiet",
+    bg:"Dwight_cry_2.jpg",
+    audio:"nogod.mp3",
     text:
-`Hey Devu...Devi..Devyaniii....Cutuuuu...Sexy and beautiful eyes —
-I wanted to show this to you for so many days...just wanted to show you.
+`Hey Devu… Devi… Devyani…
 
-"You had a lively, playful disposition that delighted in anything ridiculous."
+I wanted to show this to you for so many days.
 
-"In vain I have struggled. It will not do. My feelings will no longer be repressed.
-You must allow me to tell you how ardently I admire and love you."
-
-"A person who can write a long letter with ease, cannot write ill." – Jane Austen
-
-I remember laughing with you at \${ep}.
-You told me today: \${smile}. That made me smile too.
-
-For the times I was not good and hurt you…
-let go of me… \${s1} / \${s2}.
-
-One thing I promise: I'll keep \${care} close and never forget.
-
-I'm sorry for the times I hurt you.
-I wish I had no heart, it aches so…
-
-You are the gull — strong and wild,
-fond of the storm and the wind.
-
-I just wanted you to be happy…
-Maybe someday we will meet
-and be happy at last.
-
-?`
+In vain I have struggled.
+It will not do.
+You must allow me to tell you
+how ardently I admire and love you.`
   }
 ];
 
-function renderSlide() {
-  const s = slides[slide];
-  title.innerText = s.title || "";
+function render(){
+  const s = scenes[i];
+  title.innerText = "";
   text.innerText = s.text || "";
   quote.innerText = s.quote || "";
 
-  img.style.display = s.img ? "block" : "none";
-  img.src = s.img || "";
+  bgGif.style.backgroundImage = `url(${s.bg})`;
 
-  if (s.audio) {
+  if(s.image){
+    img.src = s.image;
+    img.style.display="block";
+  } else img.style.display="none";
+
+  if(s.audio){
     audio.src = s.audio;
     audio.play().catch(()=>{});
   }
 
-  controls.innerHTML = "";
+  controls.innerHTML="";
 
-  if (s.buttons) {
-    const yes = document.createElement("button");
-    yes.innerText = "Yes";
-    yes.className = "btn";
-    yes.onclick = () => {
-      audio.src = "audio1.mp3";
-      audio.play().catch(()=>{});
-      slide++;
-      renderSlide();
-    };
+  if(s.buttons){
+    const yes=document.createElement("button");
+    yes.innerText="YES";
+    yes.onclick=()=>{ i++; render(); };
 
-    const no = document.createElement("button");
-    no.innerText = "No";
-    no.className = "btn";
-    no.onmouseover = () => {
-      no.style.position = "absolute";
-      no.style.left = Math.random()*80 + "%";
-      no.style.top = Math.random()*80 + "%";
+    const no=document.createElement("button");
+    no.innerText="NO";
+    no.onmouseover=()=>{
+      no.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px) rotate(${Math.random()*360}deg)`;
     };
 
     controls.append(yes,no);
-  } else if (slide < slides.length - 1) {
-    const next = document.createElement("button");
-    next.innerText = "Continue";
-    next.className = "btn";
-    next.onclick = () => {
-      slide++;
-      renderSlide();
-    };
-    controls.appendChild(next);
   } else {
-    questionOverlay.style.display = "flex";
+    const next=document.createElement("button");
+    next.innerText="Continue";
+    next.onclick=()=>{
+      i++;
+      if(i<scenes.length) render();
+      else document.getElementById("questionOverlay").style.display="flex";
+    };
+    controls.append(next);
   }
 }
 
-submitAnswer.onclick = () => {
-  questionOverlay.innerHTML = "<div class='overlay-card'>Thank you for answering ❤️</div>";
-};
-
-renderSlide();
+render();
