@@ -8,6 +8,9 @@
 const ANSWER_SFX_CANDIDATES = [
   "That's_what_she_said.mp3",
   "Thats_What_she_said.mp3",
+   "Michael_scott_thank_you.mp3" ,
+   "daffyduck.mp3 ", 
+   "theme.mp3 ",
   "shesaid.mp3",
   "ThatsWhatSheSaid.mp3",
 ];
