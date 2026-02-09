@@ -56,9 +56,9 @@ also I am not dwight so i can't do it like him ...according to him .... “My pe
 Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
 
 `,
-    bg: "images/office_bg2.jpg",
+    bg: [ "images/office_bg2.jpg", "images/devvvvv_5.jpg" ,  "images/ Kelly_kapoor_Couple.jpg " ,"images/ddddduuuu_3.jpg" ]
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",        "images/devvvvv_5.jpg" ,       "images/Devu1.jpg" ,           "images/ Kelly_kapoor_Couple.jpg " , "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
+    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",            "images/Devu1.jpg" ,            "images/pam_1.jpg" ],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/Devuuu_2.jpg",
@@ -82,9 +82,9 @@ also I am not dwight so i can't do it like him ...according to him .... “My pe
 Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
 
 `,
-    bg: "images/office_bg2.jpg",
+    bg:[ "images/office_bg2.jpg", "images/Michael_1.jpg",             "images/Devu1.jpg" ,            "images/ Kelly_kapoor_Couple.jpg "] ,
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",        "images/devvvvv_5.jpg" ,       "images/Devu1.jpg" ,           "images/ Kelly_kapoor_Couple.jpg " , "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
+    people: ["images/kelly_1.jpg",             "images/devvvvv_5.jpg" ,                 "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/Devuuu_2.jpg",
@@ -119,8 +119,8 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
         id: "mba-chaiwala",
         title: "MBA Chaiwala — I was wrong...I think positive side of this fights is that ....We can remember every unique place with its Unique Altercation between us...Like MBA Chaiwala , Maggie Place , pahalgam , Regarding going to Vaishnodevi....tell me a single memory of us ... I will tell you fight regarding around it",
         text: `At MBA chaiwala — not for once but many times .....toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na. but Failure of any kind is failure. i have to accept that . also i will learn somethings from Schrute Family having said ----There are forty rules all Schrute boys must learn before the age of five. Learn your rules. You better learn your rules. If you don’t, you’ll be eaten in your sleep!“`,
-        bg: "images/office_bg2.jpg",
-        people: ["images/dwight_cry_1.jpg", "images/Michael_Crying.jpg", "images/devvvvv_5.jpg"  ,     "images/ddddduuuu_3.jpg"],
+        bg: ["images/office_bg2.jpg",  "images/Michael_Crying.jpg", "images/ddddduuuu_3.jpg" ]
+        people: ["images/dwight_cry_1.jpg", "images/devvvvv_5.jpg"  ,     ],
         gif: "images/Dwight_let's_do_this.gif",
         quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott",
         thumbs: {
@@ -137,8 +137,7 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
         id: "maggie-place",
         title: "Fight at Maggie's place",
         text: `Fight at Maggie's place last to last year... I am very sorry for thattttttt also. `,
-        bg: "images/Devuuu_2.jpg",
-        people: ["images/pam_1.jpg", "images/jim_1.jpg"],
+        bg: ["images/Devuuu_2.jpg",  "images/jim_1.jpg" , "images/pam_1.jpg" ] ,
         gif: "images/Michael_Dance_2.gif",
         quote: `I am running away from my responsibilities. And it feels good. — (but not this time)`,
         thumbs: {
@@ -155,7 +154,7 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
         id: "Pahalgam-fight ...This has to be th worst thing i did in my entire lifeeeeeeee......I am sorrry",
         title: "Pahalgam — Night was magic, morning I ruined it....This has to be th worst thing i did in my entire lifeeeeeeee",
         text: `That night in Kashmir was magic. The morning turned bad because of me. I am so sorry — my mistake and my regrets. Sorrrrryyyyyyy.\nI will never forget the stars. Let me fix this memory for us.`,
-        bg: "images/Devu1.jpg",
+        bg:[ "images/Devu1.jpg", "images/devvvvv_5.jpg" , "images/ddddddd_1.jpg" ] ,
         people: ["images/michael_1.jpg"],
         gif: "images/heart_fireworks.gif",
         quote: "I wish there was a way to know you’re in the good old days before you’ve actually left them.",
