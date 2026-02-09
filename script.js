@@ -13,6 +13,17 @@ const ANSWER_SFX_CANDIDATES = [
 ];
 
 const scenes = [
+   // 🔐 Office Gate Scene (Pre-Intro)
+{
+  id: "gate",
+  title: "Before You Enter…",
+  text: "Do you want to go inside…?",
+  bg: "office_bg1.jpg",
+  gif: "Dwight_would_a_Idiot.gif",
+  quote: "“Whenever I’m about to do something, I think, ‘Would an idiot do that?’ And if they would, I do not do that thing.” — Dwight Schrute",
+  gate: true
+},
+
   // Intro
   {
     id: "intro",
@@ -213,6 +224,40 @@ function setBackground(url) {
     sceneEl.style.backgroundImage = `linear-gradient(135deg,#222,#0b0b0b)`;
   };
   img.src = url;
+}
+
+function handleGate() {
+  // Disable Next button
+  nextBtn.innerText = "";
+  nextBtn.disabled = true;
+
+  // YES button
+  const yesBtn = document.createElement("button");
+  yesBtn.innerText = "Yessssss 😁";
+  yesBtn.className = "gateYes";
+
+  // NO button
+  const noBtn = document.createElement("button");
+  noBtn.innerText = "Noooo 😢";
+  noBtn.className = "gateNo";
+
+  // YES works
+  yesBtn.addEventListener("click", () => {
+    index++; // move to real intro
+    loadScene();
+  });
+
+  // NO runs away
+  noBtn.addEventListener("mouseenter", () => {
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform =
+      `translate(${x}px, ${y}px) rotate(${Math.random() * 20 - 10}deg)`;
+  });
+
+  // Add buttons to screen
+  nextBtn.parentElement.appendChild(yesBtn);
+  nextBtn.parentElement.appendChild(noBtn);
 }
 
 function renderPeople(list = []) {
@@ -430,6 +475,22 @@ function hideQuestion() {
 
 function loadScene() {
   const current = scenes[index];
+   // 🧠 Office Gate Logic
+if (current.id === "gate") {
+  setBackground(current.bg);
+  sceneTitle.innerText = current.title || "";
+  quoteEl.innerText = current.quote || "";
+  textEl.innerText = current.text || "";
+
+  renderPeople([]);
+  setCornerThumbs({});
+  showMedia(current.gif || "", "", current.bg || "");
+
+  handleGate();
+  playBg(""); // no background music here
+  return;
+}
+
   if (!current) return;
   // reset fightsIndex if entering fights scene
   if (current.id === "fights") {
@@ -654,6 +715,8 @@ function showFinal() {
 
 nextBtn.addEventListener("click", (ev) => {
   const current = scenes[index];
+   if (current && current.id === "gate") return;
+
   // special flows
   if (current && current.id === "intro") {
     handleIntroClick();
