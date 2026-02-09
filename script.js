@@ -30,7 +30,7 @@ const scenes = [
     id: "intro",
     title: "Welcome to Dunder Mifflin — IIM Jammu Branch",
     text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you... — tiny memories, big apologies, and a million 'that's what she said' moments.",
-    bg: ["images/The_office_image.jpg",         " images/ toby_1.jpg " ,         "images/Worlds_best_boss.jpg " ] ,
+    bg: ["images/The_office_image.jpg",      "images/devvvvv_5.jpg",    " images/ toby_1.jpg " ,         "images/Worlds_best_boss.jpg " ] ,
     gif: "images/Kelly_Italkalotsoilearnedtojusttumemyselfout.gif",
     people: ["images/jim_1.jpg", "images/kelly_1.jpg" , "images/Dddddd3.jpg"],
     thumbs: {
@@ -59,7 +59,7 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
 `,
     bg: [ "images/office_bg2.jpg", "images/devvvvv_5.jpg" ,  "images/ Kelly_kapoor_Couple.jpg " ,"images/ddddduuuu_3.jpg" ] ,
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",            "images/Devu1.jpg" ,            "images/pam_1.jpg" ],
+    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",            "images/Devu1.jpg" ,           "images/ddddduuuu_3.jpg" ],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/Devuuu_2.jpg",
