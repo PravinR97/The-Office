@@ -55,13 +55,7 @@ html,body,#app { height: 100%; font-family: Inter, system-ui, -apple-system, "Se
 /* autoplay hint */
 .hint { position:fixed; right:18px; bottom:18px; background:#111; border:1px solid rgba(255,255,255,0.06); padding:12px; border-radius:8px; z-index:200; }
 
-/* small responsive adjustments */
-@media (max-width:900px) {
-  .corner-thumb { width:80px; height:80px; }
-  #peopleBg img.person { width:110px; height:110px; }
-  #media img, #media video { max-width:60%; max-height:48%; }
-  #sceneTitle { font-size:1.2rem; }
-  .gateYes, .gateNo {
+.gateYes, .gateNo {
   font-size: 1.5rem;
   padding: 14px 28px;
   margin: 20px;
@@ -82,4 +76,10 @@ html,body,#app { height: 100%; font-family: Inter, system-ui, -apple-system, "Se
   position: relative;
 }
 
+/* small responsive adjustments */
+@media (max-width:900px) {
+  .corner-thumb { width:80px; height:80px; }
+  #peopleBg img.person { width:110px; height:110px; }
+  #media img, #media video { max-width:60%; max-height:48%; }
+  #sceneTitle { font-size:1.2rem; }
 }
