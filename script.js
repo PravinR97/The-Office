@@ -127,7 +127,7 @@ const scenes = [
   {
     id: "gate",
     title: "Before You Enter…",
-    text: "Do you want to go inside…?",
+    text: "Do you want to go inside…of course you will select No...Like please select nooo ...Noo please?",
     bg: "images/office_bg1.jpg",
     gif: "images/Dwight_would_a_Idiot.gif",
     quote:
@@ -166,7 +166,7 @@ const scenes = [
     question: {
       type: "short",
       key: "today_smile",
-      prompt: "Tell me one tiny thing from today that made you smile.",
+      prompt: "Tell me one tiny thing from today that made you smile.Like whatever ..You have to say it right...it will show in last message ...Algoritm is like that only",
     },
     bgAudio: AUDIO.wild,
   },
@@ -174,17 +174,17 @@ const scenes = [
     id: "episode-3",
     title: "Episode 3 — Katakirr Misal, Bhindi & Discipline",
     text:
-      "You and your food choices are iconic: katakirr misal, bhindi, and healthy schedule energy.\nI love that you care about discipline, good sleep, and steady routines.\nI want to be part of that — your calm, not your chaos.",
+      "You and your food choices are iconic: (first one is mine btw) katakirr misal, bhindi(Bhindi bohot acchi lagti hai mujhe ..Bhindi ke saath kuch bhi ho paratha ho roti ho  ), and healthy schedule ..(Makka roti in Zamindara)energy.\nI love that you care about discipline, good sleep, and steady routines.\nI want to be part of that — your calm, not your chaos.",
     bg: ["images/Office_bg_2.jpg", "images/Stanley_angry_Look.jpg", "images/Pam_Salute.jpg"],
     video: "images/Bhindi_bohot_paasand.mp4",
     people: ["images/Kevin_1.jpg", "images/Stanley_angry_Look.jpg", "images/Pam_happy.jpg"],
     thumbs: { pool: PHOTO_POOL },
-    quote: "Eat, breathe, plan, repeat. The Schrutes respect discipline.",
+    quote: "YOu will say why are you talking about Nostalgia and Memoriesso much because ...According to great person , philosopher Mr.Dwight Kurt Schrute III....People underestimate the power of nostalgia. Nostalgia is truly one of the greatest human weaknesses, second only to the neck.Eat, breathe, plan, repeat. The Schrutes respect discipline.",
     question: {
       type: "mcq",
       key: "favorite_food",
       prompt: "Pick your vibe today:",
-      choices: ["Katakirr misal", "Bhindi", "Both", "Surprise me"],
+      choices: ["Katakirr misal", "Bhindi", "Both","beets", "deer jerky", "bear meat ","Surprise me"],
     },
     bgAudio: AUDIO.gamble,
   },
@@ -210,7 +210,7 @@ const scenes = [
     id: "episode-5",
     title: "Episode 5 — Us, But Make It Epic",
     text:
-      "Some days we’re soft, some days we’re stormy.\nBut I want to show up — consistently, kindly, and with intention.\nYou deserve that.",
+      "Some days we’re soft, some days we’re stormy.\nBut I want to show up — consistently, kindly, and with intention.\nDo I need to be liked? Absolutely not. I like to be liked. I enjoy being liked. I have to be liked. But it’s not like this compulsive need like my need to be praised.",
     bg: ["images/Whole_squad.jpg", "images/peaky_bg.jpg", "images/Worlds_best_boss.jpg"],
     gif: "images/Dwight_Dancing_2.gif",
     people: ["images/Devyani_3.jpeg", "images/Devu1.jpeg", "images/devvvvvv_5.jpeg", "images/dddduuuu_3.jpeg"],
@@ -253,10 +253,10 @@ const scenes = [
     quote: "I wish there was a way to know you’re in the good old days...",
     fights: [
       {
-        id: "mba-chaiwala",
-        title: "MBA Chaiwala — I was wrong",
+        id: "One of our fight from many instances ...at mba-chaiwala",
+        title: "MBA Chaiwala...I don't know why I think of adding this fight of ours  — I was wrong as always ",
         text:
-          "At MBA chaiwala — not once, but many times — I handled things badly.\nI’m sorry for the words and the tone. I want to fix this memory for us.",
+          "At MBA chaiwala — not once, but many times — I handled things badly.\nI’m sorry for the words and way i acted. I want to fix this memory for us.so maybe this website will try to sooth that memory",
         bg: ["images/office_bg2.jpg", "images/Michael_Crying.jpg", "images/dddduuuu_3.jpeg"],
         people: ["images/dwight_cry_1.jpg", "images/devvvvvv_5.jpeg"],
         gif: "images/Dwight_let's_do_this.gif",
@@ -270,28 +270,28 @@ const scenes = [
       },
       {
         id: "maggie-place",
-        title: "Maggie’s Place — I’m sorry",
+        title: "Maggie’s Place — one of the many moments we spent here.....Also you went with diya ..without mee.....But I’m sorry for some bad memories if there are ... you can forgive me in that also  ",
         text:
-          "That fight at Maggie’s place... I regret it. I’m sorry for adding stress instead of peace.",
+          "That fight at Maggie’s place... I regret it. I’m sorry for adding stress instead of peace.And I knew exactly what to do. But in a much more real sense, I had no idea what to do just like Micahel..and you liked michael so you will forgive me one day...or after thisssssss",
         bg: ["images/Devuuuu_2.jpeg", "images/Jim 1.jpg", "images/Pam_happy.jpg"],
         gif: "images/Michael_TImeout.gif",
-        quote: "I am running away from my responsibilities. And it feels good. — (but not this time)",
+        quote: "I am running away from my responsibilities and were not talking like real mature , and good person (Uncle). And it feels good. — (but not this time)",
         thumbs: { pool: PHOTO_POOL },
         question: {
           type: "short",
           key: "maggie_place_fix",
-          prompt: "What helped you calm down that day?",
+          prompt: "What helped you calm down that day...What calm do you get from me like anything...atleast write something for my Last message like bro anything?",
         },
       },
       {
         id: "kashmir",
-        title: "Pahalgam — I ruined the morning",
+        title: "Pahalgam and Vaishnodevi and many more good memories of us — I ruined some parts of it ",
         text:
-          "That night in Kashmir was magic. The morning turned bad because of me.\nI’m truly sorry — let me fix this memory for us.",
+          "That night in Kashmir was magic. The morning turned bad because of me.I am not that kind of person indside .you know that..I will not act like that in any point of my life here or at moon (If we got colony there after some years ..there also I will not do like this..Like not in my bad memory also... You are my priority alwayssss\nI’m truly sorry — let me fix this memory for us.",
         bg: ["images/Devu1.jpeg", "images/devvvvvv_5.jpeg", "images/Ddddddd_1.jpeg"],
         people: ["images/michael_1.jpg"],
         gif: "images/Michael_gif_1.gif",
-        quote: "I wish there was a way to know you’re in the good old days...",
+        quote: "I wish there was a way to know you’re in the good old days...Mr Toby Flenderson's Best Quote",
         thumbs: { pool: PHOTO_POOL },
         question: {
           type: "short",
@@ -303,7 +303,7 @@ const scenes = [
   },
   {
     id: "final",
-    title: "To You — My Little Message, A Lot of Love",
+    title: "To You — My Little Message, A Lot of Love, Happiness , Wilderness , Memories ...History belongs in the past; but understanding it is the duty of the present.",
     text: "Click FINISH to reveal something I want you to keep just between us.",
     bg: "images/office_bg3.jpg",
     gif: "images/let_me_love_you_Michael.gif",
