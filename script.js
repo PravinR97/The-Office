@@ -18,8 +18,8 @@ const scenes = [
   id: "gate",
   title: "Before You Enter this…",
   text: "Do you want to go inside…?",
-  bg: "office_bg1.jpg",
-  gif: "Dwight_would_a_Idiot.gif",
+  bg:[ "images/office_bg1.jpg",      "images/Micahel_face.jpg "],
+  gif: "images/Dwight_would_a_Idiot.gif",
   quote: "“Whenever I’m about to do something, I think, ‘Would an idiot do that?’ And if they would, I do not do that thing.” — Dwight Schrute",
   gate: true
 },
@@ -30,7 +30,7 @@ const scenes = [
     title: "Welcome to Dunder Mifflin — IIM Jammu Branch",
     text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you — tiny memories, big apologies, and a million 'that's what she said' moments.",
     bg: "images/The_office_image.jpg",
-    gif: "images/Michael_Im_dead_Inside.gif",
+    gif: "images/Kelly_Italkalotsoilearnedtojusttumemyselfout.gif",
     people: ["images/jim_1.jpg", "images/kelly_1.jpg" , "images/Dddddd3.jpg"],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
@@ -38,10 +38,10 @@ const scenes = [
       bl: "images/Devvvvv_2.jpg",
       br: "images/ddddduuuu_3.jpg"
     },
-    quote: "Would I rather be feared or loved? Easy. Both. — Michael Scott",
+    quote: "Jim (devyani) is my enemy. But it turns out that Jim(Devyani) is also his own worst enemy. And the enemy of my enemy is my friend. So Jim(Devyani) is actually my friend. But, because he is his own worst enemy, the enemy of my friend is my enemy, so actually, Jim (devyani) is my enemy.",
     question: {
       type: "short",
-      key: "favorite_office_episode",
+      key: "You know , how we started watching THE OFFICE......because how come we chose this show...there should be a legend/Hilarious/ Intelligent among us ...IQ must be as good as ...your favourite Epsiode must be Diversity day..or The Dundies or worst ...Goodbye, Michael....Write here which one for My next algorithmic steps ",
       prompt: "Which episode of The Office made you laugh the hardest?"
     }
   },
@@ -53,7 +53,7 @@ const scenes = [
     text:
 `All you need is love? False. The four basic human necessities are air, water, food and shelter (As per Mr.Dwight )...sooooo ..How am I feeling? Oh, absolutely fantastic.... Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% and definitely not thinking about you.
 (And okay fine, maybe I'm thinking about you a little. Like the way Jim hides a smile after Pam laughs.)
-
+also I am not dwight so i can't do it like him ...according to him .... “My perfect Valentine’s Day? I’m at home. Three cell phones in front of me. Fielding desperate calls from people who want to buy one of the 50 restaurant reservations I made over six months ago.”
 Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
 
 `,
