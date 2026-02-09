@@ -6,10 +6,10 @@
 
 /* ---------- Configuration & assets ---------- */
 const ANSWER_SFX_CANDIDATES = [
-  "images/That's_what_she_said.mp3",
-  "images/Thats_What_she_said.mp3",
-  "images/shesaid.mp3",
-  "audio/ThatsWhatSheSaid.mp3",
+  "That's_what_she_said.mp3",
+  "Thats_What_she_said.mp3",
+  "shesaid.mp3",
+  "ThatsWhatSheSaid.mp3",
 ];
 
 const scenes = [
@@ -18,7 +18,7 @@ const scenes = [
   id: "gate",
   title: "Before You Enter this…",
   text: "Do you want to go inside…?",
-  bg:[ "images/office_bg1.jpg",      "images/Micahel_face.jpg "],
+  bg:[ "images/office_bg1.jpg",   "images/ Creed_2.jpg ", "images/Kevin_1.jpg",      "images/ Michael_famous_meme.jpg",  "images/Micahel_face.jpg "],
   gif: "images/Dwight_would_a_Idiot.gif",
   quote: "“Whenever I’m about to do something, I think, ‘Would an idiot do that?’ And if they would, I do not do that thing.” — Dwight Schrute",
   gate: true
@@ -28,8 +28,8 @@ const scenes = [
   {
     id: "intro",
     title: "Welcome to Dunder Mifflin — IIM Jammu Branch",
-    text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you — tiny memories, big apologies, and a million 'that's what she said' moments.",
-    bg: "images/The_office_image.jpg",
+    text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you... — tiny memories, big apologies, and a million 'that's what she said' moments.",
+    bg: ["images/The_office_image.jpg",         " Images/ toby_1.jpg " ,         "images/Worlds_best_boss.jpg " ] ,
     gif: "images/Kelly_Italkalotsoilearnedtojusttumemyselfout.gif",
     people: ["images/jim_1.jpg", "images/kelly_1.jpg" , "images/Dddddd3.jpg"],
     thumbs: {
@@ -42,7 +42,7 @@ const scenes = [
     question: {
       type: "short",
       key: "You know , how we started watching THE OFFICE......because how come we chose this show...there should be a legend/Hilarious/ Intelligent among us ...IQ must be as good as ...your favourite Epsiode must be Diversity day..or The Dundies or worst ...Goodbye, Michael....Write here which one for My next algorithmic steps ",
-      prompt: "Which episode of The Office made you laugh the hardest?"
+      prompt: "You know , how we started watching THE OFFICE......because how come we chose this show...there should be a legend/Hilarious/ Intelligent among us ...IQ must be as good as ...your favourite Epsiode must be Diversity day..or The Dundies or worst ...Goodbye, Michael....Write here which one for My next algorithmic steps ",
     }
   },
 
@@ -52,14 +52,14 @@ const scenes = [
     title: "That Look — Missing You",
     text:
 `All you need is love? False. The four basic human necessities are air, water, food and shelter (As per Mr.Dwight )...sooooo ..How am I feeling? Oh, absolutely fantastic.... Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% and definitely not thinking about you.
-(And okay fine, maybe I'm thinking about you a little. Like the way Jim hides a smile after Pam laughs.)
+(And okay fine, maybe I'm thinking about you a little. Like the way Jim hides a smile after Pam laughs.) I missss youuuuuuuuuu so muchhhhhh ...sorrrrrrryyyyyyyyy
 also I am not dwight so i can't do it like him ...according to him .... “My perfect Valentine’s Day? I’m at home. Three cell phones in front of me. Fielding desperate calls from people who want to buy one of the 50 restaurant reservations I made over six months ago.”
 Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
 
 `,
     bg: "images/office_bg2.jpg",
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg", "images/Michael_1.jpg", "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
+    people: ["images/kelly_1.jpg",      "images/Michael_1.jpg",        "images/devvvvv_5.jpg" ,       "images/Devu1.jpg" ,           "images/ Kelly_kapoor_Couple.jpg " , "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/Devuuu_2.jpg",
@@ -75,11 +75,11 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
 
   // Episode 3 - Fights (3 micro-scenes inside)
   {
-    id: "fights",
-    title: "Episode 3 — If you are only remebering our Fights & Sorry...then I am so sorrryyyy",
+    id: "important part of Life - fights",
+    title: "Episode 3 — so fights are basically what love is revolve around...We didn't have actual fights ,it's just some things we didn't agree.....so but now....I am ready to face any challenges that might be foolish enough to face me.",
     // we'll show sections in order with their own images/quotes; text here is an intro
     text: "This part is important. I want to say sorry for many many moments I regret. I'll walk through each memory and ask one small question.",
-    bg: ["images/whole_1.jpg", " Dwight_pam_Cry.jpg " ],
+    bg: ["images/whole_1.jpg",       " images/Dwight_pam_Cry.jpg ",       "images/Michael_Crying.jpg " ,         "images / dwight_cry_1.jpg"],
     gif: "images/heart_fireworks.gif",
     people: ["images/dwight_1.jpg", "images/jim_1.jpg"],
     thumbs: {
@@ -93,9 +93,9 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
       {
         id: "mba-chaiwala",
         title: "MBA Chaiwala — I was wrong",
-        text: `At MBA chaiwala — not for once but many times .....toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na.`,
+        text: `At MBA chaiwala — not for once but many times .....toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na. but Failure of any kind is failure. i have to accept that . also i will learn somethings from Schrute Family having said ----There are forty rules all Schrute boys must learn before the age of five. Learn your rules. You better learn your rules. If you don’t, you’ll be eaten in your sleep!“`,
         bg: "images/office_bg2.jpg",
-        people: ["images/dwight_cry_1.jpg", "images/Michael_Crying.jpg"],
+        people: ["images/dwight_cry_1.jpg", "images/Michael_Crying.jpg", "images/devvvvv_5.jpg"  ,     "images/ddddduuuu_3.jpg"],
         gif: "images/Dwight_let's_do_this.gif",
         quote: "Sometimes I'll start a sentence and I don't even know where it's going. — Michael Scott",
         thumbs: {
@@ -111,7 +111,7 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
       {
         id: "maggie-place",
         title: "Fight at Maggie's place",
-        text: `Fight at Maggie's place... I am very sorry for thattttttt. I know even Kashavar we fought and it hurt. I didn't mean to make things messy. Maaf kar, I love you.`,
+        text: `Fight at Maggie's place last to last year... I am very sorry for thattttttt also. `,
         bg: "images/Devuuu_2.jpg",
         people: ["images/pam_1.jpg", "images/jim_1.jpg"],
         gif: "images/Michael_Dance_2.gif",
@@ -150,7 +150,7 @@ Remember that quiet dramatic energy — "Are you watching closely?" — that's w
   // Final
   {
     id: "final",
-    title: "To You — A Little Quiz, A Lot of Love",
+    title: "To You — My Little message, A Lot of Love",
     text: "Click FINISH to reveal something I want you to keep just between us.",
     bg: "images/final_bg.jpg",
     gif: "images/heart_fireworks.gif",
