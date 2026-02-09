@@ -197,7 +197,7 @@ const sceneTitle = document.getElementById("sceneTitle");
 const textEl = document.getElementById("text");
 const quoteEl = document.getElementById("quote");
 const gifImg = document.getElementById("gif");
-const gifVideo = null; // not used
+const gifVideo = document.getElementById("gifVideo");
 const peopleBg = document.getElementById("peopleBg");
 const nextBtn = document.getElementById("nextBtn");
 
@@ -221,9 +221,9 @@ const finishClose = document.getElementById("finishClose");
 const finishSend = document.getElementById("finishSend");
 
 /* audio elements */
-const bgAudio = document.getElementById("sceneAudio");
-const sfxAudio = new Audio();
-const voiceAudio = new Audio();
+const bgAudio = document.getElementById("bgAudio");
+const sfxAudio = document.getElementById("sfxAudio");
+const voiceAudio = document.getElementById("voiceAudio");
 
 /* control buttons */
 const muteBtn = document.getElementById("muteBtn");
@@ -327,7 +327,7 @@ function setCornerThumbs(obj = {}) {
 function showMedia(gifPath, videoPath, fallbackImage) {
   // hide both first
   gifImg.style.display = "none";
-  if (gifVideo) gifVideo.style.display = "none";
+ gifVideo.style.display = "none";
   gifVideo.pause();
   gifVideo.removeAttribute("src");
 
@@ -345,8 +345,7 @@ function showMedia(gifPath, videoPath, fallbackImage) {
       if (videoPath) {
         gifVideo.src = videoPath;
         gifVideo.style.display = "block";
-        if (gifVideo) gifVideo.play();
-.catch(()=>{});
+        gifVideo.play().catch(()=>{});
       } else if (fallbackImage) {
         gifImg.src = fallbackImage;
         gifImg.style.display = "block";
@@ -362,8 +361,7 @@ function showMedia(gifPath, videoPath, fallbackImage) {
   if (videoPath) {
     gifVideo.src = videoPath;
     gifVideo.style.display = "block";
-    if (gifVideo) gifVideo.play();
-.catch(()=>{});
+   gifVideo.play().catch(()=>{});
     return;
   }
 
