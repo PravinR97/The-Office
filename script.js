@@ -738,18 +738,18 @@ function showFinal() {
   const usmem = responses.us_memory || "the little moment you smiled that I keep replaying";
 
   const message = [
-    "Hey love — I made this for you.",
-    `I remember laughing with you at ${ep}.`,
+    "Hey Cutu D...Devu....Devyaniiii.. — I don't know why I made this...Maybe I was thinking about you...I think there is no problem in thinking about that.I Am A Catch, And I Won’t Be The One That Got Away.I Just Want To Be Friends Plus A Little Extra. Also, I Love You.",
+    `I remember laughing, fighting and doing everything with you at ${ep}.`,
     `You told me today: ${smile}. That made me smile too.`,
     `For MBA chaiwala: ${mbaFix}.`,
     `For Maggie's place: ${maggieFix}.`,
-    `For Kashmir: ${kashFix}.`,
+    `For Kashmir and for every other thing: ${kashFix}.`,
     `One tiny moment of us I keep: ${usmem}.`,
     "",
     "I'm sorry for the times I hurt you. I regret the bad things I've done.",
-    "I hope you are doing fine. I love you, I care for you, and I want to keep making better memories with you.",
+    "I hope you are doing fine. I think about you I care for you, and I want to keep making better memories with you.Last ones that we made are not enough..enough but stillll",
     "",
-    "Will you give me one more chance to make new memories?"
+    "And I want you to be happy ,, I don't want you to be sad because of me...you are cutest , Prettiest , Loveliest animal on earth"
   ].join("\n\n");
 
   finishMessage.innerText = message;
