@@ -220,9 +220,9 @@ const finishClose = document.getElementById("finishClose");
 const finishSend = document.getElementById("finishSend");
 
 /* audio elements */
-const bgAudio = document.getElementById("sceneAudio");
-const sfxAudio = new Audio();
-const voiceAudio = new Audio();
+const bgAudio = document.getElementById("bgAudio");
+const sfxAudio = document.getElementById("sfxAudio");
+const voiceAudio = document.getElementById("voiceAudio");
 
 /* control buttons */
 const muteBtn = document.getElementById("muteBtn");
@@ -647,7 +647,7 @@ async function handleIntroClick() {
   // Step 1: user presses to play Michael clip -> play voice clip, then show question
   if (sceneState.introStep === 1) {
     nextBtn.disabled = true;
-    voiceAudio.src = "images/Michael_scott_thank_you.mp3";
+    voiceAudio.src = "Michael_scott_thank_you.mp3";
     voiceAudio.volume = muted ? 0 : 0.9;
     const p = voiceAudio.play();
     if (p !== undefined) p.catch(() => showAutoplayHint());
