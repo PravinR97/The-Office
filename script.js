@@ -20,7 +20,7 @@ const scenes = [
     text: "Welcome to IIM Jammu Branch of Dunder Mifflin Paper Company......\nThis little tour is for you — tiny memories, big apologies, and a million 'that's what she said' moments.",
     bg: "images/The_office_image.jpg",
     gif: "images/Michael_Im_dead_Inside.gif",
-    people: ["images/jim_1.jpg", "images/kelly_1.jpg"],
+    people: ["images/jim_1.jpg", "images/kelly_1.jpg" , "images/Dddddd3.jpg"],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/devuuu_5.jpg",
@@ -40,19 +40,18 @@ const scenes = [
     id: "that-look",
     title: "That Look — Missing You",
     text:
-`How am I feeling? Oh, absolutely fantastic. Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% and definitely not thinking about you.
+`All you need is love? False. The four basic human necessities are air, water, food and shelter (As per Mr.Dwight )...sooooo ..How am I feeling? Oh, absolutely fantastic.... Like unbelievably fine — not sad, not angry, just a perfectly normal human functioning at 150% and definitely not thinking about you.
 (And okay fine, maybe I'm thinking about you a little. Like the way Jim hides a smile after Pam laughs.)
 
 Remember that quiet dramatic energy — "Are you watching closely?" — that's what I feel when I think about us.
 
-Tell me one tiny thing from the day that made you smile (even if it was tiny).`,
+`,
     bg: "images/office_bg2.jpg",
     gif: "images/Michael_Dance_2.gif",
-    people: ["images/kelly_1.jpg", "images/Michael_1.jpg", "images/pam_1.jpg"],
+    people: ["images/kelly_1.jpg", "images/Michael_1.jpg", "images/pam_1.jpg" , "images/ddddduuuu_3.jpg"],
     thumbs: {
       tl: "images/devvvvv_5.jpg",
       tr: "images/Devuuu_2.jpg",
-      bl: "images/ddddduuuu_3.jpg",
       br: "images/Devu1.jpg"
     },
     quote: "Sarcastic? Always. Missing you? Always more.",
@@ -66,10 +65,10 @@ Tell me one tiny thing from the day that made you smile (even if it was tiny).`,
   // Episode 3 - Fights (3 micro-scenes inside)
   {
     id: "fights",
-    title: "Episode 3 — Fights & Sorry",
+    title: "Episode 3 — If you are only remebering our Fights & Sorry...then I am so sorrryyyy",
     // we'll show sections in order with their own images/quotes; text here is an intro
-    text: "This part is important. I want to say sorry for three moments I regret. I'll walk through each memory and ask one small question.",
-    bg: "images/whole_1.jpg",
+    text: "This part is important. I want to say sorry for many many moments I regret. I'll walk through each memory and ask one small question.",
+    bg: ["images/whole_1.jpg", " Dwight_pam_Cry.jpg " ],
     gif: "images/heart_fireworks.gif",
     people: ["images/dwight_1.jpg", "images/jim_1.jpg"],
     thumbs: {
@@ -83,7 +82,7 @@ Tell me one tiny thing from the day that made you smile (even if it was tiny).`,
       {
         id: "mba-chaiwala",
         title: "MBA Chaiwala — I was wrong",
-        text: `At MBA chaiwala — toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na.`,
+        text: `At MBA chaiwala — not for once but many times .....toh manus aheech bhandan lavanyasathiii. Aapli kahi chuki nahi... Hot astaa.\nFight is part of life, but I handled it badly. I'm so sorry for what I said and how I acted. Maaf kar na.`,
         bg: "images/office_bg2.jpg",
         people: ["images/dwight_cry_1.jpg", "images/Michael_Crying.jpg"],
         gif: "images/Dwight_let's_do_this.gif",
