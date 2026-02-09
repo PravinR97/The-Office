@@ -20,7 +20,7 @@ const scenes = [
   id: "gate",
   title: "Before You Enter this…",
   text: "Do you want to go inside…?",
-  bg:[ "images/office_bg1.jpg",   "images/ Creed_2.jpg ", "images/Kevin_1.jpg",      "images/ Michael_famous_meme.jpg",  "images/Micahel_face.jpg "],
+  bg:[ "images/office_bg1.jpg",   "images/Kevin_1.jpg",    "images/Micahel_face.jpg "],
   gif: "images/Dwight_would_a_Idiot.gif",
   quote: "“Whenever I’m about to do something, I think, ‘Would an idiot do that?’ And if they would, I do not do that thing.” — Dwight Schrute",
   gate: true
