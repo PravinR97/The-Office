@@ -16,7 +16,7 @@ const scenes = [
    // 🔐 Office Gate Scene (Pre-Intro)
 {
   id: "gate",
-  title: "Before You Enter…",
+  title: "Before You Enter this…",
   text: "Do you want to go inside…?",
   bg: "office_bg1.jpg",
   gif: "Dwight_would_a_Idiot.gif",
@@ -242,10 +242,11 @@ function handleGate() {
   noBtn.className = "gateNo";
 
   // YES works
-  yesBtn.addEventListener("click", () => {
-    index++; // move to real intro
-    loadScene();
-  });
+ yesBtn.addEventListener("click", () => {
+  removeGateButtons();   // 💥 instantly remove gate
+  index++;               // move forward
+  loadScene();
+});
 
   // NO runs away
   noBtn.addEventListener("mouseenter", () => {
@@ -472,8 +473,16 @@ function hideQuestion() {
 }
 
 /* ---------- Scene loading / navigation ---------- */
+function removeGateButtons() {
+  const yes = document.querySelector(".gateYes");
+  const no = document.querySelector(".gateNo");
+
+  if (yes) yes.remove();
+  if (no) no.remove();
+}
 
 function loadScene() {
+   removeGateButtons();
   const current = scenes[index];
    // 🧠 Office Gate Logic
 if (current.id === "gate") {
